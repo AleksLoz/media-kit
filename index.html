@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Byggeligt Home</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#F5F0E8;--offwhite:#FAF7F2;--dark:#1A0F0A;
+  --rust:#460F0F;--rust-deep:#300A0A;--rust-light:#5E1A1A;
+  --sand:#C8A882;--mid:#8A7060;
+  --serif:'Playfair Display',serif;--sans:'DM Sans',sans-serif;
+  --w:760px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--cream);color:var(--dark);font-family:var(--sans);font-size:15px;cursor:none;overflow-x:hidden}
+
+/* ── CURSOR ── */
+#cur{width:9px;height:9px;background:var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:multiply;transition:width .2s,height .2s}
+#cur-r{width:34px;height:34px;border:1px solid var(--rust);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.45;transition:width .2s,height .2s,opacity .2s}
+body.hov #cur{width:16px;height:16px}
+body.hov #cur-r{width:52px;height:52px;opacity:.15}
+body.edit-on #cur,body.edit-on #cur-r{display:none}
+body.edit-on{cursor:auto;padding-bottom:62px}
+body.edit-on a{cursor:pointer}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;transition:background .35s}
+nav.sc{background:rgba(245,240,232,0.96);backdrop-filter:blur(14px);border-bottom:0.5px solid rgba(122,32,32,0.1)}
+.nav-i{max-width:var(--w);margin:0 auto;height:58px;display:flex;align-items:center;justify-content:space-between}
+.nav-wrap{padding:0 52px;width:100%}
+.nav-logo{font-family:var(--serif);font-size:15px;font-weight:700;color:var(--dark);text-decoration:none}
+.nav-logo em{font-style:normal;color:var(--rust)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--rust)}
+.nav-pill{background:var(--rust);color:#fff!important;padding:8px 18px;border-radius:50px;letter-spacing:.14em!important;transition:background .2s!important}
+.nav-pill:hover{background:var(--rust-deep)!important}
+
+.page{max-width:var(--w);margin:0 auto;padding:0 28px}
+
+/* ── HERO ── */
+.hero{background:var(--cream);padding-top:58px}
+.hero-top{padding:36px 0 0;display:flex;align-items:flex-start;justify-content:space-between}
+.hero-badge{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--mid)}
+.hero-pill{background:var(--rust);color:#fff;font-size:9px;letter-spacing:.15em;text-transform:uppercase;padding:8px 18px;border-radius:50px;text-decoration:none;cursor:none;transition:background .2s}
+.hero-pill:hover{background:var(--rust-deep)}
+.hero-main{padding:20px 0 0}
+.hero-title{font-family:var(--serif);font-size:72px;font-weight:900;line-height:.92;color:var(--rust);letter-spacing:-.025em}
+.hero-title em{font-style:italic;font-weight:700}
+/* animation only fires once on load, works fine with contenteditable */
+.hero-title.animate .anim-word{display:inline-block;overflow:hidden}
+.hero-title.animate .anim-word span{display:inline-block;transform:translateY(105%);animation:su .85s cubic-bezier(.16,1,.3,1) forwards}
+.hero-title.animate .anim-word:nth-child(1) span{animation-delay:.04s}
+.hero-title.animate .anim-word:nth-child(2) span{animation-delay:.16s}
+.hero-title.animate .anim-word:nth-child(3) span{animation-delay:.28s}
+@keyframes su{to{transform:translateY(0)}}
+.hero-sub-row{display:flex;align-items:flex-end;justify-content:space-between;padding:18px 0 0;gap:16px;opacity:0;animation:fu .65s .6s ease forwards}
+.h-sub-l{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--mid);line-height:1.7;max-width:130px}
+.h-stat{text-align:center}
+.h-stat-n{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--rust)}
+.h-stat-l{font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--mid);margin-top:2px}
+.h-sub-r{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--mid);line-height:1.7;text-align:right;max-width:130px}
+@keyframes fu{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.stats-bar{background:var(--rust);display:grid;grid-template-columns:repeat(4,1fr);padding:20px 0;margin-top:18px;opacity:0;animation:fu .55s .85s ease forwards}
+.hs{text-align:center}
+.hs-n{font-family:var(--serif);font-size:26px;font-weight:700;color:#fff;line-height:1}
+.hs-l{font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,240,232,.6);margin-top:4px}
+.rule{height:0.5px;background:rgba(122,32,32,.15)}
+
+/* ── ABOUT ── */
+.about{padding:32px 0}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.s-hand{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--rust);margin-bottom:4px}
+.s-head{font-family:var(--serif);font-size:21px;font-weight:700;text-transform:uppercase;line-height:1.1;color:var(--dark);margin-bottom:18px;letter-spacing:.01em}
+.s-body{font-size:12.5px;color:var(--mid);line-height:1.85}
+.s-body p+p{margin-top:11px}
+.polaroid{background:#fff;padding:9px 9px 34px;border:0.5px solid rgba(122,32,32,.12);transform:rotate(1.8deg);box-shadow:0 6px 28px rgba(26,15,10,.1);transition:transform .4s ease}
+.polaroid:hover{transform:rotate(0deg) scale(1.01)}
+.pol-ph{aspect-ratio:4/3;background:#D4C4B0;display:flex;align-items:center;justify-content:center;color:rgba(122,32,32,.2)}
+.pol-img{width:100%;display:block;aspect-ratio:4/3;object-fit:cover}
+
+/* ── TRUSTED BY ── */
+.trusted{padding:28px 0}
+.trusted-label{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--mid);text-align:center;margin-bottom:28px}
+.logo-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.logo-circle{
+  width:90px;height:90px;border-radius:50%;
+  background:#fff;border:0.5px solid rgba(26,15,10,.12);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;
+  transition:background .22s,border-color .22s,transform .22s;
+  flex-shrink:0;overflow:hidden;
+  padding:13px;
+}
+.logo-circle:hover{background:var(--dark);border-color:var(--dark);transform:scale(1.05)}
+.logo-circle:hover .logo-svg path,
+.logo-circle:hover .logo-svg rect,
+.logo-circle:hover .logo-svg ellipse,
+.logo-circle:hover .logo-svg polygon,
+.logo-circle:hover .logo-svg polyline,
+.logo-circle:hover .logo-svg text,
+.logo-circle:hover .logo-svg circle{fill:inherit}
+.logo-circle:hover .logo-svg{filter:invert(1)}
+.logo-circle:hover .logo-text{color:#fff}
+.logo-svg{width:100%;height:auto;display:block;transition:filter .22s;max-height:56px;object-fit:contain}
+.logo-text{
+  font-family:var(--serif);font-weight:700;font-size:9.5px;letter-spacing:.04em;
+  color:var(--dark);text-align:center;line-height:1.2;
+  transition:color .22s;
+  padding:0 4px;
+}
+.logo-text.sm{font-size:8px}
+.logo-text.lg{font-size:11px}
+
+/* ── AUDIENCE / PIE ── */
+.audience{padding:32px 0}
+.s-eyebrow{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--rust);margin-bottom:7px}
+.s-title{font-family:var(--serif);font-size:36px;font-weight:700;line-height:1.05;color:var(--dark)}
+.s-title em{font-style:italic;color:var(--rust)}
+.aud-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pie-card{background:var(--offwhite);border:0.5px solid rgba(122,32,32,.15);border-radius:10px;padding:24px 22px;transition:box-shadow .25s}
+.pie-card:hover{box-shadow:0 8px 32px rgba(122,32,32,.1)}
+.pie-card-title{font-family:var(--serif);font-size:15px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.pie-card-sub{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:18px}
+.pie-wrap{display:flex;align-items:center;gap:20px}
+.pie-canvas-wrap{position:relative;flex-shrink:0}
+canvas.pie{display:block}
+.pie-legend{flex:1;display:flex;flex-direction:column;gap:7px}
+.leg-item{display:flex;align-items:center;gap:8px}
+.leg-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.leg-label{font-size:11px;color:var(--mid);flex:1}
+.leg-pct{font-family:var(--serif);font-size:13px;font-weight:700;color:var(--rust)}
+.pie-tooltip{position:absolute;background:var(--dark);color:#fff;font-size:11px;padding:5px 10px;border-radius:5px;pointer-events:none;white-space:nowrap;opacity:0;transition:opacity .15s;z-index:10;font-family:var(--sans)}
+
+/* ── PLATFORMS ── */
+.platforms{padding:28px 0}
+.plat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:12px}
+.plat{display:flex;align-items:center;gap:13px;border:0.5px solid rgba(122,32,32,.18);border-radius:8px;padding:13px 15px;background:#fff;transition:border-color .2s,box-shadow .2s}
+.plat:hover{border-color:var(--rust);box-shadow:0 3px 16px rgba(122,32,32,.08)}
+.plat-n{font-size:12px;font-weight:500;color:var(--dark)}
+.plat-h{font-size:10px;color:var(--mid)}
+.plat-num{font-family:var(--serif);font-size:21px;font-weight:700;color:var(--rust);line-height:1}
+.plat-sub{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--mid)}
+.stat-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.stat-card{background:var(--offwhite);border:0.5px solid rgba(122,32,32,.14);border-radius:8px;padding:16px;text-align:center}
+.sc-n{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--rust);line-height:1}
+.sc-l{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--mid);margin-top:4px}
+
+/* ── NICHES ── */
+.niches{padding:36px 0}
+.niche-eyebrow{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--rust);margin-bottom:5px}
+.niche-title{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--dark);margin-bottom:20px}
+.niche-title em{font-style:italic;color:var(--rust)}
+.vids{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:16px}
+
+/* Video card */
+.vid-card{border-radius:10px;overflow:hidden;border:none;transition:transform .3s;position:relative;background:#1A0F0A}
+.vid-card:hover{transform:translateY(-3px)}
+.vid-placeholder{aspect-ratio:9/16;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:#2A2018;position:relative;overflow:hidden}
+.vid-icon{width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(245,240,232,.28);display:flex;align-items:center;justify-content:center;color:rgba(245,240,232,.45);font-size:11px}
+.vid-hint{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.22)}
+.vid-views{display:none}
+.vid-meta{display:none}
+.vid-desc{font-size:11px;color:var(--mid);line-height:1.4}
+
+/* HTML5 video inside card */
+.vid-card video{width:100%;aspect-ratio:9/16;object-fit:cover;display:block}
+
+/* Upload overlay — only in edit mode */
+.vid-upload-overlay{
+  display:none;
+  position:absolute;inset:0;
+  background:rgba(26,15,10,.55);backdrop-filter:blur(3px);
+  align-items:center;justify-content:center;flex-direction:column;gap:6px;
+  cursor:pointer;z-index:5;
+}
+.vid-upload-overlay svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.vid-upload-overlay span{color:#fff;font-size:10px;letter-spacing:.13em;text-transform:uppercase;font-family:var(--sans)}
+body.edit-on .vid-card:hover .vid-upload-overlay{display:flex}
+
+.brand-q{background:var(--cream);border:0.5px solid rgba(122,32,32,.18);border-radius:8px;padding:20px 22px;display:flex;gap:12px;margin-bottom:36px}
+.bq-m{font-family:var(--serif);font-size:40px;font-weight:900;color:rgba(122,32,32,.13);line-height:.75;flex-shrink:0;margin-top:5px}
+.bq-t{font-family:'Playfair Display',serif;font-size:15px;font-style:italic;font-weight:400;color:var(--dark);line-height:1.7;margin-bottom:7px;letter-spacing:.01em}
+.bq-a{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid)}
+.niche-rule{height:0.5px;background:rgba(122,32,32,.12);margin:0 0 40px}
+
+/* ── PACKAGES ── */
+.packages{padding:36px 0}
+.pkg-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.pkg{border:0.5px solid rgba(122,32,32,.18);border-radius:10px;padding:26px 22px;background:#fff;transition:box-shadow .22s,transform .22s}
+.pkg:hover{box-shadow:0 10px 36px rgba(122,32,32,.1);transform:translateY(-2px)}
+.pkg.feat{background:var(--rust);border-color:var(--rust)}
+.pkg.feat:hover{box-shadow:0 10px 36px rgba(122,32,32,.28)}
+.pkg-tag{display:inline-block;font-size:8px;letter-spacing:.17em;text-transform:uppercase;background:rgba(122,32,32,.07);color:var(--rust);padding:3px 9px;border-radius:50px;margin-bottom:11px}
+.pkg.feat .pkg-tag{background:rgba(245,240,232,.2);color:rgba(245,240,232,.8)}
+.pkg-name{font-family:var(--serif);font-size:19px;font-weight:700;color:var(--dark);margin-bottom:2px}
+.pkg.feat .pkg-name{color:#fff}
+.pkg-price{font-family:var(--serif);font-size:34px;font-weight:700;color:var(--rust);line-height:1;margin-bottom:2px}
+.pkg.feat .pkg-price{color:rgba(245,240,232,.85)}
+.pkg-ideal{font-size:11px;color:var(--mid);margin-bottom:13px}
+.pkg.feat .pkg-ideal{color:rgba(245,240,232,.5)}
+.pkg-div{height:0.5px;background:rgba(122,32,32,.11);margin-bottom:13px}
+.pkg.feat .pkg-div{background:rgba(245,240,232,.2)}
+.pkg-list{list-style:none}
+.pkg-list li{
+  font-size:11px;color:var(--mid);padding:5px 0;
+  display:flex;align-items:center;gap:7px;
+  border-bottom:0.5px solid rgba(122,32,32,.07);
+  position:relative;
+}
+.pkg.feat .pkg-list li{color:rgba(245,240,232,.75);border-color:rgba(245,240,232,.1)}
+.pkg-list li:last-child{border-bottom:none}
+.li-text{flex:1}
+.pkg-ck{color:var(--rust);flex-shrink:0;font-size:12px}
+.pkg.feat .pkg-ck{color:rgba(245,240,232,.55)}
+
+/* delete button on li — edit mode only */
+.li-del{
+  display:none;
+  background:none;border:none;
+  color:rgba(122,32,32,.4);font-size:14px;
+  cursor:pointer;padding:0 2px;line-height:1;
+  transition:color .15s;flex-shrink:0;
+}
+.li-del:hover{color:var(--rust)}
+.pkg.feat .li-del{color:rgba(245,240,232,.3)}
+.pkg.feat .li-del:hover{color:rgba(245,240,232,.8)}
+body.edit-on .li-del{display:block}
+
+/* add row button */
+.add-li-btn{
+  display:none;
+  width:100%;margin-top:8px;
+  background:none;border:1px dashed rgba(122,32,32,.25);
+  color:rgba(122,32,32,.4);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  font-family:var(--sans);padding:6px;border-radius:4px;cursor:pointer;
+  transition:border-color .2s,color .2s;
+}
+.add-li-btn:hover{border-color:var(--rust);color:var(--rust)}
+.pkg.feat .add-li-btn{border-color:rgba(245,240,232,.2);color:rgba(245,240,232,.4)}
+.pkg.feat .add-li-btn:hover{border-color:rgba(245,240,232,.6);color:rgba(245,240,232,.8)}
+body.edit-on .add-li-btn{display:block}
+
+/* ── USAGE ── */
+.usage{padding:0 0 52px}
+.usage-wrap{border:0.5px solid rgba(122,32,32,.18);border-radius:10px;overflow:hidden}
+.usage-head{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;background:var(--rust);padding:10px 18px}
+.usage-head span{font-size:8px;letter-spacing:.17em;text-transform:uppercase;color:rgba(245,240,232,.7)}
+.usage-head span:not(:first-child){text-align:center}
+.usage-row{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;
+  padding:12px 18px;border-top:0.5px solid rgba(122,32,32,.08);
+  background:#fff;align-items:center;transition:background .18s;
+  position:relative;
+}
+.usage-row:hover{background:var(--cream)}
+.utype{font-size:12px;color:var(--dark);font-weight:500}
+.usub{font-size:10px;color:var(--mid);margin-top:1px}
+.uprice{font-family:var(--serif);font-size:13px;font-weight:700;color:var(--rust);text-align:center}
+/* delete row in edit mode */
+.row-del{
+  display:none;position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  background:none;border:none;color:rgba(122,32,32,.3);font-size:14px;cursor:pointer;
+  transition:color .15s;
+}
+.row-del:hover{color:var(--rust)}
+body.edit-on .row-del{display:block}
+
+/* ── COLLAB FORM ── */
+.collab{padding:36px 0}
+.collab-box{background:var(--offwhite);border:0.5px solid rgba(122,32,32,.13);border-radius:14px;padding:32px 32px 28px}
+.cf-eyebrow{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--rust);margin-bottom:6px}
+.cf-title{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--dark);line-height:1.1;margin-bottom:6px}
+.cf-title em{font-style:italic;color:var(--rust)}
+.cf-sub{font-size:12px;color:var(--mid);line-height:1.7;margin-bottom:28px}
+.cf-row{display:grid;gap:12px;margin-bottom:20px}
+.cf-row.three{grid-template-columns:repeat(3,1fr)}
+.cf-row.two{grid-template-columns:1fr 1fr}
+.cf-card{border:0.5px solid rgba(122,32,32,.14);border-radius:9px;padding:14px 16px;background:var(--cream);transition:border-color .2s}
+.cf-card:hover{border-color:rgba(122,32,32,.3)}
+.cf-label{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);margin-bottom:10px}
+/* stepper */
+.stepper{display:flex;align-items:center;gap:0}
+.step-btn{width:30px;height:30px;border:0.5px solid rgba(122,32,32,.2);background:#fff;border-radius:6px;color:var(--rust);font-size:16px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,border-color .15s;flex-shrink:0}
+.step-btn:hover{background:var(--rust);color:#fff;border-color:var(--rust)}
+.step-val{width:44px;text-align:center;font-family:var(--serif);font-size:22px;font-weight:700;color:var(--dark)}
+/* usage pills */
+.ur-group{display:flex;gap:6px;flex-wrap:wrap}
+.ur-pill{border:0.5px solid rgba(122,32,32,.18);background:#fff;border-radius:50px;padding:7px 13px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);cursor:pointer;transition:all .18s;font-family:var(--sans);white-space:nowrap}
+.ur-pill:hover{border-color:var(--rust);color:var(--rust)}
+.ur-pill.active{background:var(--rust);border-color:var(--rust);color:#fff}
+/* toggle row */
+.toggle-row{display:flex;flex-direction:column;gap:10px}
+.toggle-item{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.toggle-name{font-size:12px;color:var(--dark)}
+.toggle-sw{position:relative;width:40px;height:22px;flex-shrink:0}
+.toggle-sw input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{position:absolute;inset:0;background:rgba(122,32,32,.12);border-radius:11px;cursor:pointer;transition:background .2s}
+.toggle-sw input:checked+.toggle-track{background:var(--rust)}
+.toggle-track::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.toggle-sw input:checked+.toggle-track::after{transform:translateX(18px)}
+/* email + submit */
+.cf-email-row{display:flex;gap:10px;margin-top:8px;align-items:stretch}
+.cf-email{flex:1;border:0.5px solid rgba(122,32,32,.18);border-radius:8px;padding:12px 16px;font-family:var(--sans);font-size:13px;color:var(--dark);background:#fff;outline:none;transition:border-color .2s}
+.cf-email::placeholder{color:rgba(138,112,96,.5)}
+.cf-email:focus{border-color:var(--rust)}
+.cf-submit{background:var(--rust);color:#fff;border:none;border-radius:8px;padding:12px 22px;font-family:var(--sans);font-size:10px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;white-space:nowrap;transition:background .2s}
+.cf-submit:hover{background:var(--rust-deep)}
+.cf-alt{text-align:center;margin-top:16px;font-size:11px;color:var(--mid)}
+.cf-alt a{color:var(--rust);text-decoration:none;border-bottom:0.5px solid rgba(122,32,32,.3);transition:border-color .2s}
+.cf-alt a:hover{border-color:var(--rust)}
+.cf-success{display:none;text-align:center;padding:24px 0 8px}
+.cf-success-icon{font-size:28px;margin-bottom:8px}
+.cf-success h3{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--dark);margin-bottom:6px}
+.cf-success p{font-size:12px;color:var(--mid);line-height:1.7}
+
+/* ── CONTACT ── */
+.contact{background:var(--cream);padding:40px 0;text-align:center;border-top:0.5px solid rgba(122,32,32,.12)}
+.c-hand{font-family:var(--serif);font-size:19px;font-style:italic;color:var(--rust);margin-bottom:5px}
+.c-title{font-family:var(--serif);font-size:46px;font-weight:900;line-height:1;color:var(--dark);margin-bottom:11px;letter-spacing:-.02em}
+.c-title em{font-style:italic;color:var(--rust)}
+.c-sub{font-size:13px;color:var(--mid);margin-bottom:32px;line-height:1.8}
+.c-btn{display:inline-block;background:var(--rust);color:#fff;font-size:10px;letter-spacing:.17em;text-transform:uppercase;padding:13px 36px;border-radius:50px;text-decoration:none;margin-bottom:28px;transition:background .2s,transform .18s;cursor:none}
+.c-btn:hover{background:var(--rust-deep);transform:scale(1.02)}
+.c-handles{display:flex;justify-content:center;gap:24px;flex-wrap:wrap}
+.handle{font-size:12px;color:var(--mid);display:flex;align-items:center;gap:6px;text-decoration:none;transition:color .2s;cursor:none}
+.handle:hover{color:var(--rust)}
+footer{background:var(--offwhite);border-top:0.5px solid rgba(122,32,32,.08);padding:18px 0;display:flex;align-items:center;justify-content:space-between}
+footer p{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(122,32,32,.3)}
+
+/* ── EDITABLE LINKS ── */
+.editable-link{position:relative}
+body.edit-on .editable-link::after{
+  content:'✎ edit URL';
+  position:absolute;top:-22px;left:50%;transform:translateX(-50%);
+  background:var(--rust);color:#fff;font-size:8px;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 7px;border-radius:20px;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity .15s;
+}
+body.edit-on .editable-link:hover::after{opacity:1}
+body.edit-on .editable-link{cursor:pointer!important}
+
+/* ── SCROLL REVEAL ── */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.rv.on{opacity:1;transform:none}
+.rv.d1{transition-delay:.1s}.rv.d2{transition-delay:.2s}
+a{cursor:none}
+svg.ico{display:inline-block;width:18px;height:18px;vertical-align:middle;fill:none;stroke:var(--rust);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/* ══════════════════════════════════
+   EDITOR
+══════════════════════════════════ */
+
+/* edit FAB */
+#edit-fab{
+  position:fixed;bottom:28px;right:28px;z-index:9990;
+  background:var(--rust);color:#fff;
+  font-family:var(--sans);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  padding:12px 20px;border-radius:50px;border:none;cursor:pointer;
+  box-shadow:0 4px 20px rgba(122,32,32,.35);
+  display:flex;align-items:center;gap:8px;
+  transition:background .2s,transform .2s;
+}
+#edit-fab:hover{background:var(--rust-deep);transform:scale(1.04)}
+#edit-fab svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+body.edit-on #edit-fab{display:none}
+
+/* edit toolbar */
+#et{
+  display:none;position:fixed;bottom:0;left:0;right:0;z-index:9990;
+  background:var(--dark);padding:10px 24px;
+  align-items:center;justify-content:space-between;gap:16px;
+  border-top:2px solid var(--rust);
+}
+body.edit-on #et{display:flex}
+.et-left{display:flex;align-items:center;gap:14px;min-width:0}
+.et-badge{background:var(--rust);color:#fff;font-size:9px;letter-spacing:.17em;text-transform:uppercase;padding:4px 10px;border-radius:50px;white-space:nowrap;flex-shrink:0}
+.et-hint{font-size:10px;color:rgba(245,240,232,.4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.et-right{display:flex;gap:8px;flex-shrink:0}
+.et-btn{font-family:var(--sans);font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:9px 18px;border-radius:50px;border:none;cursor:pointer;transition:background .2s;white-space:nowrap}
+.et-save{background:var(--rust);color:#fff}.et-save:hover{background:var(--rust-light)}
+.et-exit{background:rgba(245,240,232,.1);color:rgba(245,240,232,.7)}.et-exit:hover{background:rgba(245,240,232,.18)}
+
+/* contenteditable highlight */
+body.edit-on [contenteditable=true]{
+  outline:none;cursor:text;
+  border-radius:3px;
+  transition:background .15s,box-shadow .15s;
+}
+body.edit-on [contenteditable=true]:hover{
+  background:rgba(122,32,32,.05);
+  box-shadow:0 0 0 2px rgba(122,32,32,.15);
+}
+body.edit-on [contenteditable=true]:focus{
+  background:rgba(122,32,32,.07);
+  box-shadow:0 0 0 2px rgba(122,32,32,.3);
+}
+
+/* section delete */
+.editwrap{position:relative}
+.sec-hide{
+  display:none;
+  position:absolute;top:14px;right:14px;z-index:20;
+  background:rgba(245,240,232,.9);border:0.5px solid rgba(122,32,32,.2);
+  color:var(--rust);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  padding:5px 12px;border-radius:50px;cursor:pointer;font-family:var(--sans);
+  transition:background .15s;
+}
+.sec-hide:hover{background:#fff}
+body.edit-on .sec-hide{display:inline-block}
+
+/* photo overlay */
+.photo-wrap{position:relative}
+.photo-over{
+  display:none;position:absolute;inset:0;
+  background:rgba(26,15,10,.48);backdrop-filter:blur(3px);
+  align-items:center;justify-content:center;flex-direction:column;gap:7px;cursor:pointer;
+}
+.photo-over svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.photo-over span{color:#fff;font-size:10px;letter-spacing:.13em;text-transform:uppercase;font-family:var(--sans)}
+body.edit-on .photo-wrap:hover .photo-over{display:flex}
+
+/* ── QUOTE BREAK ── */
+.q-break-inner{text-align:center;padding:52px 0 44px;max-width:560px;margin:0 auto}
+.qb-mark{font-family:var(--serif);font-size:80px;font-weight:900;color:rgba(122,32,32,.13);line-height:.6;margin-bottom:16px}
+.qb-text{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;font-weight:400;color:var(--dark);line-height:1.65;letter-spacing:.01em;border:none;padding:0;margin:0 0 18px}
+.qb-attr{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mid)}
+
+/* ── SOCIAL LINKS ── */
+.soc-links{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.soc-link{display:flex;flex-direction:column;align-items:center;gap:8px;padding:22px 18px;text-decoration:none;color:var(--dark);flex:1;min-width:120px;transition:background .22s,transform .22s;cursor:none}
+.soc-link:hover{background:var(--dark);border-color:var(--dark);transform:translateY(-2px);color:var(--cream)}
+.soc-link svg{width:26px;height:26px;flex-shrink:0}
+.soc-name{font-size:12px;font-weight:500;letter-spacing:.04em}
+.soc-handle{font-size:10px;color:var(--mid);letter-spacing:.06em;transition:color .22s}
+.soc-link:hover .soc-handle{color:rgba(245,240,232,.55)}
+
+/* ── VIDEO URL LINK ── */
+.vid-link-btn{display:none;position:absolute;bottom:8px;right:8px;z-index:6;background:rgba(26,15,10,.7);color:var(--sand);font-size:8px;letter-spacing:.1em;text-transform:uppercase;border:none;padding:4px 8px;border-radius:4px;cursor:pointer;font-family:var(--sans)}
+body.edit-on .vid-card:hover .vid-link-btn{display:block}
+.vid-card.has-link .vid-placeholder::after{content:"▶ View";position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(26,15,10,.75);color:var(--cream);font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:4px;pointer-events:none}
+body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
+
+/* ── COLLAB TABS ── */
+.cf-tabs{display:flex;gap:10px;margin-bottom:24px}
+.cf-tab{flex:1;text-align:left;padding:16px 20px;border:0.5px solid rgba(122,32,32,.18);border-radius:10px;background:transparent;cursor:pointer;transition:background .2s,border-color .2s;font-family:var(--sans)}
+.cf-tab.active{background:rgba(122,32,32,.05);border-color:var(--rust);border-width:1px}
+.cf-tab-label{display:block;font-size:13px;font-weight:500;letter-spacing:.04em;color:var(--mid);transition:color .2s;margin-bottom:3px}
+.cf-tab.active .cf-tab-label{color:var(--rust)}
+.cf-tab-desc{display:block;font-size:10px;color:var(--mid);line-height:1.5;transition:color .2s}
+.cf-tab.active .cf-tab-desc{color:var(--mid)}
+.cf-type-desc{font-size:13px;color:var(--mid);line-height:1.75;margin-bottom:20px;padding:16px 18px;background:rgba(122,32,32,.04);border-radius:8px;border-left:2px solid rgba(122,32,32,.2)}
+.cf-type-desc strong{color:var(--dark);font-weight:500}
+
+/* ── TESTIMONIAL FRAMELESS ── */
+.testi-frameless{padding:0 0 28px}
+.testi-fl-mark{font-family:var(--serif);font-size:60px;font-weight:900;color:rgba(70,15,15,.1);line-height:.6;margin-bottom:14px}
+.testi-fl-quote{font-family:'DM Sans',sans-serif;font-size:15px;font-style:normal;font-weight:300;line-height:1.55;color:var(--dark);margin-bottom:20px;letter-spacing:.01em;max-width:100%}
+.testi-fl-attr{display:flex;align-items:center;gap:18px}
+.testi-fl-line{width:32px;height:1px;background:var(--sand);flex-shrink:0}
+.testi-fl-name{font-size:13px;font-weight:500;color:var(--dark);letter-spacing:.04em}
+.testi-fl-brand{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);margin-top:2px}
+.cf-intro{font-size:14px;color:var(--mid);line-height:1.7;margin-bottom:28px;max-width:460px}
+.deliv-head-wrap{margin-bottom:16px}
+.deliv-subhead{font-size:12px;color:var(--mid);line-height:1.6;margin-top:4px}
+.deliv-info{display:flex;flex-direction:column;gap:3px;flex:1;padding-right:20px}
+.deliv-desc{font-size:11px;color:var(--mid);line-height:1.5}
+
+/* ── DELIVERABLES LAYOUT ── */
+.deliv-section{padding:20px 0;border-bottom:0.5px solid rgba(122,32,32,.1)}
+.deliv-head{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);margin-bottom:14px;font-weight:500}
+.deliv-grid{display:flex;flex-direction:column;gap:0}
+.deliv-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid rgba(122,32,32,.06)}
+.deliv-row:last-child{border-bottom:none}
+.deliv-label{font-size:14px;color:var(--dark)}
+.deliv-note{font-size:10px;color:var(--mid);font-weight:400;letter-spacing:0;text-transform:none}
+.stepper.sm .step-btn{width:28px;height:28px;font-size:14px}
+.stepper.sm .step-val{width:32px;font-size:15px}
+.cf-msg{width:100%;padding:11px 14px;border:0.5px solid rgba(122,32,32,.18);border-radius:8px;font-family:var(--sans);font-size:13px;color:var(--dark);background:transparent;resize:vertical;line-height:1.6;outline:none;transition:border-color .2s}
+.cf-msg:focus{border-color:var(--rust)}
+.cf-msg::placeholder{color:var(--mid);opacity:.7}
+
+/* ── TOGGLE FOLLOWER COUNT ── */
+.toggle-count{display:block;font-size:9px;letter-spacing:.08em;color:var(--mid);margin-top:1px;font-weight:400}
+.toggle-name{display:flex;flex-direction:column}
+
+/* ── TESTIMONIAL HIGHLIGHT ── */
+.testi-hl{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;color:var(--rust)}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+
+<!-- LOGIN OVERLAY -->
+<div id="login-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(26,15,10,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center">
+  <div style="background:#FAF7F2;border-radius:16px;padding:44px 40px 36px;width:340px;max-width:90vw;text-align:center;box-shadow:0 24px 64px rgba(26,15,10,.22)">
+    <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:#1A0F0A;margin-bottom:4px">Admin login</div>
+    <div style="font-family:'DM Sans',sans-serif;font-size:13px;color:#8A7060;margin-bottom:28px">Enter your password to edit the page</div>
+    <input id="login-pw" type="password" placeholder="Password" style="width:100%;box-sizing:border-box;padding:12px 16px;border:1px solid rgba(70,15,15,.2);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:#1A0F0A;background:#fff;outline:none;margin-bottom:10px" onkeydown="if(event.key==='Enter')doLogin()">
+    <div id="login-err" style="font-family:'DM Sans',sans-serif;font-size:12px;color:#460F0F;min-height:18px;margin-bottom:10px"></div>
+    <button onclick="doLogin()" style="width:100%;padding:13px;background:#460F0F;color:#FAF7F2;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;letter-spacing:.04em;cursor:pointer;margin-bottom:10px">Log in</button>
+    <button onclick="closeLogin()" style="width:100%;padding:10px;background:transparent;color:#8A7060;border:none;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer">Cancel</button>
+  </div>
+</div>
+
+<!-- EDIT FAB -->
+<button id="edit-fab" onclick="toggleEdit()">
+  <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+  Login
+</button>
+
+<!-- EDIT TOOLBAR -->
+<div id="et">
+  <div class="et-left">
+    <span class="et-badge">✏ Editing</span>
+    <span class="et-hint">Click text to edit · Hover photo to replace · Hover video to upload · ✕ removes rows & sections</span>
+  </div>
+  <div class="et-right">
+    <button class="et-btn et-save" onclick="saveHTML()">⬇ Save HTML</button>
+    <button class="et-btn et-exit" onclick="toggleEdit()">✕ Exit</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-wrap">
+    <div class="nav-i">
+      <a href="#" class="nav-logo">Byggeligt<em>.</em></a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#audience">Audience</a></li>
+        <li><a href="#niches">Content</a></li>
+        <li><a href="#s-collab">Work with us</a></li>
+        <li><a href="#s-collab" class="nav-pill">Packages</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero editwrap" id="s-hero">
+  <button class="sec-hide" onclick="hideEl('s-hero')">✕ Hide section</button>
+  <div class="page">
+    <div class="hero-top">
+      <span class="hero-badge">Byggeligt Home · Media Kit 2025</span>
+    </div>
+    <div class="hero-main">
+      <!-- hero title: animate on load, then fully editable as one block -->
+      <h1 class="hero-title animate" id="hero-h1">
+        <span class="anim-word"><span>HI,</span></span>
+        <em class="anim-word"><span>We're</span></em><br>
+        <span class="anim-word"><span>BYGGELIGT</span></span>
+      </h1>
+    </div>
+    <div class="hero-sub-row">
+      <div class="h-sub-l">Interior Designers &amp;<br>Content Creators<br>Based in Denmark</div>
+      <div class="h-stat">
+        <div class="h-stat-n" data-count="570" data-sfx="K+">570K+</div>
+        <div class="h-stat-l">Total followers</div>
+      </div>
+      <div class="h-sub-r">Scandinavian Living &amp;<br>Home Renovation<br>Experts</div>
+    </div>
+  </div>
+  <div class="page">
+    <div class="stats-bar">
+      <div class="hs"><div class="hs-n" data-count="395" data-sfx="K">395K</div><div class="hs-l">Instagram</div></div>
+      <div class="hs"><div class="hs-n" data-count="174" data-sfx="K">174K</div><div class="hs-l">TikTok</div></div>
+      <div class="hs"><div class="hs-n" data-count="5.7" data-sfx="M">5.7M</div><div class="hs-l">Monthly reach</div></div>
+      <div class="hs"><div class="hs-n" data-count="84" data-sfx="%">84%</div><div class="hs-l">Female audience</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section class="about editwrap" id="s-about">
+  <button class="sec-hide" onclick="hideEl('s-about')">✕ Hide section</button>
+  <div class="page" id="about">
+    <div class="rule" style="margin-bottom:24px"></div>
+    <div class="story-grid">
+      <div class="rv">
+        <div class="s-hand">Hey, We're Aleksandra &amp; Jim</div>
+        <div class="s-head">Interior Designer,<br>Content Creator,<br>and Your Brand Partner</div>
+        <div class="s-body">
+          <p>Aleksandra &amp; Jim Lozinska — parents of two boys, building a home from scratch in Denmark and sharing every step of it.</p>
+          <p>Our audience didn't grow because of algorithms. They stayed because they felt part of something real. When we recommend a product, our audience listens — because we've never told them otherwise.</p>
+          <p>We help brands tell stories through beautiful, trustworthy content that converts.</p>
+        </div>
+      </div>
+      <div class="rv d2">
+        <div class="polaroid">
+          <div class="photo-wrap" id="pol-wrap">
+            <img id="pol-img" class="pol-img" src="couple_photo.jpg" alt="Aleksandra &amp; Jim"
+                 onerror="this.style.display='none';document.getElementById('pol-ph').style.display='flex'">
+            <div id="pol-ph" class="pol-ph" style="display:none">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(122,32,32,0.22)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+            </div>
+            <div class="photo-over" onclick="uploadPhoto('pol-img','pol-ph')">
+              <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              <span>Replace photo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUSTED BY ── -->
+<section class="trusted editwrap" id="s-trusted">
+  <button class="sec-hide" onclick="hideEl('s-trusted')">✕ Hide section</button>
+  <div class="page">
+    <div class="rule" style="margin-bottom:36px"></div>
+    <p class="trusted-label rv">Trusted by</p>
+    <div class="logo-grid rv d1">
+
+      <!-- IKEA — horizontal mark, generous side padding -->
+      <div class="logo-circle" style="padding:17px">
+        <svg class="logo-svg" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0" y="2" width="94" height="46" rx="1" fill="#1A0F0A"/>
+          <ellipse cx="47" cy="25" rx="37" ry="18" fill="#fff"/>
+          <text x="47" y="31" font-family="'Arial Black','Arial',sans-serif" font-size="18" font-weight="900" fill="#1A0F0A" text-anchor="middle" letter-spacing="1.5">IKEA</text>
+        </svg>
+      </div>
+
+      <!-- Bedre Næter — 2-line wordmark + moon -->
+      <div class="logo-circle" style="padding:14px">
+        <svg class="logo-svg" viewBox="0 0 56 44" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="47" cy="8" r="7.5" fill="#1A0F0A"/>
+          <circle cx="52" cy="4" r="6" fill="#fff"/>
+          <text x="0" y="25" font-family="'DM Sans','Arial',sans-serif" font-size="14" font-weight="700" fill="#1A0F0A" letter-spacing="-0.2">bedre</text>
+          <text x="0" y="42" font-family="'DM Sans','Arial',sans-serif" font-size="14" font-weight="700" fill="#1A0F0A" letter-spacing="-0.2">næter</text>
+        </svg>
+      </div>
+
+      <!-- Birdie — bird icon only, extra padding to shrink it -->
+      <div class="logo-circle" style="padding:18px">
+        <svg class="logo-svg" viewBox="0 0 52 58" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9,58 L9,30 Q9,4 30,4 Q52,4 52,28 L52,58 Z" fill="#1A0F0A"/>
+          <polygon points="9,30 0,37 9,44" fill="#1A0F0A"/>
+          <circle cx="35" cy="24" r="4" fill="#fff"/>
+        </svg>
+      </div>
+
+      <!-- DropSpa — bold wordmark -->
+      <div class="logo-circle" style="padding:20px">
+        <svg class="logo-svg" viewBox="0 0 62 20" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="17" font-family="'DM Sans','Arial',sans-serif" font-size="19" font-weight="700" fill="#1A0F0A" letter-spacing="-0.5">drop.</text>
+        </svg>
+      </div>
+
+      <!-- Wimex — chevrons + wordmark -->
+      <div class="logo-circle" style="padding:15px">
+        <svg class="logo-svg" viewBox="0 0 72 28" xmlns="http://www.w3.org/2000/svg">
+          <polyline points="1,1 6,6 11,1"  fill="none" stroke="#1A0F0A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="1,8 6,13 11,8"  fill="none" stroke="#1A0F0A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="1,15 6,20 11,15" fill="none" stroke="#1A0F0A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="16" y="19" font-family="'Arial Black','Arial',sans-serif" font-size="14" font-weight="900" fill="#1A0F0A" letter-spacing="0.3">WIMEX</text>
+        </svg>
+      </div>
+
+      <!-- Makita — italic wordmark -->
+      <div class="logo-circle" style="padding:20px">
+        <svg class="logo-svg" viewBox="0 0 64 17" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="14" font-family="'DM Sans','Arial',sans-serif" font-size="15" font-weight="700" font-style="italic" fill="#1A0F0A" letter-spacing="-0.2">makita</text>
+        </svg>
+      </div>
+
+      <!-- Glerups — sheep + wordmark -->
+      <div class="logo-circle" style="padding:13px">
+        <svg class="logo-svg" viewBox="0 0 64 40" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="38" cy="11" rx="13" ry="8" fill="#1A0F0A"/>
+          <ellipse cx="23" cy="13" rx="6.5" ry="5.5" fill="#1A0F0A"/>
+          <ellipse cx="18" cy="9" rx="2.5" ry="3" fill="#1A0F0A"/>
+          <rect x="27" y="18" width="2.5" height="5" rx="1" fill="#1A0F0A"/>
+          <rect x="32" y="18" width="2.5" height="5" rx="1" fill="#1A0F0A"/>
+          <rect x="38" y="18" width="2.5" height="5" rx="1" fill="#1A0F0A"/>
+          <rect x="44" y="18" width="2.5" height="5" rx="1" fill="#1A0F0A"/>
+          <text x="32" y="37" font-family="'Playfair Display','Georgia',serif" font-size="12" font-weight="700" fill="#1A0F0A" text-anchor="middle" letter-spacing="0.2">glerups</text>
+        </svg>
+      </div>
+
+      <!-- Quooker — Q mark + wordmark -->
+      <div class="logo-circle" style="padding:18px">
+        <svg class="logo-svg" viewBox="0 0 72 20" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="9" cy="10" r="7.5" fill="none" stroke="#1A0F0A" stroke-width="2.8"/>
+          <line x1="5" y1="16" x2="13" y2="22" stroke="#1A0F0A" stroke-width="2.8" stroke-linecap="round"/>
+          <text x="20" y="16" font-family="'DM Sans','Arial',sans-serif" font-size="15" font-weight="700" fill="#1A0F0A" letter-spacing="-0.3">uooker</text>
+          <text x="69" y="6" font-family="Arial,sans-serif" font-size="5.5" fill="#1A0F0A">®</text>
+        </svg>
+      </div>
+
+      <!-- Flying Tiger Copenhagen — 3-line stacked -->
+      <div class="logo-circle" style="padding:12px">
+        <svg class="logo-svg" viewBox="0 0 60 48" xmlns="http://www.w3.org/2000/svg">
+          <text x="30" y="14" font-family="'Arial Black','Arial',sans-serif" font-size="14" font-weight="900" fill="#1A0F0A" text-anchor="middle" letter-spacing="-0.3">flying</text>
+          <text x="30" y="29" font-family="'Arial Black','Arial',sans-serif" font-size="14" font-weight="900" fill="#1A0F0A" text-anchor="middle" letter-spacing="-0.3">tiger</text>
+          <text x="30" y="43" font-family="'DM Sans','Arial',sans-serif" font-size="8" font-weight="500" fill="#1A0F0A" text-anchor="middle" letter-spacing="0.3">copenhagen</text>
+        </svg>
+      </div>
+
+      <!-- ârturel — bold wordmark -->
+      <div class="logo-circle" style="padding:21px">
+        <svg class="logo-svg" viewBox="0 0 60 15" xmlns="http://www.w3.org/2000/svg">
+          <text x="0" y="12" font-family="'DM Sans','Arial',sans-serif" font-size="13" font-weight="700" fill="#1A0F0A" letter-spacing="-0.2">ârturel</text>
+        </svg>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── NICHES ── -->
+<section class="niches editwrap" id="s-niches">
+  <button class="sec-hide" onclick="hideEl('s-niches')">✕ Hide section</button>
+  <div class="page" id="niches">
+    <div class="rule" style="margin-bottom:24px"></div>
+
+    <div class="rv"><p class="niche-eyebrow">Niche 01</p><h2 class="niche-title"><em>Outdoor</em> Living</h2></div>
+    <div class="vids rv d1">
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Terrace reveal — outdoor styling transformation</div></div></div>
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Garden furniture &amp; product integration</div></div></div>
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Scandinavian summer outdoor styling</div></div></div>
+    </div>
+
+    <div class="niche-rule"></div>
+    <div class="rv"><p class="niche-eyebrow">Niche 02</p><h2 class="niche-title"><em>Home</em> Decor</h2></div>
+    <div class="vids rv d1">
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">16M views</div></div><div class="vid-meta"><div class="vid-desc">Living room reveal — before &amp; after</div></div></div>
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">13M views</div></div><div class="vid-meta"><div class="vid-desc">Scandinavian kitchen — product campaign</div></div></div>
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Room transformation — interior styling</div></div></div>
+    </div>
+
+    <div class="niche-rule"></div>
+    <div class="rv"><p class="niche-eyebrow">Niche 03</p><h2 class="niche-title"><em>Smart</em> Home</h2></div>
+    <div class="vids rv d1">
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Smart lighting setup — product integration</div></div></div>
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Home automation — real home walkthrough</div></div></div>
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Tech meets Scandinavian design</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AUDIENCE ── -->
+<section class="audience editwrap" id="s-audience">
+  <button class="sec-hide" onclick="hideEl('s-audience')">✕ Hide section</button>
+  <div class="page" id="audience">
+    <div class="rule" style="margin-bottom:24px"></div>
+    <div class="rv" style="margin-bottom:28px">
+      <p class="s-eyebrow">Engaged audience</p>
+      <h2 class="s-title">Who <em>follows</em> us.</h2>
+    </div>
+    <div class="aud-grid rv d1">
+      <div class="pie-card">
+        <div class="pie-card-title">Engagement by Country</div>
+        <div class="pie-card-sub">Top markets by engagements</div>
+        <div class="pie-wrap">
+          <div class="pie-canvas-wrap"><canvas class="pie" id="pie1" width="130" height="130"></canvas><div class="pie-tooltip" id="tt1"></div></div>
+          <div class="pie-legend" id="leg1"></div>
+        </div>
+      </div>
+      <div class="pie-card">
+        <div class="pie-card-title">Audience by Age</div>
+        <div class="pie-card-sub">Age group breakdown</div>
+        <div class="pie-wrap">
+          <div class="pie-canvas-wrap"><canvas class="pie" id="pie2" width="130" height="130"></canvas><div class="pie-tooltip" id="tt2"></div></div>
+          <div class="pie-legend" id="leg2"></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:10px" class="rv d2">
+      <div class="stat-card"><div class="sc-n">84%</div><div class="sc-l">Female audience</div></div>
+      <div class="stat-card"><div class="sc-n">4.8%</div><div class="sc-l">Avg. engagement rate</div></div>
+      <div class="stat-card"><div class="sc-n">5.7M</div><div class="sc-l">Monthly reach</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PACKAGES ── -->
+<section class="packages editwrap" id="s-pkg" style="display:none">
+  <button class="sec-hide" onclick="hideEl('s-pkg')">✕ Hide section</button>
+  <div class="page" id="packages">
+    <div class="rule" style="margin-bottom:24px"></div>
+    <p class="s-eyebrow">Partnership packages</p>
+    <h2 class="s-title" style="margin-bottom:5px">Choose your <em>collaboration.</em></h2>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:24px;line-height:1.75">All packages include one revision round and a full campaign report.</p>
+    <div class="pkg-grid">
+      <div class="pkg">
+        <div class="pkg-name">Single Feature</div>
+        <div class="pkg-price">€1,200</div>
+        <div class="pkg-ideal">Ideal for product launches</div>
+        <div class="pkg-div"></div>
+        <ul class="pkg-list">
+          <li><span class="pkg-ck">✓</span><span class="li-text">1 Reel (30–60 sec)</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
+          <li><span class="pkg-ck">✓</span><span class="li-text">3 Stories with links</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
+          <li><span class="pkg-ck">✓</span><span class="li-text">Pinterest distribution</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
+          <li><span class="pkg-ck">✓</span><span class="li-text">6 months usage rights</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
+          <li><span class="pkg-ck">✓</span><span class="li-text">Campaign reporting</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
+        </ul>
+        <button class="add-li-btn" onclick="addListItem(this)">+ Add line</button>
+      </div>
+      <div class="pkg feat">
+        <div class="pkg-tag">Most popular</div>
+        <div class="pkg-name">Campaign Package</div>
+        <div class="pkg-price">€2,500</div>
+        <div class="pkg-ideal">Multi-platform reach</div>
+        <div class="pkg-div"></div>
+        <ul class="pkg-list">
+          <li><span class="pkg-ck">✓</span><span class="li-text">3 Reels (30–60 sec)</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
+          <li><span class="pkg-ck">✓</span><span class="li-text">3 Stories with links</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
+          <li><span class="pkg-ck">✓</span><span class="li-text">Instagram, TikTok &amp; YouTube</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
+          <li><span class="pkg-ck">✓</span><span class="li-text">Pinterest distribution</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
+          <li><span class="pkg-ck">✓</span><span class="li-text">6 months usage rights</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
+          <li><span class="pkg-ck">✓</span><span class="li-text">Campaign reporting</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
+        </ul>
+        <button class="add-li-btn" onclick="addListItem(this)">+ Add line</button>
+      </div>
+      <div class="pkg" style="grid-column:1/-1">
+        <div class="pkg-name">Ambassador Partnership</div>
+        <div class="pkg-price">Custom</div>
+        <div class="pkg-ideal">Quarterly or annual — for brands that want to go deep</div>
+        <div class="pkg-div"></div>
+        <ul class="pkg-list" style="display:grid;grid-template-columns:1fr 1fr;gap:0 20px">
+          <li><span class="pkg-ck">✓</span><span class="li-text">Ongoing content creation</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
+          <li><span class="pkg-ck">✓</span><span class="li-text">Priority scheduling</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
+          <li><span class="pkg-ck">✓</span><span class="li-text">Multi-platform visibility</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
+          <li><span class="pkg-ck">✓</span><span class="li-text">Long-term brand storytelling</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
+        </ul>
+        <button class="add-li-btn" onclick="addListItem(this)">+ Add line</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── USAGE ── -->
+<section class="usage editwrap" id="s-usage" style="display:none">
+  <button class="sec-hide" onclick="hideEl('s-usage')">✕ Hide section</button>
+  <div class="page">
+    <p class="s-eyebrow">Usage rights</p>
+    <h2 class="s-title" style="margin-bottom:5px">Extend your <em>content's life.</em></h2>
+    <p style="font-size:13px;color:var(--mid);margin-bottom:20px;line-height:1.75">Per piece of content, additive to the base package fee.</p>
+    <div class="usage-wrap">
+      <div class="usage-head"><span>Usage type</span><span>1 mo</span><span>3 mo</span><span>6 mo</span><span>12 mo</span></div>
+      <div class="usage-row"><div><div class="utype">Organic</div><div class="usub">Owned channels, website, email</div></div><div class="uprice">€150</div><div class="uprice">€300</div><div class="uprice">€500</div><div class="uprice">€800</div><button class="row-del" onclick="this.closest('.usage-row').remove()">×</button></div>
+      <div class="usage-row"><div><div class="utype">Whitelisting</div><div class="usub">Paid ads from our account</div></div><div class="uprice">€250</div><div class="uprice">€450</div><div class="uprice">€750</div><div class="uprice">€1,100</div><button class="row-del" onclick="this.closest('.usage-row').remove()">×</button></div>
+      <div class="usage-row"><div><div class="utype">Partnership ads</div><div class="usub">Boosted via your brand account</div></div><div class="uprice">€350</div><div class="uprice">€600</div><div class="uprice">€950</div><div class="uprice">€1,400</div><button class="row-del" onclick="this.closest('.usage-row').remove()">×</button></div>
+      <div class="usage-row"><div><div class="utype">Content licensing</div><div class="usub">Commercial, print, out-of-home</div></div><div class="uprice">€500</div><div class="uprice">€900</div><div class="uprice">€1,400</div><div class="uprice">Custom</div><button class="row-del" onclick="this.closest('.usage-row').remove()">×</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIAL ── -->
+<section class="testimonial editwrap rv" id="s-testimonial">
+  <button class="sec-hide" onclick="hideEl('s-testimonial')">✕ Hide section</button>
+  <div class="page">
+    <div class="rule" style="margin-bottom:28px"></div>
+    <p class="s-eyebrow">Why work with Byggeligt</p>
+    <h2 class="s-title" style="margin-bottom:32px">Why brands <em>choose</em> us.</h2>
+    <div class="testi-frameless">
+      <div class="testi-fl-mark">"</div>
+      <p class="testi-fl-quote">We've worked with Byggeligt Home on several campaigns, and the collaboration has exceeded our expectations. Their <em class="testi-hl">content feels authentic,</em> showcases our products beautifully, and consistently resonates with their audience. What stands out most is their ability to create content that not only looks great but also drives <em class="testi-hl">awareness, engagement, and sales.</em> They're proactive, easy to work with, and always deliver on what's agreed. We would happily recommend Byggeligt Home to any brand looking for a creator who <em class="testi-hl">understands both content and business goals.</em></p>
+      <div class="testi-fl-attr">
+        <div class="testi-fl-line"></div>
+        <div>
+          <div class="testi-fl-name">Kasandra Bodo</div>
+          <div class="testi-fl-brand">Kas Kopenhagen</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COLLAB FORM ── -->
+<section class="collab editwrap rv" id="s-collab">
+  <button class="sec-hide" onclick="hideEl('s-collab')">✕ Hide section</button>
+  <div class="page">
+    <div class="rule" style="margin-bottom:24px"></div>
+    <p class="s-eyebrow">Work with us</p>
+    <h2 class="s-title" style="margin-bottom:10px">Build your <em>campaign.</em></h2>
+    <p class="cf-intro">Tell us what you need — we'll tailor the price.</p>
+
+    <!-- Tabs -->
+    <div class="cf-tabs">
+      <button class="cf-tab active" onclick="switchTab('collab')">
+        <span class="cf-tab-label">Brand Collaboration</span>
+        <span class="cf-tab-desc">Reach a highly engaged audience of homeowners, families, and design-conscious consumers through content published on our channels.</span>
+      </button>
+      <button class="cf-tab" onclick="switchTab('ugc')">
+        <span class="cf-tab-label">UGC Content</span>
+        <span class="cf-tab-desc">Authentic, high-performing content created for your brand to use across ads, social media, website, email, and more.</span>
+      </button>
+    </div>
+
+    <!-- COLLABORATION PANEL -->
+    <div class="cf-panel" id="panel-collab">
+      <div class="collab-box">
+        <form id="collab-form" action="https://formspree.io/f/xqevewoz" method="POST" onsubmit="prepareCollab(event)">
+          <input type="hidden" name="_subject" value="Brand Collaboration Inquiry — Byggeligt Home">
+          <input type="hidden" name="Type" value="Brand Collaboration">
+          <input type="hidden" name="Reels" id="h-reels">
+          <input type="hidden" name="Stories" id="h-stories">
+          <input type="hidden" name="Photos" id="h-pics">
+          <input type="hidden" name="Usage Rights" id="h-usage">
+          <input type="hidden" name="Reshare on" id="h-reshare">
+          <input type="hidden" name="Email" id="h-email-val">
+          <input type="hidden" name="Message" id="h-msg-val">
+          <input type="text" name="_gotcha" style="display:none">
+
+          <div class="deliv-section">
+            <div class="deliv-head-wrap">
+              <div class="deliv-head">What would you like us to create?</div>
+              
+            </div>
+            <div class="deliv-grid">
+              <div class="deliv-row">
+                <div class="deliv-info">
+                  <span class="deliv-label">Reels</span>
+                  <span class="deliv-desc">Short-form video for awareness and engagement.</span>
+                </div>
+                <div class="stepper sm">
+                  <button type="button" class="step-btn" onclick="step('f-reels',-1)">−</button>
+                  <div class="step-val" id="f-reels">1</div>
+                  <button type="button" class="step-btn" onclick="step('f-reels',1)">+</button>
+                </div>
+              </div>
+              <div class="deliv-row">
+                <div class="deliv-info">
+                  <span class="deliv-label">Stories</span>
+                  <span class="deliv-desc">Behind-the-scenes content that builds trust.</span>
+                </div>
+                <div class="stepper sm">
+                  <button type="button" class="step-btn" onclick="step('f-stories',-1)">−</button>
+                  <div class="step-val" id="f-stories">0</div>
+                  <button type="button" class="step-btn" onclick="step('f-stories',1)">+</button>
+                </div>
+              </div>
+              <div class="deliv-row">
+                <div class="deliv-info">
+                  <span class="deliv-label">Photos</span>
+                  <span class="deliv-desc">Lifestyle imagery for social, web, and ads.</span>
+                </div>
+                <div class="stepper sm">
+                  <button type="button" class="step-btn" onclick="step('f-pics',-1)">−</button>
+                  <div class="step-val" id="f-pics">0</div>
+                  <button type="button" class="step-btn" onclick="step('f-pics',1)">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="deliv-section">
+            <div class="deliv-head-wrap">
+              <div class="deliv-head">How will you use the content?</div>
+              
+            </div>
+            <div class="ur-group" id="ur-group">
+              <button type="button" class="ur-pill active" data-val="None" onclick="selectUR(this,'ur-group')">None</button>
+              <button type="button" class="ur-pill" data-val="1 month" onclick="selectUR(this,'ur-group')">1 month</button>
+              <button type="button" class="ur-pill" data-val="3 months" onclick="selectUR(this,'ur-group')">3 months</button>
+              <button type="button" class="ur-pill" data-val="6 months" onclick="selectUR(this,'ur-group')">6 months</button>
+              <button type="button" class="ur-pill" data-val="1 year" onclick="selectUR(this,'ur-group')">1 year</button>
+            </div>
+          </div>
+
+          <div class="deliv-section">
+            <div class="deliv-head">Also reshare on</div>
+            <div class="toggle-row">
+              <div class="toggle-item"><span class="toggle-name">TikTok<span class="toggle-count">174K</span></span><label class="toggle-sw"><input type="checkbox" id="f-tiktok"><span class="toggle-track"></span></label></div>
+              <div class="toggle-item"><span class="toggle-name">YouTube<span class="toggle-count">644K views</span></span><label class="toggle-sw"><input type="checkbox" id="f-youtube"><span class="toggle-track"></span></label></div>
+              <div class="toggle-item"><span class="toggle-name">Pinterest<span class="toggle-count">—</span></span><label class="toggle-sw"><input type="checkbox" id="f-pinterest"><span class="toggle-track"></span></label></div>
+              <div class="toggle-item"><span class="toggle-name">Facebook<span class="toggle-count">65K</span></span><label class="toggle-sw"><input type="checkbox" id="f-facebook"><span class="toggle-track"></span></label></div>
+            </div>
+          </div>
+
+          <div class="deliv-section" style="border-bottom:none;padding-bottom:0">
+            <div class="deliv-head">Your details</div>
+            <input class="cf-email" type="email" id="f-email" placeholder="Email address" required style="margin-bottom:10px">
+            <textarea class="cf-msg" id="f-msg" placeholder="Any other details, campaign goals, or launch dates…" rows="3"></textarea>
+            <button class="cf-submit" type="submit" style="margin-top:12px;width:100%">Send inquiry →</button>
+          </div>
+
+        </form>
+        <div class="cf-success" id="cf-success" style="display:none">
+          <div class="cf-success-icon">✓</div>
+          <h3>Inquiry sent!</h3>
+          <p>We'll be in touch with a tailored price shortly.</p>
+        </div>
+      </div>
+      <p class="cf-alt"><a href="mailto:contact@byggeligt.com">Send us an email →</a></p>
+    </div>
+
+    <!-- UGC PANEL -->
+    <div class="cf-panel" id="panel-ugc" style="display:none">
+      <div class="collab-box">
+        <form id="ugc-form" action="https://formspree.io/f/xqevewoz" method="POST" onsubmit="prepareUGC(event)">
+          <input type="hidden" name="_subject" value="UGC Content Inquiry — Byggeligt Home">
+          <input type="hidden" name="Type" value="UGC Content">
+          <input type="hidden" name="Videos" id="h-uvideos">
+          <input type="hidden" name="Photos" id="h-upics">
+          <input type="hidden" name="Usage Rights" id="h-uusage">
+          <input type="hidden" name="Email" id="h-uemail-val">
+          <input type="hidden" name="Message" id="h-umsg-val">
+          <input type="text" name="_gotcha" style="display:none">
+
+          <div class="deliv-section">
+            <div class="deliv-head-wrap">
+              <div class="deliv-head">What would you like us to create?</div>
+              
+            </div>
+            <div class="deliv-grid">
+              <div class="deliv-row">
+                <div class="deliv-info">
+                  <span class="deliv-label">Videos</span>
+                  <span class="deliv-desc">Short-form video for awareness and engagement.</span>
+                </div>
+                <div class="stepper sm">
+                  <button type="button" class="step-btn" onclick="step('u-videos',-1)">−</button>
+                  <div class="step-val" id="u-videos">1</div>
+                  <button type="button" class="step-btn" onclick="step('u-videos',1)">+</button>
+                </div>
+              </div>
+              <div class="deliv-row">
+                <div class="deliv-info">
+                  <span class="deliv-label">Photos</span>
+                  <span class="deliv-desc">Lifestyle imagery for social, web, and ads.</span>
+                </div>
+                <div class="stepper sm">
+                  <button type="button" class="step-btn" onclick="step('u-pics',-1)">−</button>
+                  <div class="step-val" id="u-pics">0</div>
+                  <button type="button" class="step-btn" onclick="step('u-pics',1)">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="deliv-section">
+            <div class="deliv-head-wrap">
+              <div class="deliv-head">How will you use the content?</div>
+              
+            </div>
+            <div class="ur-group" id="ur-group-ugc">
+              <button type="button" class="ur-pill active" data-val="None" onclick="selectUR(this,'ur-group-ugc')">None</button>
+              <button type="button" class="ur-pill" data-val="1 month" onclick="selectUR(this,'ur-group-ugc')">1 month</button>
+              <button type="button" class="ur-pill" data-val="3 months" onclick="selectUR(this,'ur-group-ugc')">3 months</button>
+              <button type="button" class="ur-pill" data-val="6 months" onclick="selectUR(this,'ur-group-ugc')">6 months</button>
+              <button type="button" class="ur-pill" data-val="1 year" onclick="selectUR(this,'ur-group-ugc')">1 year</button>
+            </div>
+          </div>
+
+          <div class="deliv-section" style="border-bottom:none;padding-bottom:0">
+            <div class="deliv-head">Your details</div>
+            <input class="cf-email" type="email" id="u-email" placeholder="Email address" required style="margin-bottom:10px">
+            <textarea class="cf-msg" id="u-msg" placeholder="Any other details, campaign goals, or product info…" rows="3"></textarea>
+            <button class="cf-submit" type="submit" style="margin-top:12px;width:100%">Send inquiry →</button>
+          </div>
+
+        </form>
+        <div class="cf-success" id="ugc-success" style="display:none">
+          <div class="cf-success-icon">✓</div>
+          <h3>Inquiry sent!</h3>
+          <p>We'll be in touch with a tailored price shortly.</p>
+        </div>
+      </div>
+      <p class="cf-alt"><a href="mailto:contact@byggeligt.com">Send us an email →</a></p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── PLATFORMS ── -->
+<section class="platforms editwrap rv" id="s-plat">
+  <button class="sec-hide" onclick="hideEl('s-plat')">✕ Hide section</button>
+  <div class="page">
+    <div class="rule" style="margin-bottom:24px"></div>
+    <p class="s-eyebrow">Find us on</p>
+    <div class="soc-links">
+      <a class="soc-link editable-link" href="https://www.instagram.com/byggeligt.home/" target="_blank" rel="noopener" style="position:relative">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        <span class="soc-name">Instagram</span>
+        <span class="soc-handle">@byggeligt.home</span>
+      </a>
+      <a class="soc-link editable-link" href="https://www.tiktok.com/@byggeligt" target="_blank" rel="noopener" style="position:relative">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+        <span class="soc-name">TikTok</span>
+        <span class="soc-handle">@byggeligt</span>
+      </a>
+      <a class="soc-link editable-link" href="https://dk.pinterest.com/byggeligt/" target="_blank" rel="noopener" style="position:relative">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.236 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.598-.299-1.482c0-1.388.806-2.428 1.808-2.428.852 0 1.265.64 1.265 1.408 0 .858-.546 2.14-.828 3.33-.236.995.499 1.806 1.476 1.806 1.771 0 3.132-1.867 3.132-4.563 0-2.386-1.716-4.054-4.164-4.054-2.836 0-4.5 2.126-4.5 4.326 0 .856.33 1.775.741 2.276a.3.3 0 0 1 .069.285c-.076.31-.244.995-.277 1.134-.044.183-.145.222-.334.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.966-.527-2.292-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+        <span class="soc-name">Pinterest</span>
+        <span class="soc-handle">@byggeligt</span>
+      </a>
+      <a class="soc-link editable-link" href="https://www.youtube.com/@byggeligt" target="_blank" rel="noopener" style="position:relative">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+        <span class="soc-name">YouTube</span>
+        <span class="soc-handle">@byggeligt</span>
+      </a>
+      <a class="soc-link editable-link" href="https://www.facebook.com/byggeligt.home/" target="_blank" rel="noopener" style="position:relative">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        <span class="soc-name">Facebook</span>
+        <span class="soc-handle">byggeligt.home</span>
+      </a>
+    </div>
+  </div>
+</section>
+<!-- ── CONTACT ── -->
+<section class="contact editwrap" id="s-contact">
+  <button class="sec-hide" onclick="hideEl('s-contact')">✕ Hide section</button>
+  <div class="page" id="contact">
+    <div class="c-hand">Let's work together</div>
+    <h2 class="c-title">Build a <em>partnership,</em><br>not just a campaign.</h2>
+    <p class="c-sub">We work with brands that value quality, authenticity, and beautiful design.</p>
+    <a class="c-btn" href="mailto:contact@byggeligt.com">Get in touch</a>
+    <div class="c-handles">
+      <a href="https://instagram.com/byggeligt.home" class="handle editable-link" target="_blank"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><span>@byggeligt.home</span></a>
+      <a href="https://tiktok.com/@byggeligt.home" class="handle editable-link" target="_blank"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg><span>@byggeligt.home</span></a>
+      <a href="mailto:contact@byggeligt.com" class="handle editable-link"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>contact@byggeligt.com</span></a>
+      <a href="https://byggeligt.com" class="handle editable-link" target="_blank"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span>byggeligt.com</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="page" style="width:100%;display:flex;justify-content:space-between">
+    <p>© 2025 Byggeligt Home</p>
+    <p>Aleksandra &amp; Jim Lozinska · Denmark</p>
+  </div>
+</footer>
+
+<input type="file" id="photo-input" accept="image/*" style="display:none">
+<input type="file" id="video-input" accept="video/mp4,video/webm,video/quicktime,video/mov" style="display:none">
+
+<script>
+/* ══ CURSOR ══ */
+const cur=document.getElementById('cur'),ring=document.getElementById('cur-r');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.11;ry+=(my-ry)*.11;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button,.pkg,.plat,.vid-card,.polaroid,.pie-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
+});
+
+/* ══ NAV ══ */
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',window.scrollY>36));
+
+/* ══ SCROLL REVEAL ══ */
+const revObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('on');});},{threshold:0.1});
+document.querySelectorAll('.rv').forEach(el=>revObs.observe(el));
+
+/* ══ COUNT UP (stats bar) ══ */
+const cObs=new IntersectionObserver(e=>{
+  e.forEach(x=>{
+    if(!x.isIntersecting)return;cObs.unobserve(x.target);
+    x.target.querySelectorAll('[data-count]').forEach(n=>{
+      const t=parseFloat(n.dataset.count),s=n.dataset.sfx||'',dec=t%1!==0;
+      let v=0,step=t/48;
+      const id=setInterval(()=>{v+=step;if(v>=t){v=t;clearInterval(id);}n.textContent=(dec?v.toFixed(1):Math.floor(v))+s;},25);
+    });
+  });
+},{threshold:0.6});
+document.querySelectorAll('.stats-bar').forEach(el=>cObs.observe(el));
+
+/* ══ PIE CHARTS ══ */
+const RUST='#7A2020',RUST2='#9B3A2A',RUST3='#B55A3A',SAND='#C8A882',TAN='#B89A7A',LIGHT='#DDD5C8';
+const charts=[
+  {id:'pie1',tt:'tt1',data:[
+    {label:'Denmark 🇩🇰',pct:21.6,color:RUST},
+    {label:'Germany 🇩🇪',pct:10.4,color:RUST2},
+    {label:'Sweden 🇸🇪',pct:6.9,color:RUST3},
+    {label:'United States 🇺🇸',pct:6.9,color:SAND},
+    {label:'Netherlands 🇳🇱',pct:6.0,color:TAN},
+    {label:'Other',pct:48.2,color:LIGHT},
+  ]},
+  {id:'pie2',tt:'tt2',data:[
+    {label:'18–24',pct:14,color:RUST},
+    {label:'25–34',pct:38,color:RUST2},
+    {label:'35–44',pct:28,color:RUST3},
+    {label:'45–54',pct:13,color:SAND},
+    {label:'55+',pct:7,color:LIGHT},
+  ]}
+];
+charts.forEach(cfg=>{
+  const canvas=document.getElementById(cfg.id),tt=document.getElementById(cfg.tt),leg=document.getElementById('leg'+cfg.id.slice(-1));
+  const ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height,cx=W/2,cy=H/2,R=W/2-6,IR=W/2-22;
+  let progress=0,done=false,hovIdx=-1;
+  leg.innerHTML='';
+  cfg.data.forEach((d,i)=>{
+    const item=document.createElement('div');item.className='leg-item';
+    item.innerHTML=`<div class="leg-dot" style="background:${d.color}"></div><span class="leg-label">${d.label}</span><span class="leg-pct">${d.pct}%</span>`;
+    item.addEventListener('mouseenter',()=>{hovIdx=i;draw(1);});item.addEventListener('mouseleave',()=>{hovIdx=-1;draw(1);});
+    leg.appendChild(item);
+  });
+  function draw(prog){
+    ctx.clearRect(0,0,W,H);let angle=-Math.PI/2;
+    const total=cfg.data.reduce((s,d)=>s+d.pct,0);
+    cfg.data.forEach((d,i)=>{
+      const slice=(d.pct/total)*Math.PI*2*prog,bump=hovIdx===i?4:0,midA=angle+slice/2;
+      ctx.save();ctx.translate(Math.cos(midA)*bump,Math.sin(midA)*bump);
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,angle,angle+slice);ctx.closePath();ctx.fillStyle=d.color;ctx.fill();ctx.restore();angle+=slice;
+    });
+    ctx.beginPath();ctx.arc(cx,cy,IR-1,0,Math.PI*2);ctx.fillStyle='#FAF7F2';ctx.fill();
+    if(hovIdx>=0&&prog===1){const d=cfg.data[hovIdx];ctx.fillStyle=RUST;ctx.font=`700 17px 'Playfair Display',serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(d.pct+'%',cx,cy);}
+  }
+  new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting&&!done){done=true;const id=setInterval(()=>{progress+=0.03;if(progress>=1){progress=1;clearInterval(id);}draw(progress);},16);}});},{threshold:0.3}).observe(canvas);
+  canvas.addEventListener('mousemove',e=>{
+    const r=canvas.getBoundingClientRect(),x=e.clientX-r.left-cx,y=e.clientY-r.top-cy,dist=Math.sqrt(x*x+y*y);
+    if(dist<IR||dist>R){hovIdx=-1;tt.style.opacity=0;draw(1);return;}
+    let ang=Math.atan2(y,x)+Math.PI/2;if(ang<0)ang+=Math.PI*2;
+    const total=cfg.data.reduce((s,d)=>s+d.pct,0);let a=0,found=-1;
+    cfg.data.forEach((d,i)=>{const s=(d.pct/total)*Math.PI*2;if(ang>=a&&ang<a+s)found=i;a+=s;});
+    hovIdx=found;
+    if(found>=0){const d=cfg.data[found];tt.textContent=`${d.label}: ${d.pct}%`;tt.style.opacity=1;tt.style.left=(e.clientX-r.left+10)+'px';tt.style.top=(e.clientY-r.top-28)+'px';}
+    else tt.style.opacity=0;
+    draw(1);
+  });
+  canvas.addEventListener('mouseleave',()=>{hovIdx=-1;tt.style.opacity=0;draw(1);});
+});
+
+/* ══════════════════════════════════════
+   VIDEO — scroll autoplay (muted, no sound)
+══════════════════════════════════════ */
+const videoObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    const v=e.target;
+    if(e.isIntersecting){v.play().catch(()=>{});}
+    else{v.pause();}
+  });
+},{threshold:0.4});
+
+function observeVideo(v){
+  v.muted=true;v.loop=true;v.playsInline=true;
+  videoObs.observe(v);
+}
+// observe any videos already on page
+document.querySelectorAll('video').forEach(observeVideo);
+
+/* ══════════════════════════════════════
+   EDITOR
+══════════════════════════════════════ */
+let editMode=false;
+
+// elements to make editable — broad selector covering all visible text
+const EDITABLE_SEL=[
+  'h1','h2','h3','h4',
+  '.hero-badge','.hero-pill','.h-sub-l','.h-sub-r','.h-stat-n','.h-stat-l',
+  '.hs-n','.hs-l',
+  '.s-hand','.s-head','.s-body p',
+  '.s-eyebrow','.s-title','.s-title em',
+  '.pie-card-title','.pie-card-sub',
+  '.niche-eyebrow','.niche-title','.niche-title em',
+  '.bq-t','.bq-a',
+  '.vid-desc','.vid-views',
+  '.plat-n','.plat-h','.plat-num','.plat-sub',
+  '.sc-n','.sc-l','.stat-card .sc-n','.stat-card .sc-l',
+  '.pkg-tag','.pkg-name','.pkg-price','.pkg-ideal','.li-text',
+  '.utype','.usub','.uprice',
+  '.c-hand','.c-title','.c-sub','.c-btn','.handle span',
+  'footer p',
+].join(',');
+
+function toggleEdit(){
+  if(!editMode){
+    // show login overlay instead of prompt
+    const ov=document.getElementById('login-overlay');
+    ov.style.display='flex';
+    setTimeout(()=>document.getElementById('login-pw').focus(),80);
+    return;
+  }
+  // already in edit mode → exit
+  editMode=false;
+  document.body.classList.toggle('edit-on',false);
+
+  document.querySelectorAll(EDITABLE_SEL).forEach(el=>{
+    el.contentEditable=editMode?'true':'false';
+    // prevent link navigation while editing
+    if(el.closest('a')) el.closest('a').style.pointerEvents=editMode?'none':'';
+  });
+  // also make hero h1 directly editable (strip anim wrappers for edit)
+  const h1=document.getElementById('hero-h1');
+  if(editMode){
+    h1.classList.remove('animate');
+    h1.contentEditable='true';
+  } else {
+    h1.contentEditable='false';
+  }
+}
+
+function doLogin(){
+  const pw=document.getElementById('login-pw').value;
+  const err=document.getElementById('login-err');
+  if(pw!=='byggeligt2024'){
+    err.textContent='Incorrect password. Try again.';
+    document.getElementById('login-pw').value='';
+    document.getElementById('login-pw').focus();
+    return;
+  }
+  closeLogin();
+  // activate edit mode
+  editMode=true;
+  document.body.classList.add('edit-on');
+  document.querySelectorAll(EDITABLE_SEL).forEach(el=>{
+    el.contentEditable='true';
+    if(el.closest('a')) el.closest('a').style.pointerEvents='none';
+  });
+  const h1=document.getElementById('hero-h1');
+  h1.classList.remove('animate');
+  h1.contentEditable='true';
+}
+function closeLogin(){
+  const ov=document.getElementById('login-overlay');
+  ov.style.display='none';
+  document.getElementById('login-pw').value='';
+  document.getElementById('login-err').textContent='';
+}
+
+function hideEl(id){
+  document.getElementById(id).style.display='none';
+}
+
+/* ── Editable links ── */
+document.querySelectorAll('.editable-link').forEach(a=>{
+  a.addEventListener('click',function(e){
+    if(!editMode)return;
+    e.preventDefault();
+    const cur=this.href||'';
+    const url=prompt('Edit link URL:',cur);
+    if(url!==null&&url.trim()!=='')this.href=url.trim();
+  });
+});
+
+/* ── Photo upload ── */
+let _photoCb=null;
+document.getElementById('photo-input').addEventListener('change',function(){
+  if(!this.files[0]||!_photoCb)return;
+  const reader=new FileReader();
+  reader.onload=e=>_photoCb(e.target.result);
+  reader.readAsDataURL(this.files[0]);
+  this.value='';
+});
+function uploadPhoto(imgId,phId){
+  if(!editMode)return;
+  _photoCb=src=>{
+    const img=document.getElementById(imgId);
+    const ph=document.getElementById(phId);
+    img.src=src;img.style.display='block';
+    if(ph)ph.style.display='none';
+  };
+  document.getElementById('photo-input').click();
+}
+
+/* ── Video upload → HTML5 autoplay ── */
+let _vidTarget=null;
+document.getElementById('video-input').addEventListener('change',function(){
+  if(!this.files[0]||!_vidTarget)return;
+  const file=this.files[0];
+  const target=_vidTarget;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const vid=document.createElement('video');
+    vid.src=e.target.result;
+    vid.muted=true;vid.loop=true;vid.playsInline=true;
+    vid.style.cssText='width:100%;aspect-ratio:9/16;object-fit:cover;display:block;border-radius:0';
+    // replace placeholder
+    const placeholder=target.querySelector('.vid-placeholder');
+    if(placeholder)placeholder.replaceWith(vid);
+    // hide upload overlay after upload
+    target.querySelector('.vid-upload-overlay').style.display='none';
+    // register with scroll observer
+    observeVideo(vid);
+  };
+  reader.readAsDataURL(file);
+  this.value='';_vidTarget=null;
+});
+function uploadVideo(overlayBtn){
+  if(!editMode)return;
+  _vidTarget=overlayBtn.closest('.vid-card');
+  document.getElementById('video-input').click();
+}
+
+/* ── Add list item ── */
+function addListItem(btn){
+  const ul=btn.previousElementSibling;
+  if(!ul||ul.tagName!=='UL')return;
+  const li=document.createElement('li');
+  li.innerHTML=`<span class="pkg-ck">✓</span><span class="li-text" contenteditable="true">New item</span><button class="li-del" onclick="this.closest('li').remove()">×</button>`;
+  ul.appendChild(li);
+  // focus new item
+  const span=li.querySelector('.li-text');
+  span.focus();
+  // select all text
+  const range=document.createRange();range.selectNodeContents(span);
+  const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);
+}
+
+/* ── Collab form ── */
+function step(id,dir){
+  const el=document.getElementById(id);
+  let v=parseInt(el.textContent)||0;
+  v=Math.max(0,v+dir);
+  el.textContent=v;
+}
+function stepBy(id,by,dir){
+  const el=document.getElementById(id);
+  let v=parseInt(el.textContent)||0;
+  v=Math.max(0,v+(by*dir));
+  el.textContent=v;
+}
+function selectUR(btn){
+  document.querySelectorAll('#ur-group .ur-pill').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function prepareCollab(e){
+  // Populate hidden fields from interactive UI
+  document.getElementById('h-reels').value = document.getElementById('f-reels').textContent;
+  document.getElementById('h-stories').value = document.getElementById('f-stories').textContent;
+  document.getElementById('h-pics').value = document.getElementById('f-pics').textContent;
+  document.getEl
