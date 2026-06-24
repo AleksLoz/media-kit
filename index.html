@@ -1414,8 +1414,28 @@ function selectUR(btn){
   btn.classList.add('active');
 }
 function prepareCollab(e){
-  // Populate hidden fields from interactive UI
   document.getElementById('h-reels').value = document.getElementById('f-reels').textContent;
   document.getElementById('h-stories').value = document.getElementById('f-stories').textContent;
   document.getElementById('h-pics').value = document.getElementById('f-pics').textContent;
-  document.getEl
+  const ur=document.querySelector('#ur-group .ur-pill.active');
+  document.getElementById('h-usage').value = ur?ur.dataset.val:'None';
+  const reshare=[];
+  ['f-tiktok','f-youtube','f-pinterest','f-facebook'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&el.checked) reshare.push(id.replace('f-','').replace(/^\w/,c=>c.toUpperCase()));
+  });
+  document.getElementById('h-reshare').value = reshare.length?reshare.join(', '):'None';
+  document.getElementById('h-email-val').value = document.getElementById('f-email').value;
+  document.getElementById('h-msg-val').value = document.getElementById('f-msg').value;
+}
+function prepareUGC(e){
+  document.getElementById('h-uvideos').value = document.getElementById('u-videos').textContent;
+  document.getElementById('h-upics').value = document.getElementById('u-pics').textContent;
+  const ur=document.querySelector('#ur-group-ugc .ur-pill.active');
+  document.getElementById('h-uusage').value = ur?ur.dataset.val:'None';
+  document.getElementById('h-uemail-val').value = document.getElementById('u-email').value;
+  document.getElementById('h-umsg-val').value = document.getElementById('u-msg').value;
+}
+</script>
+</body>
+</html>
