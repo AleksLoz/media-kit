@@ -502,8 +502,8 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
 <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script><script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script></head>
 <body class="hov">
 
-<div id="cur" style="left: 770px; top: 412px;"></div>
-<div id="cur-r" style="left: 770px; top: 412px;"></div>
+<div id="cur" style="left: 882px; top: 914px;"></div>
+<div id="cur-r" style="left: 875.42px; top: 911.749px;"></div>
 
 <!-- LOGIN OVERLAY -->
 <div id="login-overlay" style="display: none; position: fixed; inset: 0px; z-index: 9999; background: rgba(26, 15, 10, 0.55); backdrop-filter: blur(8px); align-items: center; justify-content: center;">
@@ -748,7 +748,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
     <div class="vids rv d1 on">
       <div class="vid-card" data-src="https://raw.githubusercontent.com/AleksLoz/media-kit/main/videos/video_1782393417371.mp4"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style="display: none;"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Smart lighting setup — product integration</div></div></div>
       <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style="display: none;"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Home automation — real home walkthrough</div></div></div>
-      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Tech meets Scandinavian design</div></div></div>
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style="display: none;"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Tech meets Scandinavian design</div></div></div>
     </div>
   </div>
 </section>
@@ -775,7 +775,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
         <div class="pie-card-title">Audience by Age</div>
         <div class="pie-card-sub">Age group breakdown</div>
         <div class="pie-wrap">
-          <div class="pie-canvas-wrap"><canvas class="pie" id="pie2" width="130" height="130"></canvas><div class="pie-tooltip" id="tt2"></div></div>
+          <div class="pie-canvas-wrap"><canvas class="pie" id="pie2" width="130" height="130"></canvas><div class="pie-tooltip" id="tt2" style="opacity: 0;"></div></div>
           <div class="pie-legend" id="leg2"><div class="leg-item"><div class="leg-dot" style="background:#7A2020"></div><span class="leg-label">18–24</span><span class="leg-pct">14%</span></div><div class="leg-item"><div class="leg-dot" style="background:#9B3A2A"></div><span class="leg-label">25–34</span><span class="leg-pct">38%</span></div><div class="leg-item"><div class="leg-dot" style="background:#B55A3A"></div><span class="leg-label">35–44</span><span class="leg-pct">28%</span></div><div class="leg-item"><div class="leg-dot" style="background:#C8A882"></div><span class="leg-label">45–54</span><span class="leg-pct">13%</span></div><div class="leg-item"><div class="leg-dot" style="background:#DDD5C8"></div><span class="leg-label">55+</span><span class="leg-pct">7%</span></div></div>
         </div>
       </div>
@@ -893,19 +893,19 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
 
     <!-- Tabs -->
     <div class="cf-tabs">
-      <button class="cf-tab" onclick="switchTab('collab',this)">
+      <button class="cf-tab active" onclick="switchTab('collab',this)">
         <span class="cf-tab-label">Brand Collaboration</span>
       </button>
       <button class="cf-tab" onclick="switchTab('ugc',this)">
         <span class="cf-tab-label">UGC Content</span>
       </button>
-      <button class="cf-tab active" onclick="switchTab('classic',this)">
+      <button class="cf-tab" onclick="switchTab('classic',this)">
         <span class="cf-tab-label">Email Us</span>
       </button>
     </div>
 
     <!-- COLLABORATION PANEL -->
-    <div class="cf-panel" id="panel-collab" style="display: none;">
+    <div class="cf-panel" id="panel-collab" style="">
       <div class="collab-box">
         <form id="collab-form" action="https://formspree.io/f/xqevewoz" method="POST" onsubmit="prepareCollab(event)">
           <p style="font-size:13px;color:var(--mid);line-height:1.8;margin:0 0 24px">Reach a highly engaged audience of homeowners, families, and design-conscious consumers through content published on our channels.</p>
@@ -1004,7 +1004,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
     </div>
 
     <!-- UGC PANEL -->
-    <div class="cf-panel" id="panel-ugc" style="display:none">
+    <div class="cf-panel" id="panel-ugc" style="display: none;">
       <div class="collab-box">
         <form id="ugc-form" action="https://formspree.io/f/xqevewoz" method="POST" onsubmit="prepareUGC(event)">
           <p style="font-size:13px;color:var(--mid);line-height:1.8;margin:0 0 24px">Authentic, high-performing content created for your brand to use across ads, social media, website, email, and more.</p>
@@ -1080,7 +1080,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
     </div>
 
     <!-- CLASSIC EMAIL PANEL -->
-    <div class="cf-panel" id="panel-classic" style="">
+    <div class="cf-panel" id="panel-classic" style="display: none;">
       <div class="collab-box" style="text-align:center;padding:48px 32px">
         <div style="font-family:var(--serif);font-size:26px;font-weight:700;color:var(--dark);margin-bottom:12px">Let's talk</div>
         <p style="font-size:13px;color:var(--mid);line-height:1.9;max-width:340px;margin:0 auto 32px">Drop us an email with your brief, product, and campaign goals — we'll reply with a tailored proposal.</p>
