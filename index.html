@@ -787,78 +787,9 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
   </div>
 </section>
 
-<!-- ── PACKAGES ── -->
-<section class="packages editwrap" id="s-pkg">
-  <button class="sec-hide" onclick="hideEl('s-pkg')">✕ Hide section</button>
-  <div class="page" id="packages">
-    <div class="rule" style="margin-bottom:24px"></div>
-    <p class="s-eyebrow">Partnership packages</p>
-    <h2 class="s-title" style="margin-bottom:5px">Choose your <em>collaboration.</em></h2>
-    <p style="font-size:13px;color:var(--mid);margin-bottom:24px;line-height:1.75">All packages include one revision round and a full campaign report.</p>
-    <div class="pkg-grid">
-      <div class="pkg">
-        <div class="pkg-name">Single Feature</div>
-        <div class="pkg-price">€1,200</div>
-        <div class="pkg-ideal">Ideal for product launches</div>
-        <div class="pkg-div"></div>
-        <ul class="pkg-list">
-          <li><span class="pkg-ck">✓</span><span class="li-text">1 Reel (30–60 sec)</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
-          <li><span class="pkg-ck">✓</span><span class="li-text">3 Stories with links</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
-          <li><span class="pkg-ck">✓</span><span class="li-text">Pinterest distribution</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
-          <li><span class="pkg-ck">✓</span><span class="li-text">6 months usage rights</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
-          <li><span class="pkg-ck">✓</span><span class="li-text">Campaign reporting</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
-        </ul>
-        <button class="add-li-btn" onclick="addListItem(this)">+ Add line</button>
-      </div>
-      <div class="pkg feat">
-        <div class="pkg-tag">Most popular</div>
-        <div class="pkg-name">Campaign Package</div>
-        <div class="pkg-price">€2,500</div>
-        <div class="pkg-ideal">Multi-platform reach</div>
-        <div class="pkg-div"></div>
-        <ul class="pkg-list">
-          <li><span class="pkg-ck">✓</span><span class="li-text">3 Reels (30–60 sec)</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
-          <li><span class="pkg-ck">✓</span><span class="li-text">3 Stories with links</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
-          <li><span class="pkg-ck">✓</span><span class="li-text">Instagram, TikTok &amp; YouTube</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
-          <li><span class="pkg-ck">✓</span><span class="li-text">Pinterest distribution</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
-          <li><span class="pkg-ck">✓</span><span class="li-text">6 months usage rights</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
-          <li><span class="pkg-ck">✓</span><span class="li-text">Campaign reporting</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
-        </ul>
-        <button class="add-li-btn" onclick="addListItem(this)">+ Add line</button>
-      </div>
-      <div class="pkg" style="grid-column:1/-1">
-        <div class="pkg-name">Ambassador Partnership</div>
-        <div class="pkg-price">Custom</div>
-        <div class="pkg-ideal">Quarterly or annual — for brands that want to go deep</div>
-        <div class="pkg-div"></div>
-        <ul class="pkg-list" style="display:grid;grid-template-columns:1fr 1fr;gap:0 20px">
-          <li><span class="pkg-ck">✓</span><span class="li-text">Ongoing content creation</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
-          <li><span class="pkg-ck">✓</span><span class="li-text">Priority scheduling</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
-          <li><span class="pkg-ck">✓</span><span class="li-text">Multi-platform visibility</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
-          <li><span class="pkg-ck">✓</span><span class="li-text">Long-term brand storytelling</span><button class="li-del" onclick="this.closest('li').remove()">×</button></li>
-        </ul>
-        <button class="add-li-btn" onclick="addListItem(this)">+ Add line</button>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ── USAGE ── -->
-<section class="usage editwrap" id="s-usage">
-  <button class="sec-hide" onclick="hideEl('s-usage')">✕ Hide section</button>
-  <div class="page">
-    <p class="s-eyebrow">Usage rights</p>
-    <h2 class="s-title" style="margin-bottom:5px">Extend your <em>content's life.</em></h2>
-    <p style="font-size:13px;color:var(--mid);margin-bottom:20px;line-height:1.75">Per piece of content, additive to the base package fee.</p>
-    <div class="usage-wrap">
-      <div class="usage-head"><span>Usage type</span><span>1 mo</span><span>3 mo</span><span>6 mo</span><span>12 mo</span></div>
-      <div class="usage-row"><div><div class="utype">Organic</div><div class="usub">Owned channels, website, email</div></div><div class="uprice">€150</div><div class="uprice">€300</div><div class="uprice">€500</div><div class="uprice">€800</div><button class="row-del" onclick="this.closest('.usage-row').remove()">×</button></div>
-      <div class="usage-row"><div><div class="utype">Whitelisting</div><div class="usub">Paid ads from our account</div></div><div class="uprice">€250</div><div class="uprice">€450</div><div class="uprice">€750</div><div class="uprice">€1,100</div><button class="row-del" onclick="this.closest('.usage-row').remove()">×</button></div>
-      <div class="usage-row"><div><div class="utype">Partnership ads</div><div class="usub">Boosted via your brand account</div></div><div class="uprice">€350</div><div class="uprice">€600</div><div class="uprice">€950</div><div class="uprice">€1,400</div><button class="row-del" onclick="this.closest('.usage-row').remove()">×</button></div>
-      <div class="usage-row"><div><div class="utype">Content licensing</div><div class="usub">Commercial, print, out-of-home</div></div><div class="uprice">€500</div><div class="uprice">€900</div><div class="uprice">€1,400</div><div class="uprice">Custom</div><button class="row-del" onclick="this.closest('.usage-row').remove()">×</button></div>
-    </div>
-  </div>
-</section>
+
+
 
 <!-- ── TESTIMONIAL ── -->
 <section class="testimonial editwrap rv" id="s-testimonial">
@@ -1566,7 +1497,7 @@ function applyVidPreview(card,url){
 }
 
 // On page load, restore previews for cards that have data-href
-document.addEventListener('DOMContentLoaded',function(){
+(function(){
   document.querySelectorAll('.vid-card[data-href]').forEach(card=>{
     applyVidPreview(card,card.dataset.href);
     card.classList.add('has-link');
