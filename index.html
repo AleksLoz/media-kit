@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" style="scroll-behavior: auto;"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Byggeligt Home</title>
@@ -497,27 +496,6 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
 /* ── TESTIMONIAL HIGHLIGHT ── */
 .testi-hl{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;color:var(--rust)}
 
-/* ── COLLAB FORM ON BURGUNDY (stands out as a coloured band) ── */
-.collab{background:var(--rust);padding:54px 0}
-.collab .rule{background:rgba(245,240,232,.18)}
-.collab .s-eyebrow{color:var(--sand)}
-.collab .s-title{color:var(--cream)}
-.collab .s-title em{color:var(--sand)}
-.collab .cf-intro{color:rgba(245,240,232,.72)}
-/* tabs readable on the dark band */
-.collab .cf-tab{border-color:rgba(245,240,232,.22);background:rgba(245,240,232,.05)}
-.collab .cf-tab .cf-tab-label{color:rgba(245,240,232,.7)}
-.collab .cf-tab .cf-tab-desc{color:rgba(245,240,232,.45)}
-.collab .cf-tab.active{background:rgba(245,240,232,.12);border-color:var(--sand)}
-.collab .cf-tab.active .cf-tab-label{color:#fff}
-.collab .cf-tab.active .cf-tab-desc{color:rgba(245,240,232,.6)}
-/* "or email directly" line below the form card */
-.collab .cf-alt{color:rgba(245,240,232,.6)}
-.collab .cf-alt a{color:var(--sand);border-bottom-color:rgba(200,168,130,.4)}
-.collab .cf-alt a:hover{border-color:var(--sand)}
-/* keep the section-hide chip legible on dark */
-.collab .sec-hide{background:rgba(245,240,232,.92)}
-
 /* ════════════════════════════════════════════════════
    MOBILE OPTIMIZATION
    Desktop layout above is untouched — these overrides
@@ -603,10 +581,10 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
 }
 </style>
 </head>
-<body>
+<body class="">
 
-<div id="cur"></div>
-<div id="cur-r"></div>
+<div id="cur" style="left: 1423px; top: 474px;"></div>
+<div id="cur-r" style="left: 1423px; top: 473.992px;"></div>
 
 <!-- LOGIN OVERLAY -->
 <div id="login-overlay" style="display: none; position: fixed; inset: 0px; z-index: 9999; background: rgba(26, 15, 10, 0.55); backdrop-filter: blur(8px); align-items: center; justify-content: center;">
@@ -663,7 +641,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
     </div>
     <div class="hero-main">
       <!-- hero title: animate on load, then fully editable as one block -->
-      <h1 class="hero-title animate" id="hero-h1"><em class="anim-word"><span>We're</span></em><br>
+      <h1 class="hero-title" id="hero-h1"><em class="anim-word"><span>We're</span></em><br>
         <span class="anim-word"><span>BYGGELIGT</span></span>
       </h1>
     </div>
@@ -678,7 +656,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
   </div>
   <div class="page">
     <div class="stats-bar">
-      <div class="hs"><div class="hs-n" data-count="395" data-sfx="K">404K</div><div class="hs-l">Instagram</div></div>
+      <div class="hs"><div class="hs-n" data-count="395" data-sfx="K">395K</div><div class="hs-l">Instagram</div></div>
       <div class="hs"><div class="hs-n" data-count="174" data-sfx="K">174K</div><div class="hs-l">TikTok</div></div>
       <div class="hs"><div class="hs-n" data-count="5.7" data-sfx="M">5.7M</div><div class="hs-l">Monthly reach</div></div>
       <div class="hs"><div class="hs-n" data-count="84" data-sfx="%">84%</div><div class="hs-l">Female audience</div></div>
@@ -841,7 +819,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
     <div class="vids rv d1 on">
       <div class="vid-card" data-src="/videos/outdoor-1.mp4"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">16M views</div></div><div class="vid-meta"><div class="vid-desc">Living room reveal — before &amp; after</div></div></div>
       <div class="vid-card" data-src="/videos/homedecor-2.mp4"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">13M views</div></div><div class="vid-meta"><div class="vid-desc">Scandinavian kitchen — product campaign</div></div></div>
-      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style=""><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Room transformation — interior styling</div></div></div>
+      <div class="vid-card" data-src="https://8wjjpstna9kmnd1d.public.blob.vercel-storage.com/video_1782411353627-GvERVso6mEhd5P75gwlsGNzeo24Gzf.mp4"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style="display: none;"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Room transformation — interior styling</div></div></div>
     </div>
 
     <div class="niche-rule"></div>
@@ -1658,29 +1636,12 @@ function applyVidPreview(card,url){
   // Video cards do NOT open links on click — videos just play silently
 })();
 
-// Strip transient runtime state from a cloned <html> before persisting, so the
-// editor never bakes live UI state into the saved file. Without this, an
-// auto-save can capture: the custom cursor's coordinates, scroll-reveal ".on"
-// classes, the scrolled-nav ".sc" class, a mid-save "Saving…" button, a dropped
-// hero animation, and session-only blob video previews.
-function sanitizeClone(clone){
-  const body=clone.querySelector('body');
-  if(body)body.classList.remove('edit-on','hov');
-  // custom cursor — drop baked-in x/y coordinates
-  clone.querySelectorAll('#cur,#cur-r').forEach(el=>el.removeAttribute('style'));
-  // scrolled-nav state (re-added on scroll)
-  clone.querySelectorAll('nav.sc').forEach(n=>n.classList.remove('sc'));
-  // scroll-reveal state (re-added by the IntersectionObserver on load)
-  clone.querySelectorAll('.rv.on').forEach(el=>el.classList.remove('on'));
-  // preserve the hero load animation (edit mode strips it)
-  const h1=clone.querySelector('#hero-h1');
-  if(h1)h1.classList.add('animate');
-  // reset the editor save button if it was mid-save when cloned
-  clone.querySelectorAll('.et-save').forEach(b=>{b.textContent='Save changes';b.removeAttribute('disabled');b.style.removeProperty('min-width');});
-  // editing affordances
+// Headless save — no UI button dependency, safe to call from upload chain
+async function saveHTMLCore(){
+  const clone=document.documentElement.cloneNode(true);
+  clone.querySelector('body').classList.remove('edit-on');
   clone.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
   clone.querySelectorAll('a[style]').forEach(a=>a.style.removeProperty('pointer-events'));
-  // session-only video previews (blob/data URLs) — restore placeholders
   clone.querySelectorAll('.vid-preview.vid-blob').forEach(wrap=>wrap.remove());
   clone.querySelectorAll('video').forEach(vid=>{
     if(vid.src&&(vid.src.startsWith('data:')||vid.src.startsWith('blob:'))){
@@ -1689,12 +1650,6 @@ function sanitizeClone(clone){
   });
   clone.querySelectorAll('.vid-preview').forEach(prev=>prev.remove());
   clone.querySelectorAll('.vid-placeholder').forEach(ph=>{ph.style.display='';});
-  return clone;
-}
-
-// Headless save — no UI button dependency, safe to call from upload chain
-async function saveHTMLCore(){
-  const clone=sanitizeClone(document.documentElement.cloneNode(true));
   const html='<!DOCTYPE html>\n'+clone.outerHTML;
   const res=await fetch('/api/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:html})});
   if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error||'Save failed');}
@@ -1705,7 +1660,20 @@ async function saveHTML(){
   const orig=btn?btn.textContent:'';
   if(btn){btn.textContent='Saving…';btn.disabled=true;}
   const reset=btn?setTimeout(()=>{btn.textContent=orig;btn.style.minWidth='';btn.disabled=false;},20000):null;
-  const clone=sanitizeClone(document.documentElement.cloneNode(true));
+  const clone=document.documentElement.cloneNode(true);
+  clone.querySelector('body').classList.remove('edit-on');
+  clone.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
+  clone.querySelectorAll('a[style]').forEach(a=>a.style.removeProperty('pointer-events'));
+  // Strip blob-URL video wrappers (session-only, upload still in progress or failed)
+  clone.querySelectorAll('.vid-preview.vid-blob').forEach(wrap=>wrap.remove());
+  clone.querySelectorAll('video').forEach(vid=>{
+    if(vid.src&&(vid.src.startsWith('data:')||vid.src.startsWith('blob:'))){
+      const p=document.createElement('div');p.className='vid-placeholder';p.innerHTML='<div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div>';vid.replaceWith(p);
+    }
+  });
+  // Strip live iframe previews — they are recreated from data-href on DOMContentLoaded
+  clone.querySelectorAll('.vid-preview').forEach(prev=>prev.remove());
+  clone.querySelectorAll('.vid-placeholder').forEach(ph=>{ph.style.display='';});
   const html='<!DOCTYPE html>\n'+clone.outerHTML;
   try{
     const res=await fetch('/api/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:html})});
@@ -1723,7 +1691,6 @@ function switchTab(name,btn){
 }
 
 function prepareCollab(e){
-  if(e)e.preventDefault();
   document.getElementById('h-reels').value=document.getElementById('f-reels').textContent;
   document.getElementById('h-stories').value=document.getElementById('f-stories').textContent;
   document.getElementById('h-pics').value=document.getElementById('f-pics').textContent;
@@ -1737,47 +1704,14 @@ function prepareCollab(e){
   document.getElementById('h-reshare').value=reshare.length?reshare.join(', '):'None';
   document.getElementById('h-email-val').value=document.getElementById('f-email').value;
   document.getElementById('h-msg-val').value=document.getElementById('f-msg').value;
-  submitForm(document.getElementById('collab-form'));
-  return false;
 }
 function prepareUGC(e){
-  if(e)e.preventDefault();
   document.getElementById('h-uvideos').value=document.getElementById('u-videos').textContent;
   document.getElementById('h-upics').value=document.getElementById('u-pics').textContent;
   const ur=document.querySelector('#ur-group-ugc .ur-pill.active');
   document.getElementById('h-uusage').value=ur?ur.dataset.val:'None';
   document.getElementById('h-uemail-val').value=document.getElementById('u-email').value;
   document.getElementById('h-umsg-val').value=document.getElementById('u-msg').value;
-  submitForm(document.getElementById('ugc-form'));
-  return false;
-}
-
-// Submit a Formspree form via AJAX, then send the visitor to the thank-you page.
-// AJAX (rather than a native POST) keeps the success flow on our own domain.
-async function submitForm(form){
-  if(!form)return;
-  const btn=form.querySelector('.cf-submit');
-  const orig=btn?btn.textContent:'';
-  if(btn){btn.disabled=true;btn.textContent='Sending…';}
-  try{
-    const res=await fetch(form.action,{
-      method:'POST',
-      body:new FormData(form),
-      headers:{'Accept':'application/json'}
-    });
-    if(res.ok){
-      window.location.href='/thank-you.html';
-      return;
-    }
-    const data=await res.json().catch(()=>({}));
-    const msg=(data.errors&&data.errors.map(x=>x.message).join(', '))
-      ||'Something went wrong sending your inquiry. Please email contact@byggeligt.com directly.';
-    if(btn){btn.disabled=false;btn.textContent=orig;}
-    alert(msg);
-  }catch(err){
-    if(btn){btn.disabled=false;btn.textContent=orig;}
-    alert('Network error — please email contact@byggeligt.com directly.');
-  }
 }
 
 </script></body></html>
