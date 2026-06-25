@@ -788,7 +788,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
 </section>
 
 <!-- ── PACKAGES ── -->
-<section class="packages editwrap" id="s-pkg" style="display:none">
+<section class="packages editwrap" id="s-pkg">
   <button class="sec-hide" onclick="hideEl('s-pkg')">✕ Hide section</button>
   <div class="page" id="packages">
     <div class="rule" style="margin-bottom:24px"></div>
@@ -844,7 +844,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
 </section>
 
 <!-- ── USAGE ── -->
-<section class="usage editwrap" id="s-usage" style="display:none">
+<section class="usage editwrap" id="s-usage">
   <button class="sec-hide" onclick="hideEl('s-usage')">✕ Hide section</button>
   <div class="page">
     <p class="s-eyebrow">Usage rights</p>
@@ -1682,4 +1682,7 @@ function prepareUGC(e){
   const ur=document.querySelector('#ur-group-ugc .ur-pill.active');
   document.getElementById('h-uusage').value=ur?ur.dataset.val:'None';
   document.getElementById('h-uemail-val').value=document.getElementById('u-email').value;
-  document.getElementById('h-umsg-val').value=document.getElementById('u-msg').value
+  document.getElementById('h-umsg-val').value=document.getElementById('u-msg').value;
+}
+
+</script></body></html>
