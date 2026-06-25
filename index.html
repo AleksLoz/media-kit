@@ -1460,15 +1460,16 @@ async function saveHTML(){
       btn.textContent = '✓ Saved — deploying…';
       setTimeout(()=>{btn.textContent=orig;btn.disabled=false;},5000);
     } else {
-      const e = await res.json();
-      btn.textContent = '✗ Error';
-      console.error(e);
-      setTimeout(()=>{btn.textContent=orig;btn.disabled=false;},3000);
+      let msg='Unknown error';
+      try{const e=await res.json();msg=e.error||JSON.stringify(e);}catch(_){}
+      btn.textContent = '✗ '+msg;
+      btn.style.minWidth='300px';
+      setTimeout(()=>{btn.textContent=orig;btn.style.minWidth='';btn.disabled=false;},8000);
     }
   } catch(e){
-    btn.textContent = '✗ Failed';
-    console.error(e);
-    setTimeout(()=>{btn.textContent=orig;btn.disabled=false;},3000);
+    btn.textContent = '✗ '+e.message;
+    btn.style.minWidth='300px';
+    setTimeout(()=>{btn.textContent=orig;btn.style.minWidth='';btn.disabled=false;},8000);
   }
 }
 </script>
