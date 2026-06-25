@@ -1641,11 +1641,29 @@ function applyVidPreview(card,url){
 })();
 
 // Headless save — no UI button dependency, safe to call from upload chain
-async function saveHTMLCore(){
-  const clone=document.documentElement.cloneNode(true);
-  clone.querySelector('body').classList.remove('edit-on');
+// Strip transient runtime state from a cloned <html> before persisting, so the
+// editor never bakes live UI state into the saved file. Without this, an
+// auto-save can capture: the custom cursor's coordinates, scroll-reveal ".on"
+// classes, the scrolled-nav ".sc" class, a mid-save "Saving…" button, a dropped
+// hero animation, and session-only blob video previews.
+function sanitizeClone(clone){
+  const body=clone.querySelector('body');
+  if(body)body.classList.remove('edit-on','hov');
+  // custom cursor — drop baked-in x/y coordinates
+  clone.querySelectorAll('#cur,#cur-r').forEach(el=>el.removeAttribute('style'));
+  // scrolled-nav state (re-added on scroll)
+  clone.querySelectorAll('nav.sc').forEach(n=>n.classList.remove('sc'));
+  // scroll-reveal state (re-added by the IntersectionObserver on load)
+  clone.querySelectorAll('.rv.on').forEach(el=>el.classList.remove('on'));
+  // preserve the hero load animation (edit mode strips it)
+  const h1=clone.querySelector('#hero-h1');
+  if(h1)h1.classList.add('animate');
+  // reset the editor save button if it was mid-save when cloned
+  clone.querySelectorAll('.et-save').forEach(b=>{b.textContent='Save changes';b.removeAttribute('disabled');b.style.removeProperty('min-width');});
+  // editing affordances
   clone.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
   clone.querySelectorAll('a[style]').forEach(a=>a.style.removeProperty('pointer-events'));
+  // session-only video previews (blob/data URLs) — restore placeholders
   clone.querySelectorAll('.vid-preview.vid-blob').forEach(wrap=>wrap.remove());
   clone.querySelectorAll('video').forEach(vid=>{
     if(vid.src&&(vid.src.startsWith('data:')||vid.src.startsWith('blob:'))){
@@ -1654,6 +1672,11 @@ async function saveHTMLCore(){
   });
   clone.querySelectorAll('.vid-preview').forEach(prev=>prev.remove());
   clone.querySelectorAll('.vid-placeholder').forEach(ph=>{ph.style.display='';});
+  return clone;
+}
+
+async function saveHTMLCore(){
+  const clone=sanitizeClone(document.documentElement.cloneNode(true));
   const html='<!DOCTYPE html>\n'+clone.outerHTML;
   const res=await fetch('/api/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:html})});
   if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error||'Save failed');}
@@ -1664,20 +1687,7 @@ async function saveHTML(){
   const orig=btn?btn.textContent:'';
   if(btn){btn.textContent='Saving…';btn.disabled=true;}
   const reset=btn?setTimeout(()=>{btn.textContent=orig;btn.style.minWidth='';btn.disabled=false;},20000):null;
-  const clone=document.documentElement.cloneNode(true);
-  clone.querySelector('body').classList.remove('edit-on');
-  clone.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
-  clone.querySelectorAll('a[style]').forEach(a=>a.style.removeProperty('pointer-events'));
-  // Strip blob-URL video wrappers (session-only, upload still in progress or failed)
-  clone.querySelectorAll('.vid-preview.vid-blob').forEach(wrap=>wrap.remove());
-  clone.querySelectorAll('video').forEach(vid=>{
-    if(vid.src&&(vid.src.startsWith('data:')||vid.src.startsWith('blob:'))){
-      const p=document.createElement('div');p.className='vid-placeholder';p.innerHTML='<div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div>';vid.replaceWith(p);
-    }
-  });
-  // Strip live iframe previews — they are recreated from data-href on DOMContentLoaded
-  clone.querySelectorAll('.vid-preview').forEach(prev=>prev.remove());
-  clone.querySelectorAll('.vid-placeholder').forEach(ph=>{ph.style.display='';});
+  const clone=sanitizeClone(document.documentElement.cloneNode(true));
   const html='<!DOCTYPE html>\n'+clone.outerHTML;
   try{
     const res=await fetch('/api/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:html})});
