@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank you · Byggeligt Home</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --cream:#F5F0E8;--offwhite:#FAF7F2;--dark:#1A0F0A;
+    --rust:#460F0F;--rust-deep:#300A0A;--sand:#C8A882;--mid:#8A7060;
+    --serif:'Playfair Display',serif;--sans:'DM Sans',sans-serif;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--cream);color:var(--dark);font-family:var(--sans);
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    padding:32px 20px;text-align:center;
+  }
+  .ty-card{
+    background:var(--offwhite);border:0.5px solid rgba(122,32,32,.14);
+    border-radius:18px;padding:56px 44px 48px;max-width:480px;width:100%;
+    box-shadow:0 24px 64px rgba(26,15,10,.10);
+    opacity:0;transform:translateY(16px);animation:fu .7s .05s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  @keyframes fu{to{opacity:1;transform:none}}
+  .ty-check{
+    width:62px;height:62px;border-radius:50%;background:var(--rust);
+    display:flex;align-items:center;justify-content:center;margin:0 auto 26px;
+  }
+  .ty-check svg{width:28px;height:28px;stroke:#fff;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+  .ty-eyebrow{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--rust);margin-bottom:12px}
+  .ty-title{font-family:var(--serif);font-size:38px;font-weight:900;line-height:1.04;color:var(--dark);letter-spacing:-.02em;margin-bottom:14px}
+  .ty-title em{font-style:italic;color:var(--rust)}
+  .ty-text{font-size:14px;color:var(--mid);line-height:1.8;margin-bottom:32px}
+  .ty-text strong{color:var(--dark);font-weight:500}
+  .ty-btn{
+    display:inline-block;background:var(--rust);color:#fff;
+    font-size:10px;letter-spacing:.17em;text-transform:uppercase;
+    padding:14px 34px;border-radius:50px;text-decoration:none;
+    transition:background .2s,transform .18s;
+  }
+  .ty-btn:hover{background:var(--rust-deep);transform:scale(1.02)}
+  .ty-email{margin-top:22px;font-size:11px;letter-spacing:.05em;color:var(--mid)}
+  .ty-email a{color:var(--rust);text-decoration:none;border-bottom:0.5px solid rgba(122,32,32,.3)}
+  .ty-email a:hover{border-color:var(--rust)}
+  .ty-brand{margin-top:34px;font-family:var(--serif);font-size:14px;font-weight:700;color:var(--dark)}
+  .ty-brand em{font-style:normal;color:var(--rust)}
+  @media (max-width:480px){
+    .ty-card{padding:44px 26px 38px}
+    .ty-title{font-size:30px}
+  }
+</style>
+</head>
+<body>
+  <div class="ty-card">
+    <div class="ty-check">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <p class="ty-eyebrow">Inquiry received</p>
+    <h1 class="ty-title">Thank <em>you!</em></h1>
+    <p class="ty-text">Your inquiry has been sent successfully. We typically reply within <strong>48 hours</strong> with a tailored proposal — keep an eye on your inbox.</p>
+    <a class="ty-btn" href="/">← Back to the media kit</a>
+    <p class="ty-email">Or reach us directly: <a href="mailto:contact@byggeligt.com">contact@byggeligt.com</a></p>
+    <p class="ty-brand">Byggeligt<em>.</em></p>
+  </div>
+</body>
+</html>

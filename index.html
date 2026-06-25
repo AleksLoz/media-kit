@@ -1705,6 +1705,7 @@ function switchTab(name,btn){
 }
 
 function prepareCollab(e){
+  if(e)e.preventDefault();
   document.getElementById('h-reels').value=document.getElementById('f-reels').textContent;
   document.getElementById('h-stories').value=document.getElementById('f-stories').textContent;
   document.getElementById('h-pics').value=document.getElementById('f-pics').textContent;
@@ -1718,14 +1719,47 @@ function prepareCollab(e){
   document.getElementById('h-reshare').value=reshare.length?reshare.join(', '):'None';
   document.getElementById('h-email-val').value=document.getElementById('f-email').value;
   document.getElementById('h-msg-val').value=document.getElementById('f-msg').value;
+  submitForm(document.getElementById('collab-form'));
+  return false;
 }
 function prepareUGC(e){
+  if(e)e.preventDefault();
   document.getElementById('h-uvideos').value=document.getElementById('u-videos').textContent;
   document.getElementById('h-upics').value=document.getElementById('u-pics').textContent;
   const ur=document.querySelector('#ur-group-ugc .ur-pill.active');
   document.getElementById('h-uusage').value=ur?ur.dataset.val:'None';
   document.getElementById('h-uemail-val').value=document.getElementById('u-email').value;
   document.getElementById('h-umsg-val').value=document.getElementById('u-msg').value;
+  submitForm(document.getElementById('ugc-form'));
+  return false;
+}
+
+// Submit a Formspree form via AJAX, then send the visitor to the thank-you page.
+// AJAX (rather than a native POST) keeps the success flow on our own domain.
+async function submitForm(form){
+  if(!form)return;
+  const btn=form.querySelector('.cf-submit');
+  const orig=btn?btn.textContent:'';
+  if(btn){btn.disabled=true;btn.textContent='Sending…';}
+  try{
+    const res=await fetch(form.action,{
+      method:'POST',
+      body:new FormData(form),
+      headers:{'Accept':'application/json'}
+    });
+    if(res.ok){
+      window.location.href='/thank-you.html';
+      return;
+    }
+    const data=await res.json().catch(()=>({}));
+    const msg=(data.errors&&data.errors.map(x=>x.message).join(', '))
+      ||'Something went wrong sending your inquiry. Please email contact@byggeligt.com directly.';
+    if(btn){btn.disabled=false;btn.textContent=orig;}
+    alert(msg);
+  }catch(err){
+    if(btn){btn.disabled=false;btn.textContent=orig;}
+    alert('Network error — please email contact@byggeligt.com directly.');
+  }
 }
 
 </script></body></html>
