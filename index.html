@@ -181,6 +181,12 @@ canvas.pie{display:block}
 .vid-upload-overlay span{color:#fff;font-size:10px;letter-spacing:.13em;text-transform:uppercase;font-family:var(--sans)}
 body.edit-on .vid-card:hover .vid-upload-overlay{display:flex}
 body.edit-on .vid-card.has-link:hover .vid-upload-overlay{display:none}
+body.edit-on .vid-card[data-src]:hover .vid-upload-overlay{display:none}
+.vid-compress-status{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(26,15,10,.93);color:var(--cream);font-size:10px;letter-spacing:.13em;text-transform:uppercase;font-family:var(--sans);z-index:5;border-radius:10px 10px 0 0;gap:10px;pointer-events:none}
+.vid-compress-bar{width:60%;height:3px;background:rgba(255,255,255,.2);border-radius:2px;overflow:hidden}
+.vid-compress-fill{height:100%;background:#C4A46B;border-radius:2px;transition:width .15s;width:0%}
+.vid-remove-btn{display:none;position:absolute;top:8px;left:8px;z-index:6;background:rgba(180,30,30,.8);color:#fff;border:none;border-radius:4px;padding:5px 10px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;font-family:var(--sans)}
+body.edit-on .vid-preview:hover .vid-remove-btn{display:block}
 /* Block video/iframe clicks in edit mode so change-video button is reachable */
 body.edit-on .vid-edit-block{display:block!important}
 body.edit-on .vid-preview video{pointer-events:none}
@@ -1233,7 +1239,7 @@ const videoObs=new IntersectionObserver(entries=>{
     if(e.isIntersecting){v.play().catch(()=>{});}
     else{v.pause();}
   });
-},{threshold:0.4});
+},{threshold:0.1});
 
 function observeVideo(v){
   v.muted=true;v.loop=true;v.playsInline=true;
@@ -1356,9 +1362,54 @@ function uploadPhoto(imgId,phId){
   document.getElementById('photo-input').click();
 }
 
+/* ── FFmpeg compression ── */
+let _ff=null,_ffLoading=false;
+async function loadFF(){
+  if(_ff)return _ff;
+  if(_ffLoading){while(_ffLoading)await new Promise(r=>setTimeout(r,80));return _ff;}
+  _ffLoading=true;
+  const load=src=>new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});
+  await load('https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js');
+  await load('https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js');
+  const {FFmpeg}=FFmpegWASM;
+  const {toBlobURL}=FFmpegUtil;
+  const base='https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';
+  const ff=new FFmpeg();
+  await ff.load({
+    coreURL:await toBlobURL(base+'/ffmpeg-core.js','text/javascript'),
+    wasmURL:await toBlobURL(base+'/ffmpeg-core.wasm','application/wasm'),
+  });
+  _ff=ff;_ffLoading=false;
+  return ff;
+}
+async function compressVideo(file,statusEl,fillEl){
+  const THRESH=5*1024*1024;
+  if(file.size<=THRESH)return file; // small files — skip compression
+  try{
+    const ff=await loadFF();
+    ff.on('progress',({progress})=>{
+      const pct=Math.max(0,Math.min(100,Math.round(progress*100)));
+      if(fillEl)fillEl.style.width=pct+'%';
+      if(statusEl)statusEl.firstChild.textContent='Compressing '+pct+'%';
+    });
+    const {fetchFile}=FFmpegUtil;
+    const ext=(file.name.split('.').pop()||'mp4').toLowerCase();
+    const inName='input.'+ext;
+    await ff.writeFile(inName,await fetchFile(file));
+    await ff.exec(['-i',inName,'-vf',"scale='min(720,iw)':-2",'-c:v','libx264','-crf','28','-preset','fast','-an','output.mp4']);
+    const data=await ff.readFile('output.mp4');
+    await ff.deleteFile(inName);await ff.deleteFile('output.mp4');
+    ff.off('progress');
+    return new Blob([data.buffer],{type:'video/mp4'});
+  }catch(err){
+    console.warn('Compression failed, using original:',err);
+    return file;
+  }
+}
+
 /* ── Video upload ── */
 let _vidTarget=null;
-document.getElementById('video-input').addEventListener('change',function(){
+document.getElementById('video-input').addEventListener('change',async function(){
   if(!this.files[0]||!_vidTarget)return;
   const file=this.files[0];
   const target=_vidTarget;
@@ -1366,8 +1417,23 @@ document.getElementById('video-input').addEventListener('change',function(){
   const placeholder=target.querySelector('.vid-placeholder');
   this.value='';_vidTarget=null;
 
-  // Show video INSTANTLY using a local blob URL — no waiting for any upload
-  const blobUrl=URL.createObjectURL(file);
+  // Show compression status overlay on the card
+  const statusEl=document.createElement('div');
+  statusEl.className='vid-compress-status';
+  const statusTxt=document.createTextNode(file.size>5*1024*1024?'Compressing 0%':'Processing…');
+  statusEl.appendChild(statusTxt);
+  const barEl=document.createElement('div');barEl.className='vid-compress-bar';
+  const fillEl=document.createElement('div');fillEl.className='vid-compress-fill';
+  barEl.appendChild(fillEl);statusEl.appendChild(barEl);
+  if(placeholder)placeholder.style.display='none';
+  if(overlay)overlay.style.display='none';
+  target.appendChild(statusEl);
+
+  // Compress (or pass through if small), then show instantly via blob URL
+  const compressed=await compressVideo(file,statusEl,fillEl);
+  statusEl.remove();
+
+  const blobUrl=URL.createObjectURL(compressed);
   const vid=document.createElement('video');
   vid.src=blobUrl;
   vid.muted=true;vid.loop=true;vid.playsInline=true;
@@ -1377,6 +1443,20 @@ document.getElementById('video-input').addEventListener('change',function(){
   wrap.className='vid-preview vid-blob';
   wrap.style.cssText='width:100%;aspect-ratio:9/16;position:relative;overflow:hidden;border-radius:10px 10px 0 0;background:#000;';
   wrap.appendChild(vid);
+  // Edit-mode remove button (only visible in edit mode on hover)
+  const removeBtn=document.createElement('button');
+  removeBtn.className='vid-remove-btn';
+  removeBtn.textContent='✕ Remove';
+  wrap.appendChild(removeBtn);
+  removeBtn.onclick=function(e){
+    e.stopPropagation();
+    wrap.remove();
+    delete target.dataset.src;
+    if(overlay)overlay.style.display='';
+    if(placeholder){placeholder.style.display='';placeholder.style.removeProperty('display');}
+    const ph=target.querySelector('.vid-placeholder');
+    if(ph)ph.style.display='';
+  };
   const oldPrev=target.querySelector('.vid-preview');
   if(oldPrev)oldPrev.remove();
   if(placeholder)placeholder.style.display='none';
@@ -1384,28 +1464,25 @@ document.getElementById('video-input').addEventListener('change',function(){
   target.insertBefore(wrap,placeholder||target.firstChild);
   observeVideo(vid);
 
-  // Upload to GitHub in background so video survives a page reload
-  if(overlay){overlay.style.display='flex';overlay.querySelector('span').textContent='Saving…';}
+  // Upload to GitHub in background — blob URL keeps playing during upload
+  // Do NOT switch vid.src to GitHub URL this session (Vercel needs ~1min to redeploy)
   const reader=new FileReader();
   reader.onload=async function(e){
     const base64=e.target.result.split(',')[1];
-    const ext=file.name.split('.').pop()||'mp4';
+    const ext=compressed.type==='video/mp4'?'mp4':(file.name.split('.').pop()||'mp4');
     const filename='video_'+Date.now()+'.'+ext;
     try{
       const res=await fetch('/api/upload-video',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({filename,content:base64})});
       if(res.ok){
         const {url}=await res.json();
-        // Switch from blob URL to permanent GitHub URL
-        URL.revokeObjectURL(blobUrl);
-        vid.src=url+'?t='+Date.now();
         wrap.classList.remove('vid-blob');
-        // Store permanent URL on the card so saveHTML preserves it
-        target.dataset.src=url;
+        target.dataset.src=url; // persists across reloads via DOMContentLoaded
+        // Auto-save so data-src is committed to GitHub — video survives next refresh
+        saveHTML().catch(()=>{});
       }
     }catch(_){}
-    if(overlay)overlay.style.display='none';
   };
-  reader.readAsDataURL(file);
+  reader.readAsDataURL(compressed);
 });
 function uploadVideo(overlayBtn){
   if(!editMode)return;
@@ -1527,21 +1604,7 @@ function applyVidPreview(card,url){
     wrapper.appendChild(fb);
   }
 
-  // In edit mode, block iframe clicks so the change button is reachable
-  const editBlock=document.createElement('div');
-  editBlock.className='vid-edit-block';
-  editBlock.style.cssText='position:absolute;inset:0;z-index:5;display:none;';
-  wrapper.appendChild(editBlock);
-
-  // Edit-mode change-video button
-  const changeBtn=document.createElement('button');
-  changeBtn.className='vid-change-link';
-  changeBtn.textContent='✎ Change video';
-  changeBtn.style.cssText='display:none;position:absolute;top:8px;right:8px;z-index:6;background:rgba(0,0,0,.65);color:#fff;border:none;border-radius:4px;padding:5px 10px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;font-family:var(--sans)';
-  changeBtn.onclick=function(e){e.stopPropagation();setVidLink(card.querySelector('.vid-link-btn'));};
-  wrapper.appendChild(changeBtn);
-  wrapper.addEventListener('mouseenter',()=>{if(editMode)changeBtn.style.display='block';});
-  wrapper.addEventListener('mouseleave',()=>{changeBtn.style.display='none';});
+  // No edit/change/delete controls on video previews — videos are locked once set
 
   if(ph)ph.style.display='none';
   card.insertBefore(wrapper,ph||card.firstChild);
@@ -1564,6 +1627,20 @@ document.addEventListener('DOMContentLoaded',function(){
     wrap.className='vid-preview';
     wrap.style.cssText='width:100%;aspect-ratio:9/16;position:relative;overflow:hidden;border-radius:10px 10px 0 0;background:#000;';
     wrap.appendChild(vid);
+    // Edit-mode remove button
+    const removeBtn=document.createElement('button');
+    removeBtn.className='vid-remove-btn';
+    removeBtn.textContent='✕ Remove';
+    wrap.appendChild(removeBtn);
+    removeBtn.onclick=function(e){
+      e.stopPropagation();
+      wrap.remove();
+      delete card.dataset.src;
+      const ov=card.querySelector('.vid-upload-overlay');
+      if(ov)ov.style.display='';
+      const ph2=card.querySelector('.vid-placeholder');
+      if(ph2)ph2.style.display='';
+    };
     if(ph)ph.style.display='none';
     card.insertBefore(wrap,ph||card.firstChild);
     observeVideo(vid);
