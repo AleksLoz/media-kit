@@ -43,46 +43,21 @@ const handler = async function(req, res) {
   const repo  = 'media-kit';
   const filePath = `videos/${filename}`;
 
-  // 1. Get current HEAD commit
-  const ref = await ghRequest('GET', `/repos/${owner}/${repo}/git/refs/heads/main`, token);
-  if (ref.status !== 200) return res.status(500).json({ error: 'Could not get ref: ' + ref.body.message });
-  const commitSha = ref.body.object.sha;
-
-  // 2. Get commit tree
-  const commit = await ghRequest('GET', `/repos/${owner}/${repo}/git/commits/${commitSha}`, token);
-  if (commit.status !== 200) return res.status(500).json({ error: 'Could not get commit' });
-  const treeSha = commit.body.tree.sha;
-
-  // 3. Create blob (handles large files)
-  const blob = await ghRequest('POST', `/repos/${owner}/${repo}/git/blobs`, token, {
-    content,
-    encoding: 'base64'
-  });
-  if (blob.status !== 201) return res.status(500).json({ error: 'Blob failed: ' + blob.body.message });
-
-  // 4. Create new tree with the video file
-  const tree = await ghRequest('POST', `/repos/${owner}/${repo}/git/trees`, token, {
-    base_tree: treeSha,
-    tree: [{ path: filePath, mode: '100644', type: 'blob', sha: blob.body.sha }]
-  });
-  if (tree.status !== 201) return res.status(500).json({ error: 'Tree failed' });
-
-  // 5. Create new commit
-  const newCommit = await ghRequest('POST', `/repos/${owner}/${repo}/git/commits`, token, {
+  // Each video is a brand-new unique file — no SHA conflict possible.
+  // The Contents API handles this in one request instead of 6.
+  const put = await ghRequest('PUT', `/repos/${owner}/${repo}/contents/${filePath}`, token, {
     message: `Upload video: ${filename}`,
-    tree: tree.body.sha,
-    parents: [commitSha]
+    content: content,   // already base64
+    branch: 'main'
   });
-  if (newCommit.status !== 201) return res.status(500).json({ error: 'Commit failed' });
 
-  // 6. Update branch ref
-  const update = await ghRequest('PATCH', `/repos/${owner}/${repo}/git/refs/heads/main`, token, {
-    sha: newCommit.body.sha,
-    force: false
-  });
-  if (update.status !== 200) return res.status(500).json({ error: 'Ref update failed' });
-
-  return res.status(200).json({ url: `/${filePath}` });
+  if (put.status === 200 || put.status === 201) {
+    // Return a CDN-friendly raw URL
+    const url = `https://raw.githubusercontent.com/${owner}/${repo}/main/${filePath}`;
+    return res.status(200).json({ url });
+  } else {
+    return res.status(500).json({ error: put.body.message || 'Upload failed' });
+  }
 };
 
 handler.config = {
