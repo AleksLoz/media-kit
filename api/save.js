@@ -1,20 +1,23 @@
-export const config = {
-  api: { bodyParser: { sizeLimit: '10mb' } }
-};
-
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
   const token = process.env.GITHUB_TOKEN;
-  if (!token) return res.status(500).json({ error: 'GITHUB_TOKEN not configured' });
+  if (!token) {
+    return res.status(500).json({ error: 'GITHUB_TOKEN not set in Vercel environment variables' });
+  }
 
   const owner = 'AleksLoz';
   const repo  = 'media-kit';
   const path  = 'index.html';
 
-  const { content } = req.body;
-  if (!content) return res.status(400).json({ error: 'No content provided' });
+  const { content } = req.body || {};
+  if (!content) {
+    return res.status(400).json({ error: 'No content provided' });
+  }
 
   const headers = {
     'Authorization': `token ${token}`,
@@ -23,7 +26,7 @@ export default async function handler(req, res) {
     'Content-Type': 'application/json'
   };
 
-  // Get current file SHA (required for updates)
+  // Get current file SHA (required to update)
   const getRes = await fetch(
     `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
     { headers }
@@ -32,7 +35,8 @@ export default async function handler(req, res) {
     const err = await getRes.json();
     return res.status(500).json({ error: `GitHub GET failed: ${err.message}` });
   }
-  const { sha } = await getRes.json();
+  const fileData = await getRes.json();
+  const sha = fileData.sha;
 
   // Commit updated content
   const encoded = Buffer.from(content, 'utf8').toString('base64');
@@ -42,7 +46,7 @@ export default async function handler(req, res) {
       method: 'PUT',
       headers,
       body: JSON.stringify({
-        message: 'Update media kit',
+        message: 'Update media kit content',
         content: encoded,
         sha
       })
@@ -55,4 +59,4 @@ export default async function handler(req, res) {
     const err = await putRes.json();
     return res.status(500).json({ error: err.message });
   }
-}
+};
