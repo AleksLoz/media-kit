@@ -1536,7 +1536,7 @@ function applyVidPreview(card,url){
     vid.addEventListener('canplay',()=>vid.play().catch(()=>{}),{once:true});
   });
   // Video cards do NOT open links on click — videos just play silently
-});
+})();
 
 // Headless save — no UI button dependency, safe to call from upload chain
 async function saveHTMLCore(){
