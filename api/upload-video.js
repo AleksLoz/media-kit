@@ -43,20 +43,58 @@ const handler = async function(req, res) {
   const repo  = 'media-kit';
   const filePath = `videos/${filename}`;
 
-  // Each video is a brand-new unique file — no SHA conflict possible.
-  // The Contents API handles this in one request instead of 6.
-  const put = await ghRequest('PUT', `/repos/${owner}/${repo}/contents/${filePath}`, token, {
-    message: `Upload video: ${filename}`,
-    content: content,   // already base64
-    branch: 'main'
-  });
+  // Retry up to 3 times — handles rare concurrent ref conflicts
+  for (let attempt = 0; attempt < 3; attempt++) {
+    // 1. Get current HEAD
+    const ref = await ghRequest('GET', `/repos/${owner}/${repo}/git/refs/heads/main`, token);
+    if (ref.status !== 200) return res.status(500).json({ error: 'Could not get ref: ' + ref.body.message });
+    const commitSha = ref.body.object.sha;
 
-  if (put.status === 200 || put.status === 201) {
-    // Return a CDN-friendly raw URL
-    const url = `https://raw.githubusercontent.com/${owner}/${repo}/main/${filePath}`;
-    return res.status(200).json({ url });
-  } else {
-    return res.status(500).json({ error: put.body.message || 'Upload failed' });
+    // 2. Get commit tree
+    const commit = await ghRequest('GET', `/repos/${owner}/${repo}/git/commits/${commitSha}`, token);
+    if (commit.status !== 200) return res.status(500).json({ error: 'Could not get commit' });
+    const treeSha = commit.body.tree.sha;
+
+    // 3. Create blob
+    const blob = await ghRequest('POST', `/repos/${owner}/${repo}/git/blobs`, token, {
+      content,
+      encoding: 'base64'
+    });
+    if (blob.status !== 201) return res.status(500).json({ error: 'Blob failed: ' + blob.body.message });
+
+    // 4. Create tree
+    const tree = await ghRequest('POST', `/repos/${owner}/${repo}/git/trees`, token, {
+      base_tree: treeSha,
+      tree: [{ path: filePath, mode: '100644', type: 'blob', sha: blob.body.sha }]
+    });
+    if (tree.status !== 201) return res.status(500).json({ error: 'Tree failed' });
+
+    // 5. Create commit
+    const newCommit = await ghRequest('POST', `/repos/${owner}/${repo}/git/commits`, token, {
+      message: `Upload video: ${filename}`,
+      tree: tree.body.sha,
+      parents: [commitSha]
+    });
+    if (newCommit.status !== 201) return res.status(500).json({ error: 'Commit failed' });
+
+    // 6. Update ref
+    const update = await ghRequest('PATCH', `/repos/${owner}/${repo}/git/refs/heads/main`, token, {
+      sha: newCommit.body.sha,
+      force: false
+    });
+
+    if (update.status === 200) {
+      const url = `https://raw.githubusercontent.com/${owner}/${repo}/main/${filePath}`;
+      return res.status(200).json({ url });
+    }
+
+    // 422 = not a fast-forward (another upload just landed) — re-fetch HEAD and retry
+    if (update.status === 422 && attempt < 2) {
+      await new Promise(r => setTimeout(r, 800 + attempt * 600));
+      continue;
+    }
+
+    return res.status(500).json({ error: update.body.message || 'Ref update failed' });
   }
 };
 
