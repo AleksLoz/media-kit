@@ -1,0 +1,14 @@
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+      ]
+    }
+  ],
+  "functions": {
+    "api/save.js": { "maxDuration": 60 },
+    "api/upload-video.js": { "maxDuration": 60 }
+  }
+}
