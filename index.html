@@ -521,7 +521,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
     <span class="et-hint">Click text to edit · Hover photo to replace · Hover video to upload · ✕ removes rows & sections</span>
   </div>
   <div class="et-right">
-    <button class="et-btn et-save" onclick="saveHTML()">⬇ Save HTML</button>
+    <button class="et-btn et-save" onclick="saveHTML()">Save changes</button>
     <button class="et-btn et-exit" onclick="toggleEdit()">✕ Exit</button>
   </div>
 </div>
@@ -1435,6 +1435,41 @@ function prepareUGC(e){
   document.getElementById('h-uusage').value = ur?ur.dataset.val:'None';
   document.getElementById('h-uemail-val').value = document.getElementById('u-email').value;
   document.getElementById('h-umsg-val').value = document.getElementById('u-msg').value;
+}
+
+async function saveHTML(){
+  const btn = document.querySelector('.et-save');
+  const orig = btn.textContent;
+  btn.textContent = 'Saving…';
+  btn.disabled = true;
+
+  // Clone doc, strip edit-mode state
+  const clone = document.documentElement.cloneNode(true);
+  clone.querySelector('body').classList.remove('edit-on');
+  clone.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));
+  clone.querySelectorAll('a[style]').forEach(a=>a.style.removeProperty('pointer-events'));
+  const html = '<!DOCTYPE html>\n' + clone.outerHTML;
+
+  try {
+    const res = await fetch('/api/save', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({content: html})
+    });
+    if(res.ok){
+      btn.textContent = '✓ Saved — deploying…';
+      setTimeout(()=>{btn.textContent=orig;btn.disabled=false;},5000);
+    } else {
+      const e = await res.json();
+      btn.textContent = '✗ Error';
+      console.error(e);
+      setTimeout(()=>{btn.textContent=orig;btn.disabled=false;},3000);
+    }
+  } catch(e){
+    btn.textContent = '✗ Failed';
+    console.error(e);
+    setTimeout(()=>{btn.textContent=orig;btn.disabled=false;},3000);
+  }
 }
 </script>
 </body>
