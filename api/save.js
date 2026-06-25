@@ -1,5 +1,37 @@
 const https = require('https');
 
+// Force every saved index.html into the canonical externalized form, no matter
+// what the (possibly stale) browser tab posts. The editor serializes the whole
+// page, so a tab running an older inline version would otherwise keep wiping the
+// stylesheet/app logic. CSS lives in styles.css and JS in app.js — both are
+// served from the repo and never written here — so we strip any inline blocks
+// and guarantee the external references + drop transient runtime state.
+function normalize(html) {
+  // Inline <style>…</style> -> external stylesheet link
+  if (/<style[^>]*>[\s\S]*?<\/style>/i.test(html)) {
+    html = html.replace(/<style[^>]*>[\s\S]*?<\/style>/i, '<link rel="stylesheet" href="/styles.css">');
+  }
+  if (!/href="\/styles\.css"/i.test(html)) {
+    html = html.replace(/<\/head>/i, '<link rel="stylesheet" href="/styles.css">\n</head>');
+  }
+  // Inline classic <script>…</script> (app logic) -> external app.js ref.
+  // The Vercel Blob loader is <script type="module"> and is left untouched.
+  if (/<script>[\s\S]*?<\/script>/i.test(html)) {
+    html = html.replace(/<script>[\s\S]*?<\/script>/i, '<script src="/app.js"></script>');
+  }
+  if (!/src="\/app\.js"/i.test(html)) {
+    html = html.replace(/<\/body>/i, '<script src="/app.js"></script>\n</body>');
+  }
+  // Strip transient runtime state a stale tab may have serialized in
+  html = html.replace(/<html lang="en"[^>]*>/i, '<html lang="en">');
+  html = html.replace(/<div id="cur"[^>]*>/i, '<div id="cur">');
+  html = html.replace(/<div id="cur-r"[^>]*>/i, '<div id="cur-r">');
+  html = html.replace(/<body[^>]*\bclass="hov"[^>]*>/i, '<body>');
+  // Restore the hero load animation if a save dropped the class
+  html = html.replace('class="hero-title" id="hero-h1"', 'class="hero-title animate" id="hero-h1"');
+  return html;
+}
+
 const handler = async function(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
@@ -39,7 +71,7 @@ const handler = async function(req, res) {
     });
   }
 
-  const encoded = Buffer.from(content, 'utf8').toString('base64');
+  const encoded = Buffer.from(normalize(content), 'utf8').toString('base64');
 
   // Retry up to 3 times — handles SHA conflicts from concurrent video uploads
   for (let attempt = 0; attempt < 3; attempt++) {
@@ -65,4 +97,5 @@ const handler = async function(req, res) {
 };
 
 handler.config = { api: { bodyParser: { sizeLimit: '10mb' } } };
+handler.normalize = normalize;
 module.exports = handler;
