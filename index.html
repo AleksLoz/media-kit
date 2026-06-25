@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" style=""><head>
+<html lang="en">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Byggeligt Home</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&amp;family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -180,9 +181,9 @@ canvas.pie{display:block}
 .vid-upload-overlay span{color:#fff;font-size:10px;letter-spacing:.13em;text-transform:uppercase;font-family:var(--sans)}
 body.edit-on .vid-card:hover .vid-upload-overlay{display:flex}
 body.edit-on .vid-card.has-link:hover .vid-upload-overlay{display:none}
-/* Block Instagram iframe clicks in edit mode so change-link button works */
-body.edit-on .ig-iframe{pointer-events:none}
-body.edit-on .ig-edit-layer{display:block!important}
+/* Block iframe/video clicks in edit mode so change-video button is reachable */
+body.edit-on .gdrive-iframe{pointer-events:none}
+body.edit-on .vid-edit-block{display:block!important}
 
 .brand-q{background:var(--cream);border:0.5px solid rgba(122,32,32,.18);border-radius:8px;padding:20px 22px;display:flex;gap:12px;margin-bottom:36px}
 .bq-m{font-family:var(--serif);font-size:40px;font-weight:900;color:rgba(122,32,32,.13);line-height:.75;flex-shrink:0;margin-top:5px}
@@ -494,13 +495,13 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
 .testi-hl{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;color:var(--rust)}
 </style>
 </head>
-<body class="hov">
+<body>
 
-<div id="cur" style="left: 816px; top: 890px;"></div>
-<div id="cur-r" style="left: 815.98px; top: 890.434px;"></div>
+<div id="cur"></div>
+<div id="cur-r"></div>
 
 <!-- LOGIN OVERLAY -->
-<div id="login-overlay" style="display: none; position: fixed; inset: 0px; z-index: 9999; background: rgba(26, 15, 10, 0.55); backdrop-filter: blur(8px); align-items: center; justify-content: center;">
+<div id="login-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(26,15,10,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:center;justify-content:center">
   <div style="background:#FAF7F2;border-radius:16px;padding:44px 40px 36px;width:340px;max-width:90vw;text-align:center;box-shadow:0 24px 64px rgba(26,15,10,.22)">
     <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:#1A0F0A;margin-bottom:4px">Admin login</div>
     <div style="font-family:'DM Sans',sans-serif;font-size:13px;color:#8A7060;margin-bottom:28px">Enter your password to edit the page</div>
@@ -513,7 +514,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
 
 <!-- EDIT FAB -->
 <button id="edit-fab" onclick="toggleEdit()">
-  <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+  <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
   Login
 </button>
 
@@ -521,16 +522,16 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
 <div id="et">
   <div class="et-left">
     <span class="et-badge">✏ Editing</span>
-    <span class="et-hint">Click text to edit · Hover photo to replace · Hover video to upload · ✕ removes rows &amp; sections</span>
+    <span class="et-hint">Click text to edit · Hover photo to replace · Hover video to upload · ✕ removes rows & sections</span>
   </div>
   <div class="et-right">
-    <button class="et-btn et-save" onclick="saveHTML()" disabled="">Saving…</button>
+    <button class="et-btn et-save" onclick="saveHTML()">Save changes</button>
     <button class="et-btn et-exit" onclick="toggleEdit()">✕ Exit</button>
   </div>
 </div>
 
 <!-- NAV -->
-<nav id="nav" class="sc">
+<nav id="nav">
   <div class="nav-wrap">
     <div class="nav-i">
       <a href="#" class="nav-logo">Byggeligt<em>.</em></a>
@@ -554,7 +555,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
     </div>
     <div class="hero-main">
       <!-- hero title: animate on load, then fully editable as one block -->
-      <h1 class="hero-title" id="hero-h1">
+      <h1 class="hero-title animate" id="hero-h1">
         <span class="anim-word"><span>HI,</span></span>
         <em class="anim-word"><span>We're</span></em><br>
         <span class="anim-word"><span>BYGGELIGT</span></span>
@@ -585,7 +586,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
   <div class="page" id="about">
     <div class="rule" style="margin-bottom:24px"></div>
     <div class="story-grid">
-      <div class="rv on">
+      <div class="rv">
         <div class="s-hand">Hey, We're Aleksandra &amp; Jim</div>
         <div class="s-head">Interior Designer,<br>Content Creator,<br>and Your Brand Partner</div>
         <div class="s-body">
@@ -594,15 +595,16 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
           <p>We help brands tell stories through beautiful, trustworthy content that converts.</p>
         </div>
       </div>
-      <div class="rv d2 on">
+      <div class="rv d2">
         <div class="polaroid">
           <div class="photo-wrap" id="pol-wrap">
-            <img id="pol-img" class="pol-img" src="couple_photo.jpg" alt="Aleksandra &amp; Jim" onerror="this.style.display='none';document.getElementById('pol-ph').style.display='flex'" style="display: none;">
-            <div id="pol-ph" class="pol-ph" style="display: flex;">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(122,32,32,0.22)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="m21 15-5-5L5 21"></path></svg>
+            <img id="pol-img" class="pol-img" src="couple_photo.jpg" alt="Aleksandra &amp; Jim"
+                 onerror="this.style.display='none';document.getElementById('pol-ph').style.display='flex'">
+            <div id="pol-ph" class="pol-ph" style="display:none">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(122,32,32,0.22)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
             </div>
             <div class="photo-over" onclick="uploadPhoto('pol-img','pol-ph')">
-              <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+              <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
               <span>Replace photo</span>
             </div>
           </div>
@@ -617,14 +619,14 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
   <button class="sec-hide" onclick="hideEl('s-trusted')">✕ Hide section</button>
   <div class="page">
     <div class="rule" style="margin-bottom:36px"></div>
-    <p class="trusted-label rv on">Trusted by</p>
-    <div class="logo-grid rv d1 on">
+    <p class="trusted-label rv">Trusted by</p>
+    <div class="logo-grid rv d1">
 
       <!-- IKEA — horizontal mark, generous side padding -->
       <div class="logo-circle" style="padding:17px">
         <svg class="logo-svg" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
-          <rect x="0" y="2" width="94" height="46" rx="1" fill="#1A0F0A"></rect>
-          <ellipse cx="47" cy="25" rx="37" ry="18" fill="#fff"></ellipse>
+          <rect x="0" y="2" width="94" height="46" rx="1" fill="#1A0F0A"/>
+          <ellipse cx="47" cy="25" rx="37" ry="18" fill="#fff"/>
           <text x="47" y="31" font-family="'Arial Black','Arial',sans-serif" font-size="18" font-weight="900" fill="#1A0F0A" text-anchor="middle" letter-spacing="1.5">IKEA</text>
         </svg>
       </div>
@@ -632,8 +634,8 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
       <!-- Bedre Næter — 2-line wordmark + moon -->
       <div class="logo-circle" style="padding:14px">
         <svg class="logo-svg" viewBox="0 0 56 44" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="47" cy="8" r="7.5" fill="#1A0F0A"></circle>
-          <circle cx="52" cy="4" r="6" fill="#fff"></circle>
+          <circle cx="47" cy="8" r="7.5" fill="#1A0F0A"/>
+          <circle cx="52" cy="4" r="6" fill="#fff"/>
           <text x="0" y="25" font-family="'DM Sans','Arial',sans-serif" font-size="14" font-weight="700" fill="#1A0F0A" letter-spacing="-0.2">bedre</text>
           <text x="0" y="42" font-family="'DM Sans','Arial',sans-serif" font-size="14" font-weight="700" fill="#1A0F0A" letter-spacing="-0.2">næter</text>
         </svg>
@@ -642,9 +644,9 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
       <!-- Birdie — bird icon only, extra padding to shrink it -->
       <div class="logo-circle" style="padding:18px">
         <svg class="logo-svg" viewBox="0 0 52 58" xmlns="http://www.w3.org/2000/svg">
-          <path d="M9,58 L9,30 Q9,4 30,4 Q52,4 52,28 L52,58 Z" fill="#1A0F0A"></path>
-          <polygon points="9,30 0,37 9,44" fill="#1A0F0A"></polygon>
-          <circle cx="35" cy="24" r="4" fill="#fff"></circle>
+          <path d="M9,58 L9,30 Q9,4 30,4 Q52,4 52,28 L52,58 Z" fill="#1A0F0A"/>
+          <polygon points="9,30 0,37 9,44" fill="#1A0F0A"/>
+          <circle cx="35" cy="24" r="4" fill="#fff"/>
         </svg>
       </div>
 
@@ -658,9 +660,9 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
       <!-- Wimex — chevrons + wordmark -->
       <div class="logo-circle" style="padding:15px">
         <svg class="logo-svg" viewBox="0 0 72 28" xmlns="http://www.w3.org/2000/svg">
-          <polyline points="1,1 6,6 11,1" fill="none" stroke="#1A0F0A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></polyline>
-          <polyline points="1,8 6,13 11,8" fill="none" stroke="#1A0F0A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></polyline>
-          <polyline points="1,15 6,20 11,15" fill="none" stroke="#1A0F0A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></polyline>
+          <polyline points="1,1 6,6 11,1"  fill="none" stroke="#1A0F0A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="1,8 6,13 11,8"  fill="none" stroke="#1A0F0A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="1,15 6,20 11,15" fill="none" stroke="#1A0F0A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
           <text x="16" y="19" font-family="'Arial Black','Arial',sans-serif" font-size="14" font-weight="900" fill="#1A0F0A" letter-spacing="0.3">WIMEX</text>
         </svg>
       </div>
@@ -675,13 +677,13 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
       <!-- Glerups — sheep + wordmark -->
       <div class="logo-circle" style="padding:13px">
         <svg class="logo-svg" viewBox="0 0 64 40" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="38" cy="11" rx="13" ry="8" fill="#1A0F0A"></ellipse>
-          <ellipse cx="23" cy="13" rx="6.5" ry="5.5" fill="#1A0F0A"></ellipse>
-          <ellipse cx="18" cy="9" rx="2.5" ry="3" fill="#1A0F0A"></ellipse>
-          <rect x="27" y="18" width="2.5" height="5" rx="1" fill="#1A0F0A"></rect>
-          <rect x="32" y="18" width="2.5" height="5" rx="1" fill="#1A0F0A"></rect>
-          <rect x="38" y="18" width="2.5" height="5" rx="1" fill="#1A0F0A"></rect>
-          <rect x="44" y="18" width="2.5" height="5" rx="1" fill="#1A0F0A"></rect>
+          <ellipse cx="38" cy="11" rx="13" ry="8" fill="#1A0F0A"/>
+          <ellipse cx="23" cy="13" rx="6.5" ry="5.5" fill="#1A0F0A"/>
+          <ellipse cx="18" cy="9" rx="2.5" ry="3" fill="#1A0F0A"/>
+          <rect x="27" y="18" width="2.5" height="5" rx="1" fill="#1A0F0A"/>
+          <rect x="32" y="18" width="2.5" height="5" rx="1" fill="#1A0F0A"/>
+          <rect x="38" y="18" width="2.5" height="5" rx="1" fill="#1A0F0A"/>
+          <rect x="44" y="18" width="2.5" height="5" rx="1" fill="#1A0F0A"/>
           <text x="32" y="37" font-family="'Playfair Display','Georgia',serif" font-size="12" font-weight="700" fill="#1A0F0A" text-anchor="middle" letter-spacing="0.2">glerups</text>
         </svg>
       </div>
@@ -689,8 +691,8 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
       <!-- Quooker — Q mark + wordmark -->
       <div class="logo-circle" style="padding:18px">
         <svg class="logo-svg" viewBox="0 0 72 20" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="9" cy="10" r="7.5" fill="none" stroke="#1A0F0A" stroke-width="2.8"></circle>
-          <line x1="5" y1="16" x2="13" y2="22" stroke="#1A0F0A" stroke-width="2.8" stroke-linecap="round"></line>
+          <circle cx="9" cy="10" r="7.5" fill="none" stroke="#1A0F0A" stroke-width="2.8"/>
+          <line x1="5" y1="16" x2="13" y2="22" stroke="#1A0F0A" stroke-width="2.8" stroke-linecap="round"/>
           <text x="20" y="16" font-family="'DM Sans','Arial',sans-serif" font-size="15" font-weight="700" fill="#1A0F0A" letter-spacing="-0.3">uooker</text>
           <text x="69" y="6" font-family="Arial,sans-serif" font-size="5.5" fill="#1A0F0A">®</text>
         </svg>
@@ -722,27 +724,27 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
   <div class="page" id="niches">
     <div class="rule" style="margin-bottom:24px"></div>
 
-    <div class="rv on"><p class="niche-eyebrow">Niche 01</p><h2 class="niche-title"><em>Outdoor</em> Living</h2></div>
-    <div class="vids rv d1 on">
-      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style="display: none;"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Uploading…</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><video src="/videos/video_1782386646207.mp4?t=1782386652448" loop="" playsinline="" style="width: 100%; aspect-ratio: 9 / 16; object-fit: cover; display: block; border-radius: 0px;"></video><div class="vid-meta"><div class="vid-desc">Terrace reveal — outdoor styling transformation</div></div></div>
-      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style="display: none;"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Uploading…</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><video src="/videos/video_1782386652458.mp4?t=1782386657702" loop="" playsinline="" style="width: 100%; aspect-ratio: 9 / 16; object-fit: cover; display: block; border-radius: 0px;"></video><div class="vid-meta"><div class="vid-desc">Garden furniture &amp; product integration</div></div></div>
-      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style="display: flex;"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Uploading…</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Scandinavian summer outdoor styling</div></div></div>
-    </div>
-
-    <div class="niche-rule"></div>
-    <div class="rv on"><p class="niche-eyebrow">Niche 02</p><h2 class="niche-title"><em>Home</em> Decor</h2></div>
-    <div class="vids rv d1 on">
-      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">16M views</div></div><div class="vid-meta"><div class="vid-desc">Living room reveal — before &amp; after</div></div></div>
-      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">13M views</div></div><div class="vid-meta"><div class="vid-desc">Scandinavian kitchen — product campaign</div></div></div>
-      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Room transformation — interior styling</div></div></div>
-    </div>
-
-    <div class="niche-rule"></div>
-    <div class="rv on"><p class="niche-eyebrow">Niche 03</p><h2 class="niche-title"><em>Smart</em> Home</h2></div>
+    <div class="rv"><p class="niche-eyebrow">Niche 01</p><h2 class="niche-title"><em>Outdoor</em> Living</h2></div>
     <div class="vids rv d1">
-      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Smart lighting setup — product integration</div></div></div>
-      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Home automation — real home walkthrough</div></div></div>
-      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Set link</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Tech meets Scandinavian design</div></div></div>
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Terrace reveal — outdoor styling transformation</div></div></div>
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Garden furniture &amp; product integration</div></div></div>
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Scandinavian summer outdoor styling</div></div></div>
+    </div>
+
+    <div class="niche-rule"></div>
+    <div class="rv"><p class="niche-eyebrow">Niche 02</p><h2 class="niche-title"><em>Home</em> Decor</h2></div>
+    <div class="vids rv d1">
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">16M views</div></div><div class="vid-meta"><div class="vid-desc">Living room reveal — before &amp; after</div></div></div>
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">13M views</div></div><div class="vid-meta"><div class="vid-desc">Scandinavian kitchen — product campaign</div></div></div>
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Room transformation — interior styling</div></div></div>
+    </div>
+
+    <div class="niche-rule"></div>
+    <div class="rv"><p class="niche-eyebrow">Niche 03</p><h2 class="niche-title"><em>Smart</em> Home</h2></div>
+    <div class="vids rv d1">
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Smart lighting setup — product integration</div></div></div>
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Home automation — real home walkthrough</div></div></div>
+      <div class="vid-card"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder"><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Tech meets Scandinavian design</div></div></div>
     </div>
   </div>
 </section>
@@ -762,7 +764,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
         <div class="pie-card-sub">Top markets by engagements</div>
         <div class="pie-wrap">
           <div class="pie-canvas-wrap"><canvas class="pie" id="pie1" width="130" height="130"></canvas><div class="pie-tooltip" id="tt1"></div></div>
-          <div class="pie-legend" id="leg1"><div class="leg-item"><div class="leg-dot" style="background:#7A2020"></div><span class="leg-label">Denmark 🇩🇰</span><span class="leg-pct">21.6%</span></div><div class="leg-item"><div class="leg-dot" style="background:#9B3A2A"></div><span class="leg-label">Germany 🇩🇪</span><span class="leg-pct">10.4%</span></div><div class="leg-item"><div class="leg-dot" style="background:#B55A3A"></div><span class="leg-label">Sweden 🇸🇪</span><span class="leg-pct">6.9%</span></div><div class="leg-item"><div class="leg-dot" style="background:#C8A882"></div><span class="leg-label">United States 🇺🇸</span><span class="leg-pct">6.9%</span></div><div class="leg-item"><div class="leg-dot" style="background:#B89A7A"></div><span class="leg-label">Netherlands 🇳🇱</span><span class="leg-pct">6%</span></div><div class="leg-item"><div class="leg-dot" style="background:#DDD5C8"></div><span class="leg-label">Other</span><span class="leg-pct">48.2%</span></div></div>
+          <div class="pie-legend" id="leg1"></div>
         </div>
       </div>
       <div class="pie-card">
@@ -770,7 +772,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
         <div class="pie-card-sub">Age group breakdown</div>
         <div class="pie-wrap">
           <div class="pie-canvas-wrap"><canvas class="pie" id="pie2" width="130" height="130"></canvas><div class="pie-tooltip" id="tt2"></div></div>
-          <div class="pie-legend" id="leg2"><div class="leg-item"><div class="leg-dot" style="background:#7A2020"></div><span class="leg-label">18–24</span><span class="leg-pct">14%</span></div><div class="leg-item"><div class="leg-dot" style="background:#9B3A2A"></div><span class="leg-label">25–34</span><span class="leg-pct">38%</span></div><div class="leg-item"><div class="leg-dot" style="background:#B55A3A"></div><span class="leg-label">35–44</span><span class="leg-pct">28%</span></div><div class="leg-item"><div class="leg-dot" style="background:#C8A882"></div><span class="leg-label">45–54</span><span class="leg-pct">13%</span></div><div class="leg-item"><div class="leg-dot" style="background:#DDD5C8"></div><span class="leg-label">55+</span><span class="leg-pct">7%</span></div></div>
+          <div class="pie-legend" id="leg2"></div>
         </div>
       </div>
     </div>
@@ -980,7 +982,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
 
           <div class="deliv-section" style="border-bottom:none;padding-bottom:0">
             <div class="deliv-head">Your details</div>
-            <input class="cf-email" type="email" id="f-email" placeholder="Email address" required="" style="margin-bottom:10px">
+            <input class="cf-email" type="email" id="f-email" placeholder="Email address" required style="margin-bottom:10px">
             <textarea class="cf-msg" id="f-msg" placeholder="Any other details, campaign goals, or launch dates…" rows="3"></textarea>
             <button class="cf-submit" type="submit" style="margin-top:12px;width:100%">Send inquiry →</button>
           </div>
@@ -1055,7 +1057,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
 
           <div class="deliv-section" style="border-bottom:none;padding-bottom:0">
             <div class="deliv-head">Your details</div>
-            <input class="cf-email" type="email" id="u-email" placeholder="Email address" required="" style="margin-bottom:10px">
+            <input class="cf-email" type="email" id="u-email" placeholder="Email address" required style="margin-bottom:10px">
             <textarea class="cf-msg" id="u-msg" placeholder="Any other details, campaign goals, or product info…" rows="3"></textarea>
             <button class="cf-submit" type="submit" style="margin-top:12px;width:100%">Send inquiry →</button>
           </div>
@@ -1081,27 +1083,27 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
     <p class="s-eyebrow">Find us on</p>
     <div class="soc-links">
       <a class="soc-link editable-link" href="https://www.instagram.com/byggeligt.home/" target="_blank" rel="noopener" style="position:relative">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         <span class="soc-name">Instagram</span>
         <span class="soc-handle">@byggeligt.home</span>
       </a>
       <a class="soc-link editable-link" href="https://www.tiktok.com/@byggeligt" target="_blank" rel="noopener" style="position:relative">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
         <span class="soc-name">TikTok</span>
         <span class="soc-handle">@byggeligt</span>
       </a>
       <a class="soc-link editable-link" href="https://dk.pinterest.com/byggeligt/" target="_blank" rel="noopener" style="position:relative">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.236 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.598-.299-1.482c0-1.388.806-2.428 1.808-2.428.852 0 1.265.64 1.265 1.408 0 .858-.546 2.14-.828 3.33-.236.995.499 1.806 1.476 1.806 1.771 0 3.132-1.867 3.132-4.563 0-2.386-1.716-4.054-4.164-4.054-2.836 0-4.5 2.126-4.5 4.326 0 .856.33 1.775.741 2.276a.3.3 0 0 1 .069.285c-.076.31-.244.995-.277 1.134-.044.183-.145.222-.334.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.966-.527-2.292-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z"></path></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.236 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.181-.78 1.172-4.97 1.172-4.97s-.299-.598-.299-1.482c0-1.388.806-2.428 1.808-2.428.852 0 1.265.64 1.265 1.408 0 .858-.546 2.14-.828 3.33-.236.995.499 1.806 1.476 1.806 1.771 0 3.132-1.867 3.132-4.563 0-2.386-1.716-4.054-4.164-4.054-2.836 0-4.5 2.126-4.5 4.326 0 .856.33 1.775.741 2.276a.3.3 0 0 1 .069.285c-.076.31-.244.995-.277 1.134-.044.183-.145.222-.334.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.966-.527-2.292-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
         <span class="soc-name">Pinterest</span>
         <span class="soc-handle">@byggeligt</span>
       </a>
       <a class="soc-link editable-link" href="https://www.youtube.com/@byggeligt" target="_blank" rel="noopener" style="position:relative">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"></path><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"></polygon></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
         <span class="soc-name">YouTube</span>
         <span class="soc-handle">@byggeligt</span>
       </a>
       <a class="soc-link editable-link" href="https://www.facebook.com/byggeligt.home/" target="_blank" rel="noopener" style="position:relative">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
         <span class="soc-name">Facebook</span>
         <span class="soc-handle">byggeligt.home</span>
       </a>
@@ -1115,12 +1117,12 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
     <div class="c-hand">Let's work together</div>
     <h2 class="c-title">Build a <em>partnership,</em><br>not just a campaign.</h2>
     <p class="c-sub">We work with brands that value quality, authenticity, and beautiful design.</p>
-    <a class="c-btn" href="mailto:contact@byggeligt.com" style="">Get in touch</a>
+    <a class="c-btn" href="mailto:contact@byggeligt.com">Get in touch</a>
     <div class="c-handles">
-      <a href="https://instagram.com/byggeligt.home" class="handle editable-link" target="_blank" style=""><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg><span>@byggeligt.home</span></a>
-      <a href="https://tiktok.com/@byggeligt.home" class="handle editable-link" target="_blank" style=""><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg><span>@byggeligt.home</span></a>
-      <a href="mailto:contact@byggeligt.com" class="handle editable-link" style=""><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><span>contact@byggeligt.com</span></a>
-      <a href="https://byggeligt.com" class="handle editable-link" target="_blank" style=""><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg><span>byggeligt.com</span></a>
+      <a href="https://instagram.com/byggeligt.home" class="handle editable-link" target="_blank"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><span>@byggeligt.home</span></a>
+      <a href="https://tiktok.com/@byggeligt.home" class="handle editable-link" target="_blank"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg><span>@byggeligt.home</span></a>
+      <a href="mailto:contact@byggeligt.com" class="handle editable-link"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>contact@byggeligt.com</span></a>
+      <a href="https://byggeligt.com" class="handle editable-link" target="_blank"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg><span>byggeligt.com</span></a>
     </div>
   </div>
 </section>
@@ -1435,19 +1437,46 @@ function selectUR(btn){
   document.querySelectorAll('#ur-group .ur-pill').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
 }
-/* ── Video link preview ── */
+/* ── Video URL / preview ── */
+function getGDriveId(url){
+  // Handles: /file/d/ID/view, /file/d/ID/edit, open?id=ID, uc?id=ID
+  const m=url.match(/\/file\/d\/([^\/\?&]+)/)||url.match(/[?&]id=([^&]+)/);
+  return m?m[1]:null;
+}
+
+function normalizeVideoUrl(url){
+  // Dropbox: make it a direct streaming link
+  if(url.includes('dropbox.com')){
+    url=url.replace('www.dropbox.com','dl.dropboxusercontent.com')
+           .replace(/[?&]dl=\d/,'');
+    if(!url.includes('dl.dropboxusercontent.com'))
+      url=url.replace('dropbox.com','dl.dropboxusercontent.com');
+  }
+  return url;
+}
+
+function isVideoUrl(url){
+  return /\.(mp4|webm|mov|m4v|ogg)(\?.*)?$/i.test(url) ||
+         url.includes('dropbox.com') ||
+         url.includes('dl.dropboxusercontent.com') ||
+         url.includes('cloudinary.com') ||
+         url.includes('amazonaws.com') ||
+         url.includes('bunnycdn.com');
+}
+
 function setVidLink(btn){
   if(!editMode)return;
   const card=btn.closest('.vid-card');
   const current=card.dataset.href||'';
-  const url=prompt('Paste Instagram, TikTok or YouTube URL:',current);
+  const url=prompt('Paste a video link — Google Drive, Dropbox, or any direct .mp4 URL:',current);
   if(url===null)return;
   if(!url.trim()){
     card.removeAttribute('data-href');
     card.classList.remove('has-link');
-    // restore placeholder if no preview
     const prev=card.querySelector('.vid-preview');
     if(prev)prev.remove();
+    const ph=card.querySelector('.vid-placeholder');
+    if(ph)ph.style.display='';
     return;
   }
   card.dataset.href=url.trim();
@@ -1460,74 +1489,49 @@ function applyVidPreview(card,url){
   if(old)old.remove();
   const ph=card.querySelector('.vid-placeholder');
 
-  const ytMatch=url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?\/]+)/);
-  const igMatch=url.match(/instagram\.com\/(?:p|reel|reels)\/([A-Za-z0-9_-]+)/);
-  const ttMatch=url.match(/tiktok\.com\/@[^\/]+\/video\/(\d+)/);
-
-  let embedUrl='',platform='fallback';
-  if(ytMatch){
-    const id=ytMatch[1];
-    embedUrl=`https://www.youtube.com/embed/${id}?autoplay=1&mute=1&loop=1&playlist=${id}&controls=0&modestbranding=1&playsinline=1`;
-    platform='youtube';
-  } else if(igMatch){
-    const code=igMatch[1];
-    const type=url.includes('/reel')?'reel':'p';
-    embedUrl=`https://www.instagram.com/${type}/${code}/embed/`;
-    platform='instagram';
-  } else if(ttMatch){
-    embedUrl=`https://www.tiktok.com/embed/v2/${ttMatch[1]}`;
-    platform='tiktok';
-  }
-
   const wrapper=document.createElement('div');
   wrapper.className='vid-preview';
   wrapper.style.cssText='width:100%;aspect-ratio:9/16;position:relative;overflow:hidden;border-radius:10px 10px 0 0;background:#000;';
 
-  if(embedUrl){
+  const gdId=getGDriveId(url);
+
+  if(gdId){
+    // Google Drive — use the preview iframe which streams the video
+    // autoplay=1 triggers playback; it loops via JS after load
     const iframe=document.createElement('iframe');
-    iframe.src=embedUrl;
-    iframe.setAttribute('allow','autoplay;encrypted-media;picture-in-picture');
+    iframe.src=`https://drive.google.com/file/d/${gdId}/preview?autoplay=1`;
+    iframe.setAttribute('allow','autoplay;encrypted-media');
     iframe.setAttribute('allowfullscreen','');
-    iframe.setAttribute('scrolling','no');
     iframe.setAttribute('frameborder','0');
-    if(platform==='instagram'){
-      // Instagram embed is ~400px wide — center and crop to fill the 9:16 card
-      // Leave pointer-events active so the play button and Instagram interactions work
-      iframe.style.cssText='position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:400px;height:calc(100% + 120px);border:none;';
-      iframe.classList.add('ig-iframe');
-    } else {
-      // YouTube/TikTok autoplay — block interaction, click overlay opens link
-      iframe.style.cssText='position:absolute;inset:0;width:100%;height:100%;border:none;pointer-events:none;';
-    }
+    // Let pointer-events through so the video player is interactive
+    iframe.style.cssText='position:absolute;inset:0;width:100%;height:100%;border:none;';
+    iframe.classList.add('gdrive-iframe');
     wrapper.appendChild(iframe);
+  } else if(isVideoUrl(url)){
+    // Direct video URL — autoplay muted loop via IntersectionObserver
+    const vid=document.createElement('video');
+    vid.src=normalizeVideoUrl(url);
+    vid.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+    wrapper.appendChild(vid);
+    observeVideo(vid);
   } else {
     wrapper.style.background='linear-gradient(135deg,#1A0F0A,#3A2010)';
     const fb=document.createElement('div');
-    fb.style.cssText='position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:40px;opacity:.4;';
-    fb.textContent='▶';
+    fb.style.cssText='position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;gap:8px;';
+    fb.innerHTML='<div style="font-size:32px;opacity:.3">▶</div><div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;opacity:.4;font-family:var(--sans)">Paste a video URL</div>';
     wrapper.appendChild(fb);
   }
 
-  // For non-Instagram: transparent overlay handles click-to-open
-  if(platform!=='instagram'){
-    const clickLayer=document.createElement('div');
-    clickLayer.style.cssText='position:absolute;inset:0;z-index:5;cursor:pointer;';
-    clickLayer.onclick=function(){if(!editMode)window.open(card.dataset.href,'_blank');};
-    wrapper.appendChild(clickLayer);
-  }
+  // In edit mode, block iframe clicks so the change button is reachable
+  const editBlock=document.createElement('div');
+  editBlock.className='vid-edit-block';
+  editBlock.style.cssText='position:absolute;inset:0;z-index:5;display:none;';
+  wrapper.appendChild(editBlock);
 
-  // Edit-mode overlay for Instagram (blocks iframe interaction while editing)
-  if(platform==='instagram'){
-    const editLayer=document.createElement('div');
-    editLayer.className='ig-edit-layer';
-    editLayer.style.cssText='position:absolute;inset:0;z-index:5;display:none;';
-    wrapper.appendChild(editLayer);
-  }
-
-  // Edit-mode change-link button
+  // Edit-mode change-video button
   const changeBtn=document.createElement('button');
   changeBtn.className='vid-change-link';
-  changeBtn.textContent='✎ Change link';
+  changeBtn.textContent='✎ Change video';
   changeBtn.style.cssText='display:none;position:absolute;top:8px;right:8px;z-index:6;background:rgba(0,0,0,.65);color:#fff;border:none;border-radius:4px;padding:5px 10px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;font-family:var(--sans)';
   changeBtn.onclick=function(e){e.stopPropagation();setVidLink(card.querySelector('.vid-link-btn'));};
   wrapper.appendChild(changeBtn);
@@ -1603,6 +1607,5 @@ function prepareUGC(e){
   document.getElementById('h-umsg-val').value=document.getElementById('u-msg').value;
 }
 </script>
-
-
-</body></html>
+</body>
+</html>
