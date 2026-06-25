@@ -1085,6 +1085,12 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
 <input type="file" id="photo-input" accept="image/*" style="display:none">
 <input type="file" id="video-input" accept="video/mp4,video/webm,video/quicktime,video/mov" style="display:none">
 
+<!-- Vercel Blob client SDK — enables direct browser→storage uploads (bypasses the 4.5 MB serverless body limit) -->
+<script type="module">
+  import { upload } from 'https://esm.sh/@vercel/blob@2.4.1/client';
+  window.vercelBlobUpload = upload;
+</script>
+
 <script>
 /* ══ CURSOR ══ */
 const cur=document.getElementById('cur'),ring=document.getElementById('cur-r');
@@ -1350,25 +1356,37 @@ document.getElementById('video-input').addEventListener('change',function(){
   target.insertBefore(wrap,placeholder||target.firstChild);
   observeVideo(vid);
 
-  // Upload to GitHub sequentially — each upload+save waits for the previous to finish
-  const reader=new FileReader();
-  reader.onload=function(e){
-    const base64=e.target.result.split(',')[1];
-    const ext=file.name.split('.').pop()||'mp4';
-    const filename='video_'+Date.now()+'.'+ext;
-    _uploadChain=_uploadChain.then(async()=>{
-      try{
-        const res=await fetch('/api/upload-video',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({filename,content:base64})});
-        if(res.ok){
-          const {url}=await res.json();
-          wrap.classList.remove('vid-blob');
-          target.dataset.src=url;
-          await saveHTMLCore();
-        }
-      }catch(err){console.warn('Upload or save failed:',err);}
-    });
-  };
-  reader.readAsDataURL(file);
+  // Upload sequentially — each upload+save waits for the previous to finish.
+  // The file streams DIRECTLY from the browser to Vercel Blob storage (no
+  // base64, no serverless body limit), then we record the returned URL in
+  // data-src and persist index.html.
+  const ext=file.name.split('.').pop()||'mp4';
+  const pathname='video_'+Date.now()+'.'+ext;
+  _uploadChain=_uploadChain.then(async()=>{
+    try{
+      if(typeof window.vercelBlobUpload!=='function'){
+        throw new Error('Uploader still loading — try again in a moment.');
+      }
+      const blob=await window.vercelBlobUpload(pathname,file,{
+        access:'public',
+        handleUploadUrl:'/api/upload-video',
+        contentType:file.type||'video/mp4',
+      });
+      wrap.classList.remove('vid-blob');
+      target.dataset.src=blob.url;
+      await saveHTMLCore();
+    }catch(err){
+      console.warn('Upload or save failed:',err);
+      // Surface the failure instead of silently dropping the video
+      wrap.remove();
+      delete target.dataset.src;
+      if(overlay)overlay.style.display='';
+      if(placeholder){placeholder.style.display='';placeholder.style.removeProperty('display');}
+      const ph=target.querySelector('.vid-placeholder');
+      if(ph)ph.style.display='';
+      alert('Video upload failed: '+((err&&err.message)?err.message:err));
+    }
+  });
 });
 function uploadVideo(overlayBtn){
   if(!editMode)return;
