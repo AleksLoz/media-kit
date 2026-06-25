@@ -1244,15 +1244,17 @@ charts.forEach(cfg=>{
 /* ══════════════════════════════════════
    VIDEO — scroll autoplay (muted, no sound)
 ══════════════════════════════════════ */
+let _vidReady=false;setTimeout(()=>{_vidReady=true;},1500);
 const videoObs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     const v=e.target;
     if(e.isIntersecting){v.play().catch(()=>{});}
-    else{v.pause();}
+    else if(_vidReady){v.pause();}
   });
 },{threshold:0.1});
 
 function observeVideo(v){
+  v.setAttribute('muted','');v.setAttribute('playsinline','');
   v.muted=true;v.loop=true;v.playsInline=true;
   videoObs.observe(v);
 }
@@ -1573,8 +1575,10 @@ document.addEventListener('DOMContentLoaded',function(){
   document.querySelectorAll('.vid-card[data-src]').forEach(card=>{
     const ph=card.querySelector('.vid-placeholder');
     const vid=document.createElement('video');
+    vid.setAttribute('muted','');vid.setAttribute('autoplay','');vid.setAttribute('playsinline','');vid.setAttribute('loop','');
+    vid.muted=true;vid.loop=true;vid.playsInline=true;vid.autoplay=true;
+    vid.preload='auto';
     vid.src=card.dataset.src;
-    vid.muted=true;vid.loop=true;vid.playsInline=true;
     vid.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:0';
     const wrap=document.createElement('div');
     wrap.className='vid-preview';
@@ -1596,8 +1600,8 @@ document.addEventListener('DOMContentLoaded',function(){
     };
     if(ph)ph.style.display='none';
     card.insertBefore(wrap,ph||card.firstChild);
-    vid.autoplay=true;
     observeVideo(vid);
+    vid.load();
     vid.addEventListener('canplay',()=>vid.play().catch(()=>{}),{once:true});
   });
   // Video cards do NOT open links on click — videos just play silently
