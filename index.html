@@ -182,9 +182,6 @@ canvas.pie{display:block}
 body.edit-on .vid-card:hover .vid-upload-overlay{display:flex}
 body.edit-on .vid-card.has-link:hover .vid-upload-overlay{display:none}
 body.edit-on .vid-card[data-src]:hover .vid-upload-overlay{display:none}
-.vid-compress-status{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(26,15,10,.93);color:var(--cream);font-size:10px;letter-spacing:.13em;text-transform:uppercase;font-family:var(--sans);z-index:5;border-radius:10px 10px 0 0;gap:10px}
-.vid-compress-bar{width:60%;height:3px;background:rgba(255,255,255,.2);border-radius:2px;overflow:hidden}
-.vid-compress-fill{height:100%;background:#C4A46B;border-radius:2px;transition:width .15s;width:0%}
 .vid-remove-btn{display:none;position:absolute;top:8px;left:8px;z-index:6;background:rgba(180,30,30,.8);color:#fff;border:none;border-radius:4px;padding:5px 10px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;font-family:var(--sans)}
 body.edit-on .vid-preview:hover .vid-remove-btn{display:block}
 /* Block video/iframe clicks in edit mode so change-video button is reachable */
@@ -1376,61 +1373,13 @@ function uploadPhoto(imgId,phId){
   document.getElementById('photo-input').click();
 }
 
-/* ── FFmpeg compression ── */
-// Cache scripts + blob URLs across calls; create a FRESH FFmpeg instance each time
-// (reusing a single instance causes stuck-at-0% on 3rd+ upload)
-let _ffScriptsLoaded=false,_ffScriptsLoading=false;
-let _ffCoreURL=null,_ffWasmURL=null;
-async function ensureFFScripts(){
-  if(_ffScriptsLoaded)return;
-  if(_ffScriptsLoading){while(_ffScriptsLoading)await new Promise(r=>setTimeout(r,80));return;}
-  _ffScriptsLoading=true;
-  const load=src=>new Promise((res,rej)=>{const s=document.createElement('script');s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s);});
-  if(!window.FFmpegWASM)await load('https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js');
-  if(!window.FFmpegUtil)await load('https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js');
-  const {toBlobURL}=FFmpegUtil;
-  const base='https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';
-  _ffCoreURL=await toBlobURL(base+'/ffmpeg-core.js','text/javascript');
-  _ffWasmURL=await toBlobURL(base+'/ffmpeg-core.wasm','application/wasm');
-  _ffScriptsLoaded=true;_ffScriptsLoading=false;
-}
-async function compressVideo(file,statusEl,fillEl,cancelRef){
-  const THRESH=5*1024*1024;
-  if(file.size<=THRESH)return file; // small — skip
-  try{
-    await ensureFFScripts();
-    if(cancelRef&&cancelRef.cancelled)return null;
-    const {FFmpeg}=FFmpegWASM;
-    const ff=new FFmpeg(); // fresh instance every time — avoids stuck state
-    await ff.load({coreURL:_ffCoreURL,wasmURL:_ffWasmURL});
-    if(cancelRef&&cancelRef.cancelled)return null;
-    ff.on('progress',({progress})=>{
-      if(cancelRef&&cancelRef.cancelled)return;
-      const pct=Math.max(0,Math.min(100,Math.round(progress*100)));
-      if(fillEl)fillEl.style.width=pct+'%';
-      if(statusEl&&statusEl.firstChild)statusEl.firstChild.textContent='Compressing '+pct+'%';
-    });
-    const {fetchFile}=FFmpegUtil;
-    const ext=(file.name.split('.').pop()||'mp4').toLowerCase();
-    const inName='input.'+ext;
-    await ff.writeFile(inName,await fetchFile(file));
-    if(cancelRef&&cancelRef.cancelled)return null;
-    await ff.exec(['-i',inName,'-vf',"scale='min(720,iw)':-2",'-c:v','libx264','-crf','28','-preset','fast','-an','output.mp4']);
-    if(cancelRef&&cancelRef.cancelled)return null;
-    const data=await ff.readFile('output.mp4');
-    return new Blob([data.buffer],{type:'video/mp4'});
-  }catch(err){
-    if(cancelRef&&cancelRef.cancelled)return null;
-    console.warn('Compression failed, using original:',err);
-    return file;
-  }
-}
+
 
 /* ── Video upload ── */
 let _vidTarget=null;
 // Sequential GitHub upload queue — ensures each video's git commit lands before the next starts
 let _uploadChain=Promise.resolve();
-document.getElementById('video-input').addEventListener('change',async function(){
+document.getElementById('video-input').addEventListener('change',function(){
   if(!this.files[0]||!_vidTarget)return;
   const file=this.files[0];
   const target=_vidTarget;
@@ -1438,46 +1387,16 @@ document.getElementById('video-input').addEventListener('change',async function(
   const placeholder=target.querySelector('.vid-placeholder');
   this.value='';_vidTarget=null;
 
-  // Show compression status overlay on the card
-  const cancelRef={cancelled:false};
-  const statusEl=document.createElement('div');
-  statusEl.className='vid-compress-status';
-  const statusTxt=document.createTextNode(file.size>5*1024*1024?'Compressing 0%':'Processing…');
-  statusEl.appendChild(statusTxt);
-  const barEl=document.createElement('div');barEl.className='vid-compress-bar';
-  const fillEl=document.createElement('div');fillEl.className='vid-compress-fill';
-  barEl.appendChild(fillEl);statusEl.appendChild(barEl);
-  // Cancel button — lets user abort and re-upload a different file
-  const cancelBtn=document.createElement('button');
-  cancelBtn.textContent='✕ Cancel';
-  cancelBtn.style.cssText='background:none;border:1px solid rgba(255,255,255,.35);color:var(--cream);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:5px 14px;border-radius:4px;cursor:pointer;font-family:var(--sans);margin-top:2px';
-  cancelBtn.onclick=function(){
-    cancelRef.cancelled=true;
-    statusEl.remove();
-    if(placeholder){placeholder.style.removeProperty('display');}
-    if(overlay)overlay.style.display='';
-  };
-  statusEl.appendChild(cancelBtn);
-  if(placeholder)placeholder.style.display='none';
-  if(overlay)overlay.style.display='none';
-  target.appendChild(statusEl);
-
-  // Compress (or pass through if small), then show instantly via blob URL
-  const compressed=await compressVideo(file,statusEl,fillEl,cancelRef);
-  if(cancelRef.cancelled||!compressed)return; // user cancelled
-  statusEl.remove();
-
-  const blobUrl=URL.createObjectURL(compressed);
+  // Show immediately via blob URL
+  const blobUrl=URL.createObjectURL(file);
   const vid=document.createElement('video');
   vid.src=blobUrl;
   vid.muted=true;vid.loop=true;vid.playsInline=true;
   vid.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:0';
-  // Wrap in a vid-preview div so saveHTML can strip it cleanly
   const wrap=document.createElement('div');
   wrap.className='vid-preview vid-blob';
   wrap.style.cssText='width:100%;aspect-ratio:9/16;position:relative;overflow:hidden;border-radius:10px 10px 0 0;background:#000;';
   wrap.appendChild(vid);
-  // Edit-mode remove button (only visible in edit mode on hover)
   const removeBtn=document.createElement('button');
   removeBtn.className='vid-remove-btn';
   removeBtn.textContent='✕ Remove';
@@ -1498,15 +1417,12 @@ document.getElementById('video-input').addEventListener('change',async function(
   target.insertBefore(wrap,placeholder||target.firstChild);
   observeVideo(vid);
 
-  // Upload to GitHub in background — blob URL keeps playing during upload
+  // Upload to GitHub sequentially — each upload+save waits for the previous to finish
   const reader=new FileReader();
   reader.onload=function(e){
     const base64=e.target.result.split(',')[1];
-    const ext=compressed.type==='video/mp4'?'mp4':(file.name.split('.').pop()||'mp4');
+    const ext=file.name.split('.').pop()||'mp4';
     const filename='video_'+Date.now()+'.'+ext;
-    // Queue uploads AND saves sequentially in one chain
-    // Each step waits for the previous to fully complete (video committed + HTML saved)
-    // so GitHub SHA is always fresh — no conflicts possible
     _uploadChain=_uploadChain.then(async()=>{
       try{
         const res=await fetch('/api/upload-video',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({filename,content:base64})});
@@ -1514,13 +1430,12 @@ document.getElementById('video-input').addEventListener('change',async function(
           const {url}=await res.json();
           wrap.classList.remove('vid-blob');
           target.dataset.src=url;
-          // Save HTML immediately in-chain (not debounced, not parallel)
           await saveHTMLCore();
         }
       }catch(err){console.warn('Upload or save failed:',err);}
     });
   };
-  reader.readAsDataURL(compressed);
+  reader.readAsDataURL(file);
 });
 function uploadVideo(overlayBtn){
   if(!editMode)return;
