@@ -1,6 +1,6 @@
 const https = require('https');
 
-module.exports = async function handler(req, res) {
+const handler = async function(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
 
   if (req.method !== 'POST') {
@@ -35,7 +35,10 @@ module.exports = async function handler(req, res) {
       const req = https.request(options, r => {
         let raw = '';
         r.on('data', c => raw += c);
-        r.on('end', () => resolve({ status: r.statusCode, body: JSON.parse(raw) }));
+        r.on('end', () => {
+          try { resolve({ status: r.statusCode, body: JSON.parse(raw) }); }
+          catch(e) { resolve({ status: r.statusCode, body: { message: raw } }); }
+        });
       });
       req.on('error', reject);
       if (data) req.write(data);
@@ -63,3 +66,14 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: put.body.message });
   }
 };
+
+// Allow up to 10MB request body (for base64 photos)
+handler.config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb'
+    }
+  }
+};
+
+module.exports = handler;
