@@ -84,7 +84,7 @@ const handler = async function(req, res) {
     });
 
     if (update.status === 200) {
-      const url = `https://raw.githubusercontent.com/${owner}/${repo}/main/${filePath}`;
+      const url = `/videos/${filename}`; // Vercel serves this from the git repo
       return res.status(200).json({ url });
     }
 
