@@ -32,12 +32,13 @@ document.querySelectorAll('.stats-bar').forEach(el=>cObs.observe(el));
 const RUST='#7A2020',RUST2='#9B3A2A',RUST3='#B55A3A',SAND='#C8A882',TAN='#B89A7A',LIGHT='#DDD5C8';
 const charts=[
   {id:'pie1',tt:'tt1',data:[
-    {label:'Denmark 🇩🇰',pct:21.6,color:RUST},
+    {label:'Denmark 🇩🇰',pct:23,color:RUST},
     {label:'Germany 🇩🇪',pct:10.4,color:RUST2},
     {label:'Sweden 🇸🇪',pct:6.9,color:RUST3},
     {label:'United States 🇺🇸',pct:6.9,color:SAND},
     {label:'Netherlands 🇳🇱',pct:6.0,color:TAN},
-    {label:'Other',pct:48.2,color:LIGHT},
+    {label:'United Kingdom 🇬🇧',pct:5,color:'#C4855A'},
+    {label:'Other',pct:41.8,color:LIGHT},
   ]},
   {id:'pie2',tt:'tt2',data:[
     {label:'18–24',pct:14,color:RUST},
