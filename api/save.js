@@ -7,10 +7,8 @@ const https = require('https');
 // served from the repo and never written here — so we strip any inline blocks
 // and guarantee the external references + drop transient runtime state.
 function normalize(html) {
-  // Inline <style>…</style> -> external stylesheet link
-  if (/<style[^>]*>[\s\S]*?<\/style>/i.test(html)) {
-    html = html.replace(/<style[^>]*>[\s\S]*?<\/style>/i, '<link rel="stylesheet" href="/styles.css">');
-  }
+  // Strip ALL inline <style> blocks (app CSS lives in styles.css; Claude-injected styles also removed here)
+  html = html.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
   if (!/href="\/styles\.css"/i.test(html)) {
     html = html.replace(/<\/head>/i, '<link rel="stylesheet" href="/styles.css">\n</head>');
   }
@@ -29,6 +27,10 @@ function normalize(html) {
   html = html.replace(/<body[^>]*\bclass="hov"[^>]*>/i, '<body>');
   // Restore the hero load animation if a save dropped the class
   html = html.replace('class="hero-title" id="hero-h1"', 'class="hero-title animate" id="hero-h1"');
+  // Strip Claude browser-extension UI injected into the live DOM
+  // (glow border, "Claude is active" badge, animation styles)
+  html = html.replace(/<style id="claude-agent-animation-styles">[\s\S]*?<\/style>/gi, '');
+  html = html.replace(/<div id="claude-agent-glow-border"[\s\S]*/i, '</body>\n</html>\n');
   return html;
 }
 
