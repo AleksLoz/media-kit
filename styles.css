@@ -489,8 +489,9 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
 /* ── TESTIMONIAL HIGHLIGHT ── */
 .testi-hl{font-family:'Playfair Display',serif;font-style:italic;font-weight:700;color:var(--rust)}
 
-/* ── COLLAB FORM ON BURGUNDY (stands out as a coloured band) ── */
-.collab{background:var(--rust);padding:54px 0}
+/* ── COLLAB FORM ON BURGUNDY (framed card, not a full-bleed band) ── */
+.collab{background:transparent;padding:48px 16px}
+.collab .page{background:var(--rust);border-radius:18px;padding:42px 34px}
 .collab .rule{background:rgba(245,240,232,.18)}
 .collab .s-eyebrow{color:var(--sand)}
 .collab .s-title{color:var(--cream)}
@@ -547,9 +548,9 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
   /* PLATFORMS */
   .plat-grid{grid-template-columns:1fr}
 
-  /* NICHES — reels as a 2-up grid (readable captions) */
+  /* NICHES — keep reels 3-up on mobile (Instagram-style grid) */
   .niche-title{font-size:24px}
-  .vids{grid-template-columns:repeat(2,1fr);gap:8px}
+  .vids{grid-template-columns:repeat(3,1fr);gap:6px}
   .brand-q{padding:18px}
 
   /* PACKAGES */
