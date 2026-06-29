@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css">
 <style>
-/* ── HERO ── */
 .calc-hero{background:var(--cream);padding:92px 0 28px}
 .calc-badge{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--rust);margin-bottom:8px}
 .calc-h1{font-family:var(--serif);font-size:58px;font-weight:900;line-height:.92;color:var(--rust);letter-spacing:-.025em;margin-bottom:16px}
@@ -16,118 +15,66 @@
 .calc-intro{font-size:14px;color:var(--mid);line-height:1.85;max-width:540px;margin-bottom:24px}
 .calc-intro strong{color:var(--dark);font-weight:500}
 
-/* ── CURRENCY PICKER ── */
 .currency-row{display:flex;align-items:center;gap:10px;margin-bottom:4px}
 .currency-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--mid)}
 .currency-pills{display:flex;gap:6px}
-.cur-pill{
-  padding:6px 14px;border:0.5px solid rgba(122,32,32,.2);
-  border-radius:50px;background:#fff;font-family:var(--sans);
-  font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;
-  color:var(--mid);cursor:pointer;transition:all .18s;
-}
+.cur-pill{padding:6px 14px;border:0.5px solid rgba(122,32,32,.2);border-radius:50px;background:#fff;font-family:var(--sans);font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:var(--mid);cursor:pointer;transition:all .18s}
 .cur-pill:hover{border-color:var(--rust);color:var(--rust)}
 .cur-pill.active{background:var(--rust);border-color:var(--rust);color:#fff}
 
-/* ── MAIN WRAP ── */
 .calc-wrap{padding:20px 0 60px}
 
-/* ── DISCOUNT BANNER ── */
-.disc-banner{
-  display:none;align-items:center;gap:10px;
-  background:rgba(70,15,15,.06);border:0.5px solid rgba(70,15,15,.2);
-  border-radius:8px;padding:10px 16px;margin-bottom:18px;
-}
-.disc-banner.show{display:flex}
-.disc-text{font-size:12px;color:var(--dark);flex:1}
-.disc-text strong{color:var(--rust)}
-.disc-next-badge{
-  background:var(--rust);color:#fff;
-  font-size:9px;letter-spacing:.14em;text-transform:uppercase;
-  padding:3px 10px;border-radius:50px;white-space:nowrap;
-}
+.tab-row{display:flex;gap:0;margin-bottom:28px;border-bottom:1px solid rgba(122,32,32,.12)}
+.tab-btn{padding:12px 28px;border:none;background:transparent;cursor:pointer;font-family:var(--sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--mid);border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s}
+.tab-btn:hover{color:var(--dark)}
+.tab-btn.active{color:var(--rust);border-bottom-color:var(--rust)}
+.tab-content{display:none}
+.tab-content.active{display:block}
 
-/* ── PACKAGES ── */
 .strip-hd{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
 .strip-title{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--dark)}
 .strip-hint{font-size:10px;color:var(--mid);font-style:italic}
-.pkg-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px}
-.pkg-tile{
-  background:var(--offwhite);border:0.5px solid rgba(122,32,32,.15);
-  border-radius:12px;padding:16px 14px;display:flex;flex-direction:column;gap:3px;
-  transition:border-color .2s,box-shadow .2s,transform .2s;position:relative;overflow:hidden;
-}
+
+.pkg-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px}
+.pkg-strip.one-col{grid-template-columns:minmax(0,420px)}
+.pkg-tile{background:var(--offwhite);border:0.5px solid rgba(122,32,32,.15);border-radius:12px;padding:18px 16px;display:flex;flex-direction:column;gap:4px;transition:border-color .2s,box-shadow .2s,transform .2s;position:relative;overflow:hidden}
 .pkg-tile:hover{border-color:rgba(122,32,32,.35);box-shadow:0 6px 22px rgba(122,32,32,.1);transform:translateY(-2px)}
 .pkg-tile.featured{background:var(--rust);border-color:var(--rust)}
-.pkg-save{
-  position:absolute;top:10px;right:10px;
-  font-size:8px;letter-spacing:.14em;text-transform:uppercase;
-  background:rgba(122,32,32,.1);color:var(--rust);
-  padding:3px 7px;border-radius:50px;
-}
-.pkg-tile.featured .pkg-save{background:rgba(245,240,232,.2);color:rgba(245,240,232,.85)}
-.pkg-name{font-family:var(--serif);font-size:13px;font-weight:700;color:var(--dark);margin-bottom:1px}
+.pkg-save{position:absolute;top:10px;right:10px;font-size:8px;letter-spacing:.14em;text-transform:uppercase;background:rgba(122,32,32,.1);color:var(--rust);padding:3px 7px;border-radius:50px}
+.pkg-tile.featured .pkg-save{background:rgba(245,240,232,.18);color:rgba(245,240,232,.9)}
+.pkg-badge{font-size:8px;letter-spacing:.14em;text-transform:uppercase;background:rgba(245,240,232,.18);color:rgba(245,240,232,.9);padding:2px 9px;border-radius:50px;display:inline-block;align-self:flex-start;margin-bottom:2px}
+.pkg-name{font-family:var(--serif);font-size:15px;font-weight:700;color:var(--dark)}
 .pkg-tile.featured .pkg-name{color:#fff}
-.pkg-items{font-size:10px;color:var(--mid);line-height:1.6;flex:1}
+.pkg-items{font-size:10px;color:var(--mid);line-height:1.65;flex:1;margin:4px 0}
 .pkg-tile.featured .pkg-items{color:rgba(245,240,232,.6)}
-.pkg-price{font-family:var(--serif);font-size:20px;font-weight:700;color:var(--rust);margin-top:6px}
+.pkg-per{font-size:9px;color:var(--mid);margin-top:4px}
+.pkg-tile.featured .pkg-per{color:rgba(245,240,232,.5)}
+.pkg-price{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--rust);margin-top:2px}
 .pkg-tile.featured .pkg-price{color:#fff}
-.pkg-was{font-size:9px;color:var(--mid);text-decoration:line-through;margin-bottom:7px}
-.pkg-tile.featured .pkg-was{color:rgba(245,240,232,.4)}
-.pkg-btn{
-  display:block;width:100%;padding:8px;border:none;cursor:pointer;
-  background:#fff;color:var(--rust);
-  font-family:var(--sans);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
-  border-radius:6px;transition:background .18s;font-weight:500;
-}
+.pkg-was{font-size:9px;color:var(--mid);text-decoration:line-through}
+.pkg-tile.featured .pkg-was{color:rgba(245,240,232,.35);text-decoration:none}
+.pkg-btn{display:block;width:100%;padding:9px;border:none;cursor:pointer;background:#fff;color:var(--rust);font-family:var(--sans);font-size:9px;letter-spacing:.14em;text-transform:uppercase;border-radius:6px;transition:background .18s;font-weight:500;margin-top:10px}
 .pkg-btn:hover{background:var(--cream)}
-.pkg-tile.featured .pkg-btn{background:rgba(245,240,232,.15);color:#fff}
-.pkg-tile.featured .pkg-btn:hover{background:rgba(245,240,232,.25)}
+.pkg-tile.featured .pkg-btn{background:rgba(245,240,232,.14);color:#fff}
+.pkg-tile.featured .pkg-btn:hover{background:rgba(245,240,232,.24)}
 
-/* ── SECTION HEADER ── */
 .sec-hd{display:flex;align-items:center;gap:9px;margin:20px 0 10px}
-.sec-num{
-  width:22px;height:22px;border-radius:50%;background:var(--rust);color:#fff;
-  font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
+.sec-num{width:22px;height:22px;border-radius:50%;background:var(--rust);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .sec-title{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--dark);flex:1}
 .sec-aside{font-size:10px;color:var(--mid);font-style:italic}
 
-/* ── CATALOG PANEL ── */
 .cat-panel{background:var(--offwhite);border:0.5px solid rgba(122,32,32,.12);border-radius:12px;padding:16px;margin-bottom:10px}
-.cat-rows{display:flex;flex-direction:column;gap:8px}
-.cat-row{
-  display:flex;align-items:center;gap:10px;
-  background:#fff;border:0.5px solid rgba(122,32,32,.1);
-  border-radius:8px;padding:11px 13px;transition:border-color .2s;
-}
-.cat-row:hover{border-color:rgba(122,32,32,.28)}
-.cat-row.in-cart{border-color:rgba(122,32,32,.4);background:rgba(122,32,32,.025)}
-.cat-info{flex:1}
-.cat-name{font-size:13px;font-weight:500;color:var(--dark)}
-.cat-note{font-size:10px;color:var(--mid);margin-top:1px}
-.cat-price{font-family:var(--serif);font-size:14px;font-weight:700;color:var(--rust);flex-shrink:0;white-space:nowrap}
-.cat-qty-badge{
-  font-family:var(--serif);font-size:13px;font-weight:700;color:var(--rust);
-  width:18px;text-align:center;flex-shrink:0;display:none;
-}
-.cat-add{
-  width:32px;height:32px;border-radius:50%;
-  background:var(--rust);color:#fff;border:none;
-  font-size:20px;line-height:1;cursor:pointer;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-  transition:background .18s,transform .15s;
-}
-.cat-add:hover{background:var(--rust-deep);transform:scale(1.08)}
-.cat-add.added{background:var(--offwhite);color:var(--rust);border:0.5px solid rgba(122,32,32,.25);font-size:16px}
+.tog-rows{display:flex;flex-direction:column;gap:8px}
+.tog-row{display:flex;align-items:center;gap:10px;background:#fff;border:0.5px solid rgba(122,32,32,.1);border-radius:8px;padding:11px 13px;transition:border-color .2s}
+.tog-row:hover{border-color:rgba(122,32,32,.28)}
+.tog-row.tog-on{border-color:rgba(122,32,32,.4);background:rgba(122,32,32,.025)}
+.tog-info{flex:1}
+.tog-name{font-size:13px;color:var(--dark)}
+.tog-note{font-size:10px;color:var(--mid);margin-top:1px}
+.tog-price{font-family:var(--serif);font-size:13px;font-weight:700;color:var(--rust);flex-shrink:0;white-space:nowrap}
 
-/* Usage pills */
 .usage-pills{display:flex;flex-wrap:wrap;gap:7px}
-.usage-pill{
-  display:flex;align-items:center;gap:5px;padding:8px 14px;
-  border:0.5px solid rgba(122,32,32,.18);border-radius:7px;background:#fff;
-  cursor:pointer;transition:all .18s;font-family:var(--sans);user-select:none;
-}
+.usage-pill{display:flex;align-items:center;gap:5px;padding:8px 14px;border:0.5px solid rgba(122,32,32,.18);border-radius:7px;background:#fff;cursor:pointer;transition:all .18s;font-family:var(--sans);user-select:none}
 .usage-pill input{display:none}
 .usage-pill:hover{border-color:rgba(122,32,32,.4)}
 .usage-pill.active{background:var(--rust);border-color:var(--rust)}
@@ -138,126 +85,43 @@
 .usage-note{font-size:11px;color:var(--mid);margin-top:10px;padding:9px 12px;background:rgba(122,32,32,.04);border-radius:6px;border-left:2px solid rgba(122,32,32,.2);line-height:1.6}
 .usage-note strong{color:var(--rust)}
 
-/* Toggle rows */
-.tog-rows{display:flex;flex-direction:column;gap:8px}
-.tog-row{
-  display:flex;align-items:center;gap:10px;
-  background:#fff;border:0.5px solid rgba(122,32,32,.1);
-  border-radius:8px;padding:11px 13px;transition:border-color .2s;
-}
-.tog-row:hover{border-color:rgba(122,32,32,.28)}
-.tog-row.tog-on{border-color:rgba(122,32,32,.4);background:rgba(122,32,32,.025)}
-.tog-info{flex:1}
-.tog-name{font-size:13px;color:var(--dark)}
-.tog-note{font-size:10px;color:var(--mid);margin-top:1px}
-.tog-price{font-family:var(--serif);font-size:13px;font-weight:700;color:var(--rust);flex-shrink:0}
-
-/* ── QUOTE SUMMARY (bottom, full-width) ── */
 .quote-section{margin-top:32px;scroll-margin-top:80px}
-.quote-card{
-  background:var(--offwhite);border:0.5px solid rgba(122,32,32,.15);
-  border-radius:18px;padding:36px 34px;
-  box-shadow:0 20px 60px rgba(70,15,15,.1);
-}
-.q-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:28px;flex-wrap:wrap}
-.q-card-title-wrap{}
+.quote-card{background:var(--offwhite);border:0.5px solid rgba(122,32,32,.15);border-radius:18px;padding:36px 34px;box-shadow:0 20px 60px rgba(70,15,15,.1)}
+.q-card-top{margin-bottom:28px}
 .q-eyebrow{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--rust);margin-bottom:8px}
 .q-title{font-family:var(--serif);font-size:28px;font-weight:700;color:var(--dark);line-height:1.05}
 .q-title em{font-style:italic;color:var(--rust)}
-.q-disc-badge{
-  background:var(--rust);
-  border-radius:8px;padding:10px 16px;text-align:center;flex-shrink:0;
-}
-.q-disc-pct{font-family:var(--serif);font-size:28px;font-weight:700;color:#fff;line-height:1}
-.q-disc-tag{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,240,232,.7);margin-top:2px}
-
 .q-layout{display:grid;grid-template-columns:1fr 280px;gap:28px;align-items:start}
-
-/* items list */
 .q-items{display:flex;flex-direction:column;gap:7px}
 .q-empty{font-size:13px;color:rgba(138,112,96,.5);font-style:italic;font-family:var(--serif);padding:12px 0}
-.q-item{
-  display:flex;align-items:center;gap:8px;
-  padding:10px 12px;border-radius:8px;
-  background:#fff;border:0.5px solid rgba(122,32,32,.1);
-}
+.q-item{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:8px;background:#fff;border:0.5px solid rgba(122,32,32,.1)}
 .q-item:hover{border-color:rgba(122,32,32,.25)}
-.q-rm{
-  width:20px;height:20px;border-radius:50%;
-  background:rgba(122,32,32,.07);border:none;color:rgba(122,32,32,.4);
-  font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:background .15s,color .15s;flex-shrink:0;
-}
+.q-rm{width:20px;height:20px;border-radius:50%;background:rgba(122,32,32,.07);border:none;color:rgba(122,32,32,.4);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,color .15s;flex-shrink:0}
 .q-rm:hover{background:rgba(122,32,32,.15);color:var(--rust)}
 .q-item-name{font-size:12px;color:var(--dark);flex:1;line-height:1.35}
 .q-qty-ctrl{display:flex;align-items:center;gap:4px;flex-shrink:0}
-.qq-btn{
-  width:22px;height:22px;border-radius:4px;
-  background:rgba(122,32,32,.07);border:none;color:var(--rust);
-  font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:background .15s;
-}
+.qq-btn{width:22px;height:22px;border-radius:4px;background:rgba(122,32,32,.07);border:none;color:var(--rust);font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
 .qq-btn:hover{background:rgba(122,32,32,.14)}
 .qq-val{font-family:var(--serif);font-size:13px;font-weight:700;color:var(--dark);width:16px;text-align:center}
-.q-item-price{font-family:var(--serif);font-size:13px;font-weight:700;color:var(--rust);min-width:52px;text-align:right;flex-shrink:0}
+.q-item-price{font-family:var(--serif);font-size:13px;font-weight:700;color:var(--rust);min-width:60px;text-align:right;flex-shrink:0}
 .q-rule{height:0.5px;background:rgba(122,32,32,.12);margin:16px 0}
-
-/* totals panel */
 .q-totals{background:#fff;border:0.5px solid rgba(122,32,32,.13);border-radius:12px;padding:22px 20px}
-.q-sub-row,.q-disc-row,.q-total-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
-.q-sub-label,.q-disc-label{font-size:11px;color:var(--mid);letter-spacing:.08em}
-.q-sub-val{font-size:13px;color:var(--mid);text-decoration:line-through}
-.q-disc-label strong{color:var(--rust)}
-.q-disc-val{font-family:var(--serif);font-size:14px;font-weight:700;color:var(--rust)}
+.q-total-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
 .q-total-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid)}
 .q-total-val{font-family:var(--serif);font-size:38px;font-weight:900;color:var(--rust);letter-spacing:-.02em;line-height:1}
 .q-vat{font-size:9px;color:var(--mid);opacity:.6;margin-bottom:20px;margin-top:4px}
-
-.q-req-btn{
-  display:block;width:100%;text-align:center;
-  background:var(--rust);color:#fff;border:none;
-  font-family:var(--sans);font-size:10px;letter-spacing:.17em;text-transform:uppercase;
-  padding:13px;border-radius:8px;cursor:pointer;font-weight:500;
-  transition:background .2s,transform .18s;text-decoration:none;margin-bottom:8px;
-}
+.q-req-btn{display:block;width:100%;text-align:center;background:var(--rust);color:#fff;border:none;font-family:var(--sans);font-size:10px;letter-spacing:.17em;text-transform:uppercase;padding:13px;border-radius:8px;cursor:pointer;font-weight:500;transition:background .2s,transform .18s;text-decoration:none;margin-bottom:8px}
 .q-req-btn:hover{background:var(--rust-deep);transform:scale(1.02)}
-.q-pdf-btn{
-  display:block;width:100%;text-align:center;
-  background:transparent;color:var(--mid);border:0.5px solid rgba(122,32,32,.2);
-  font-family:var(--sans);font-size:10px;letter-spacing:.15em;text-transform:uppercase;
-  padding:11px;border-radius:8px;cursor:pointer;
-  transition:border-color .2s,color .2s;margin-bottom:14px;
-}
+.q-pdf-btn{display:block;width:100%;text-align:center;background:transparent;color:var(--mid);border:0.5px solid rgba(122,32,32,.2);font-family:var(--sans);font-size:10px;letter-spacing:.15em;text-transform:uppercase;padding:11px;border-radius:8px;cursor:pointer;transition:border-color .2s,color .2s;margin-bottom:14px}
 .q-pdf-btn:hover{border-color:var(--rust);color:var(--rust)}
-.q-copy-btn{
-  display:block;width:100%;background:transparent;border:none;
-  font-family:var(--sans);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
-  color:rgba(138,112,96,.5);cursor:pointer;padding:6px;transition:color .2s;
-}
+.q-copy-btn{display:block;width:100%;background:transparent;border:none;font-family:var(--sans);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(138,112,96,.5);cursor:pointer;padding:6px;transition:color .2s}
 .q-copy-btn:hover{color:var(--rust)}
 .q-foot{font-size:10px;color:var(--mid);opacity:.6;line-height:1.6;margin-top:14px}
 
-/* ── REQUEST MODAL ── */
-#req-modal{
-  display:none;position:fixed;inset:0;z-index:999;
-  background:rgba(26,15,10,.6);backdrop-filter:blur(6px);
-  align-items:center;justify-content:center;padding:20px;
-}
+#req-modal{display:none;position:fixed;inset:0;z-index:999;background:rgba(26,15,10,.6);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
 #req-modal.open{display:flex}
-.modal-card{
-  background:var(--offwhite);border-radius:18px;padding:40px 36px;
-  width:100%;max-width:480px;
-  box-shadow:0 32px 80px rgba(26,15,10,.28);
-  position:relative;max-height:90vh;overflow-y:auto;
-}
-.modal-close{
-  position:absolute;top:18px;right:18px;
-  width:30px;height:30px;border-radius:50%;
-  background:rgba(122,32,32,.08);border:none;
-  color:var(--rust);font-size:16px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:background .15s;
-}
+.modal-card{background:var(--offwhite);border-radius:18px;padding:40px 36px;width:100%;max-width:480px;box-shadow:0 32px 80px rgba(26,15,10,.28);position:relative;max-height:90vh;overflow-y:auto}
+.modal-close{position:absolute;top:18px;right:18px;width:30px;height:30px;border-radius:50%;background:rgba(122,32,32,.08);border:none;color:var(--rust);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
 .modal-close:hover{background:rgba(122,32,32,.15)}
 .modal-eyebrow{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--rust);margin-bottom:6px}
 .modal-title{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--dark);margin-bottom:6px;line-height:1.1}
@@ -265,112 +129,55 @@
 .modal-sub{font-size:12px;color:var(--mid);line-height:1.7;margin-bottom:22px}
 .modal-field{margin-bottom:12px}
 .modal-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);display:block;margin-bottom:5px}
-.modal-input{
-  width:100%;padding:11px 14px;
-  border:0.5px solid rgba(122,32,32,.18);border-radius:8px;
-  font-family:var(--sans);font-size:13px;color:var(--dark);
-  background:#fff;outline:none;transition:border-color .2s;
-  box-sizing:border-box;
-}
+.modal-input{width:100%;padding:11px 14px;border:0.5px solid rgba(122,32,32,.18);border-radius:8px;font-family:var(--sans);font-size:13px;color:var(--dark);background:#fff;outline:none;transition:border-color .2s;box-sizing:border-box}
 .modal-input:focus{border-color:var(--rust)}
 .modal-input::placeholder{color:rgba(138,112,96,.5)}
-.modal-quote-preview{
-  background:var(--cream);border:0.5px solid rgba(122,32,32,.12);
-  border-radius:8px;padding:12px 14px;margin-bottom:16px;
-  max-height:140px;overflow-y:auto;
-}
+.modal-quote-preview{background:var(--cream);border:0.5px solid rgba(122,32,32,.12);border-radius:8px;padding:12px 14px;margin-bottom:16px;max-height:160px;overflow-y:auto}
 .modal-q-line{display:flex;justify-content:space-between;font-size:11px;color:var(--mid);padding:3px 0;border-bottom:0.5px solid rgba(122,32,32,.07)}
 .modal-q-line:last-child{border-bottom:none;color:var(--dark);font-weight:500}
 .modal-q-line span:last-child{font-family:var(--serif);font-weight:700;color:var(--rust)}
-.modal-send-btn{
-  width:100%;padding:13px;border:none;border-radius:8px;
-  background:var(--rust);color:#fff;
-  font-family:var(--sans);font-size:10px;letter-spacing:.17em;text-transform:uppercase;
-  cursor:pointer;font-weight:500;transition:background .2s;
-}
+.modal-send-btn{width:100%;padding:13px;border:none;border-radius:8px;background:var(--rust);color:#fff;font-family:var(--sans);font-size:10px;letter-spacing:.17em;text-transform:uppercase;cursor:pointer;font-weight:500;transition:background .2s}
 .modal-send-btn:hover{background:var(--rust-deep)}
 .modal-send-btn:disabled{opacity:.6;cursor:not-allowed}
 .modal-err{font-size:11px;color:var(--rust);margin-top:8px;min-height:16px}
 
-/* ── STICKY SCROLL BAR ── */
-.sticky-bar{
-  position:fixed;bottom:0;left:0;right:0;z-index:300;
-  background:var(--dark);padding:12px 20px;
-  display:flex;align-items:center;justify-content:space-between;gap:16px;
-  box-shadow:0 -4px 20px rgba(26,15,10,.3);
-  transform:translateY(100%);transition:transform .3s cubic-bezier(.16,1,.3,1);
-}
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--dark);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 -4px 20px rgba(26,15,10,.3);transform:translateY(100%);transition:transform .3s cubic-bezier(.16,1,.3,1)}
 .sticky-bar.visible{transform:translateY(0)}
 .sb-left{display:flex;flex-direction:column;gap:1px}
 .sb-label{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,240,232,.35)}
 .sb-total{font-family:var(--serif);font-size:22px;font-weight:700;color:#fff}
 .sb-right{display:flex;gap:8px;align-items:center;flex-shrink:0}
-.sb-view{
-  background:rgba(245,240,232,.1);color:rgba(245,240,232,.7);border:none;
-  font-family:var(--sans);font-size:9px;letter-spacing:.13em;text-transform:uppercase;
-  padding:9px 14px;border-radius:6px;cursor:pointer;transition:background .18s;white-space:nowrap;
-}
+.sb-view{background:rgba(245,240,232,.1);color:rgba(245,240,232,.7);border:none;font-family:var(--sans);font-size:9px;letter-spacing:.13em;text-transform:uppercase;padding:9px 14px;border-radius:6px;cursor:pointer;transition:background .18s;white-space:nowrap}
 .sb-view:hover{background:rgba(245,240,232,.18)}
-.sb-req{
-  background:var(--rust);color:#fff;border:none;
-  font-family:var(--sans);font-size:9px;letter-spacing:.13em;text-transform:uppercase;
-  padding:9px 16px;border-radius:6px;cursor:pointer;transition:background .18s;white-space:nowrap;
-}
+.sb-req{background:var(--rust);color:#fff;border:none;font-family:var(--sans);font-size:9px;letter-spacing:.13em;text-transform:uppercase;padding:9px 16px;border-radius:6px;cursor:pointer;transition:background .18s;white-space:nowrap}
 .sb-req:hover{background:var(--rust-deep)}
 
-/* ── PRINT STYLES ── */
 @media print {
-  nav,.calc-hero,.calc-wrap .currency-row,.disc-banner,
-  .pkg-strip-head,.pkg-strip,.sec-hd,.cat-panel,.tog-rows,
-  .cat-rows,.usage-pills,.usage-note,
+  nav,.calc-hero,.calc-wrap .currency-row,.tab-row,.pkg-strip,
+  .sec-hd,.cat-panel,.tog-rows,.usage-pills,.usage-note,
   .contact,footer,.sticky-bar,#req-modal,
-  .q-card-top .q-disc-badge,
   .q-rm,.q-qty-ctrl,.q-pdf-btn,.q-copy-btn,.q-req-btn{display:none!important}
-
   body{background:#fff;cursor:auto}
   .calc-wrap{padding:0}
   .quote-section{margin:0;padding:0}
-  .quote-card{
-    background:#fff!important;box-shadow:none!important;
-    border:1px solid #e0d8d0;border-radius:8px;padding:24px;
-  }
-  .q-eyebrow,.q-title,.q-item-name,.q-total-label{color:#1A0F0A!important}
-  .q-title em,.q-disc-label strong,.q-disc-val,.q-item-price,.q-total-val{color:#460F0F!important}
-  .q-sub-label,.q-sub-val,.q-vat,.q-foot{color:#8A7060!important}
-  .q-item{background:#F5F0E8!important;border-color:#e0d8d0!important}
-  .q-item-name{color:#1A0F0A!important}
-  .q-rule{background:#e0d8d0!important}
-  .q-totals{background:#FAF7F2!important;border-color:#e0d8d0!important}
+  .quote-card{background:#fff!important;box-shadow:none!important;border:1px solid #e0d8d0;border-radius:8px;padding:24px}
   .q-layout{grid-template-columns:1fr 260px}
-
   .print-header{display:block!important}
 }
-.print-header{
-  display:none;text-align:center;
-  font-family:'Playfair Display',serif;font-size:18px;font-weight:700;
-  color:#1A0F0A;margin-bottom:20px;
-}
+.print-header{display:none;text-align:center;font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:#1A0F0A;margin-bottom:20px}
 .print-header em{font-style:normal;color:#460F0F}
 .print-header small{display:block;font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#8A7060;font-weight:400;margin-top:4px}
 
-/* ── RESPONSIVE ── */
-@media (max-width:860px){
-  .pkg-strip{grid-template-columns:repeat(2,1fr)}
-}
-@media (max-width:768px){
+@media(max-width:860px){.pkg-strip{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){
   .calc-h1{font-size:clamp(36px,11vw,50px)}
   .q-layout{grid-template-columns:1fr}
-  .pkg-strip{grid-template-columns:1fr 1fr}
+  .pkg-strip{grid-template-columns:1fr}
   .usage-pills{flex-direction:column}
   .quote-card{padding:24px 18px}
-  .q-card-top{margin-bottom:18px}
-  .sticky-bar{padding:10px 16px}
+  .tab-btn{padding:10px 18px;font-size:10px}
 }
-@media (max-width:430px){
-  .calc-h1{font-size:34px}
-  .pkg-strip{grid-template-columns:1fr}
-  .calc-hero{padding-top:80px}
-}
+@media(max-width:430px){.calc-h1{font-size:34px}.calc-hero{padding-top:80px}}
 </style>
 </head>
 <body>
@@ -378,7 +185,6 @@
 <div id="cur"></div>
 <div id="cur-r"></div>
 
-<!-- NAV -->
 <nav id="nav" class="sc">
   <div class="nav-wrap">
     <div class="nav-i">
@@ -393,288 +199,288 @@
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="calc-hero">
   <div class="page">
     <p class="calc-badge">Byggeligt Home · Content Pricing 2025</p>
     <h1 class="calc-h1">Build our <em>campaign</em></h1>
     <p class="calc-intro">
       We believe great partnerships start with transparency. This calculator lets you put together exactly what you need — a single Reel, a full multi-platform campaign, or anything in between.
-      <strong>The more content you add, the better the rate.</strong> Build your selection below and send it straight to us — we'll come back with a personal proposal within 48 hours.
+      <strong>Pick a package or build your own</strong> from the add-ons below. Send it straight to us and we'll come back with a personal proposal within 48 hours.
     </p>
     <div class="currency-row">
       <span class="currency-label">Currency</span>
       <div class="currency-pills">
-        <button class="cur-pill active" onclick="setCurrency('EUR')">EUR</button>
-        <button class="cur-pill" onclick="setCurrency('DKK')">DKK</button>
+        <button class="cur-pill" onclick="setCurrency('EUR')">EUR</button>
+        <button class="cur-pill active" onclick="setCurrency('DKK')">DKK</button>
         <button class="cur-pill" onclick="setCurrency('USD')">USD</button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CALCULATOR -->
 <section class="calc-wrap">
   <div class="page">
 
-    <!-- Discount nudge banner -->
-    <div class="disc-banner" id="disc-banner">
-      <span style="font-size:14px">✦</span>
-      <span class="disc-text" id="disc-text">Add deliverables to unlock a volume discount</span>
-      <span class="disc-next-badge" id="disc-badge"></span>
+    <!-- TABS -->
+    <div class="tab-row">
+      <button class="tab-btn active" onclick="switchTab('collab')">Collab</button>
+      <button class="tab-btn" onclick="switchTab('ugc')">UGC</button>
     </div>
 
-    <!-- ── PACKAGES ── -->
-    <div class="strip-hd">
-      <h2 class="strip-title">Ready-made packages</h2>
-      <span class="strip-hint">One click to fill your basket</span>
-    </div>
-    <div class="pkg-strip">
-      <div class="pkg-tile" id="pkg-starter">
-        <span class="pkg-save">Save 5%</span>
-        <div class="pkg-name">Starter</div>
-        <div class="pkg-items">1 Reel<br>1 Stories set</div>
-        <div class="pkg-price" id="pp-starter">€1,473</div>
-        <div class="pkg-was" id="pw-starter">€1,550</div>
-        <button class="pkg-btn" onclick="addPackage('starter')">Add package +</button>
-      </div>
-      <div class="pkg-tile" id="pkg-creator">
-        <span class="pkg-save">Save 10%</span>
-        <div class="pkg-name">Creator</div>
-        <div class="pkg-items">2 Reels<br>1 Stories · 1 Photo set</div>
-        <div class="pkg-price" id="pp-creator">€2,880</div>
-        <div class="pkg-was" id="pw-creator">€3,200</div>
-        <button class="pkg-btn" onclick="addPackage('creator')">Add package +</button>
-      </div>
-      <div class="pkg-tile featured" id="pkg-campaign">
-        <span class="pkg-save">Save 15%</span>
-        <div class="pkg-name">Brand Campaign</div>
-        <div class="pkg-items">3 Reels · 2 Stories<br>1 Photo · 1 Newsletter</div>
-        <div class="pkg-price" id="pp-campaign">€4,378</div>
-        <div class="pkg-was" id="pw-campaign">€5,150</div>
-        <button class="pkg-btn" onclick="addPackage('campaign')">Add package +</button>
-      </div>
-      <div class="pkg-tile" id="pkg-full">
-        <span class="pkg-save">Save 15%</span>
-        <div class="pkg-name">Full Campaign</div>
-        <div class="pkg-items">5 Reels · 3 Stories<br>2 Photo · 1 Newsletter</div>
-        <div class="pkg-price" id="pp-full">€7,948</div>
-        <div class="pkg-was" id="pw-full">€9,350</div>
-        <button class="pkg-btn" onclick="addPackage('full')">Add package +</button>
-      </div>
-    </div>
+    <!-- ── COLLAB TAB ── -->
+    <div class="tab-content active" id="tab-collab">
 
-    <!-- ── DELIVERABLES ── -->
-    <div class="sec-hd">
-      <div class="sec-num">1</div>
-      <h3 class="sec-title">Content deliverables</h3>
-    </div>
-    <div class="cat-panel">
-      <div class="cat-rows">
-        <div class="cat-row" id="cr-reel">
-          <div class="cat-info">
-            <div class="cat-name">Instagram Reel</div>
-            <div class="cat-note">45–60 sec · filmed, edited &amp; captioned</div>
+      <div class="strip-hd">
+        <h2 class="strip-title">Ready-made packages</h2>
+        <span class="strip-hint">Click to add to your quote</span>
+      </div>
+      <div class="pkg-strip">
+
+        <div class="pkg-tile" id="pkg-single">
+          <div class="pkg-name">Single Feature</div>
+          <div class="pkg-items">1× Reel (cross-posted TikTok)<br>1× Story set (5 frames)</div>
+          <div class="pkg-price" id="pp-single">9.500 kr.</div>
+          <button class="pkg-btn" onclick="addPkg('single')">Select package +</button>
+        </div>
+
+        <div class="pkg-tile" id="pkg-campaign">
+          <span class="pkg-save">Save 25%</span>
+          <div class="pkg-name">Campaign</div>
+          <div class="pkg-items">5× Reels + 5× Story sets<br>Spread over 5 months</div>
+          <div class="pkg-price" id="pp-campaign">38.000 kr.</div>
+          <div class="pkg-was" id="pw-campaign">47.000 kr.</div>
+          <button class="pkg-btn" onclick="addPkg('campaign')">Select package +</button>
+        </div>
+
+        <div class="pkg-tile featured" id="pkg-ambassador">
+          <span class="pkg-badge">Our suggestion</span>
+          <div class="pkg-name">Ambassadorship</div>
+          <div class="pkg-items">1× Reel (TikTok + FB + Pinterest)<br>1× Story with link<br>Product integration<br>Organic usage rights<br>Performance co-evaluation</div>
+          <div class="pkg-per" id="pp-per">8.500 kr. / month</div>
+          <div class="pkg-price" id="pp-ambassador">25.000 kr.</div>
+          <div style="font-size:9px;color:rgba(245,240,232,.4);margin-bottom:2px">Minimum 3 months</div>
+          <button class="pkg-btn" onclick="addPkg('ambassador')">Add 3-month package +</button>
+        </div>
+
+      </div>
+
+      <!-- Distribution -->
+      <div class="sec-hd">
+        <div class="sec-num">1</div>
+        <h3 class="sec-title">Cross-platform distribution</h3>
+        <span class="sec-aside">add extra reach</span>
+      </div>
+      <div class="cat-panel">
+        <div class="tog-rows">
+          <div class="tog-row" id="tr-igcopost">
+            <div class="tog-info"><div class="tog-name">Instagram Reel Co-post</div><div class="tog-note">Shared authorship · visible on both profiles</div></div>
+            <div class="tog-price" id="tp-igcopost">€350</div>
+            <label class="toggle-sw"><input type="checkbox" id="d-igcopost" onchange="toggleKey('d-igcopost','tr-igcopost','igcopost');render()"><span class="toggle-track"></span></label>
           </div>
-          <div class="cat-price" id="dp-reel">€1,300</div>
-          <span class="cat-qty-badge" id="cq-reel"></span>
-          <button class="cat-add" id="ca-reel" onclick="addItem('reel')" title="Add">+</button>
-        </div>
-        <div class="cat-row" id="cr-stories">
-          <div class="cat-info">
-            <div class="cat-name">Instagram Stories</div>
-            <div class="cat-note">Set of 5 · branded &amp; sequenced</div>
+          <div class="tog-row" id="tr-tiktok">
+            <div class="tog-info"><div class="tog-name">TikTok</div><div class="tog-note">173K followers</div></div>
+            <div class="tog-price" id="tp-tiktok">€250</div>
+            <label class="toggle-sw"><input type="checkbox" id="d-tiktok" onchange="toggleKey('d-tiktok','tr-tiktok','tiktok');render()"><span class="toggle-track"></span></label>
           </div>
-          <div class="cat-price" id="dp-stories">€250</div>
-          <span class="cat-qty-badge" id="cq-stories"></span>
-          <button class="cat-add" id="ca-stories" onclick="addItem('stories')" title="Add">+</button>
-        </div>
-        <div class="cat-row" id="cr-photo">
-          <div class="cat-info">
-            <div class="cat-name">Lifestyle Photo Set</div>
-            <div class="cat-note">5 edited images · high-res delivery</div>
+          <div class="tog-row" id="tr-facebook">
+            <div class="tog-info"><div class="tog-name">Facebook</div><div class="tog-note">62K followers</div></div>
+            <div class="tog-price" id="tp-facebook">€250</div>
+            <label class="toggle-sw"><input type="checkbox" id="d-facebook" onchange="toggleKey('d-facebook','tr-facebook','facebook');render()"><span class="toggle-track"></span></label>
           </div>
-          <div class="cat-price" id="dp-photo">€350</div>
-          <span class="cat-qty-badge" id="cq-photo"></span>
-          <button class="cat-add" id="ca-photo" onclick="addItem('photo')" title="Add">+</button>
-        </div>
-        <div class="cat-row" id="cr-newsletter">
-          <div class="cat-info">
-            <div class="cat-name">Newsletter Article</div>
-            <div class="cat-note">Written by us · incl. images &amp; CTA</div>
+          <div class="tog-row" id="tr-youtube">
+            <div class="tog-info"><div class="tog-name">YouTube Shorts</div><div class="tog-note">23.7K monthly views</div></div>
+            <div class="tog-price" id="tp-youtube">€250</div>
+            <label class="toggle-sw"><input type="checkbox" id="d-youtube" onchange="toggleKey('d-youtube','tr-youtube','youtube');render()"><span class="toggle-track"></span></label>
           </div>
-          <div class="cat-price" id="dp-newsletter">€400</div>
-          <span class="cat-qty-badge" id="cq-newsletter"></span>
-          <button class="cat-add" id="ca-newsletter" onclick="addItem('newsletter')" title="Add">+</button>
+          <div class="tog-row" id="tr-pinterest">
+            <div class="tog-info"><div class="tog-name">Pinterest</div><div class="tog-note">19.7K monthly views</div></div>
+            <div class="tog-price" id="tp-pinterest">€250</div>
+            <label class="toggle-sw"><input type="checkbox" id="d-pinterest" onchange="toggleKey('d-pinterest','tr-pinterest','pinterest');render()"><span class="toggle-track"></span></label>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- ── USAGE RIGHTS ── -->
-    <div class="sec-hd">
-      <div class="sec-num">2</div>
-      <h3 class="sec-title">Commercial usage rights</h3>
-      <span class="sec-aside">per Reel</span>
-    </div>
-    <div class="cat-panel">
-      <div class="usage-pills">
-        <label class="usage-pill active">
-          <input type="radio" name="usage" value="organic" checked onchange="render()">
-          <span class="u-label">Organic only</span>
-          <span class="u-sub">Included</span>
-        </label>
-        <label class="usage-pill">
-          <input type="radio" name="usage" value="1m" onchange="render()">
-          <span class="u-label">1 month</span>
-          <span class="u-sub" id="us-1m">€450/reel</span>
-        </label>
-        <label class="usage-pill">
-          <input type="radio" name="usage" value="3m" onchange="render()">
-          <span class="u-label">3 months</span>
-          <span class="u-sub" id="us-3m">€800/reel</span>
-        </label>
-        <label class="usage-pill">
-          <input type="radio" name="usage" value="6m" onchange="render()">
-          <span class="u-label">6 months</span>
-          <span class="u-sub" id="us-6m">€1,200/reel</span>
-        </label>
-        <label class="usage-pill">
-          <input type="radio" name="usage" value="12m" onchange="render()">
-          <span class="u-label">12 months</span>
-          <span class="u-sub" id="us-12m">€1,800/reel</span>
-        </label>
+      <!-- Usage License -->
+      <div class="sec-hd">
+        <div class="sec-num">2</div>
+        <h3 class="sec-title">Commercial usage license</h3>
+        <span class="sec-aside">Paid Social · Website · Digital Marketing</span>
       </div>
-      <p class="usage-note" id="usage-note">Add Reels above to unlock paid usage licensing.</p>
-    </div>
+      <div class="cat-panel">
+        <div class="usage-pills">
+          <label class="usage-pill active">
+            <input type="radio" name="usage" value="organic" checked onchange="render()">
+            <span class="u-label">Organic only</span>
+            <span class="u-sub">Included</span>
+          </label>
+          <label class="usage-pill">
+            <input type="radio" name="usage" value="1m" onchange="render()">
+            <span class="u-label">1 month</span>
+            <span class="u-sub" id="us-1m">€750</span>
+          </label>
+          <label class="usage-pill">
+            <input type="radio" name="usage" value="3m" onchange="render()">
+            <span class="u-label">3 months</span>
+            <span class="u-sub" id="us-3m">€1.500</span>
+          </label>
+          <label class="usage-pill">
+            <input type="radio" name="usage" value="6m" onchange="render()">
+            <span class="u-label">6 months</span>
+            <span class="u-sub" id="us-6m">€2.500</span>
+          </label>
+          <label class="usage-pill">
+            <input type="radio" name="usage" value="12m" onchange="render()">
+            <span class="u-label">12 months</span>
+            <span class="u-sub" id="us-12m">€4.000</span>
+          </label>
+        </div>
+        <p class="usage-note" id="usage-note">Organic usage is included with all Collab packages at no extra cost.</p>
+      </div>
 
-    <!-- ── DISTRIBUTION ── -->
-    <div class="sec-hd">
-      <div class="sec-num">3</div>
-      <h3 class="sec-title">Distribution add-ons</h3>
-    </div>
-    <div class="cat-panel">
-      <div class="tog-rows">
-        <div class="tog-row" id="tr-collab">
-          <div class="tog-info"><div class="tog-name">Instagram Collab Post</div><div class="tog-note">Shared authorship · visible on both profiles</div></div>
-          <div class="tog-price" id="tp-collab">€250</div>
-          <label class="toggle-sw"><input type="checkbox" id="d-collab" onchange="toggleFlat('d-collab','tr-collab','D collab');render()"><span class="toggle-track"></span></label>
-        </div>
-        <div class="tog-row" id="tr-tiktok">
-          <div class="tog-info"><div class="tog-name">TikTok Repost</div><div class="tog-note">174K followers</div></div>
-          <div class="tog-price" id="tp-tiktok">€350</div>
-          <label class="toggle-sw"><input type="checkbox" id="d-tiktok" onchange="toggleFlat('d-tiktok','tr-tiktok','D tiktok');render()"><span class="toggle-track"></span></label>
-        </div>
-        <div class="tog-row" id="tr-facebook">
-          <div class="tog-info"><div class="tog-name">Facebook Repost</div><div class="tog-note">62K followers</div></div>
-          <div class="tog-price" id="tp-facebook">€250</div>
-          <label class="toggle-sw"><input type="checkbox" id="d-facebook" onchange="toggleFlat('d-facebook','tr-facebook','D facebook');render()"><span class="toggle-track"></span></label>
-        </div>
-        <div class="tog-row" id="tr-pinterest">
-          <div class="tog-info"><div class="tog-name">Pinterest Repost</div><div class="tog-note">19.7K monthly views</div></div>
-          <div class="tog-price" id="tp-pinterest">€200</div>
-          <label class="toggle-sw"><input type="checkbox" id="d-pinterest" onchange="toggleFlat('d-pinterest','tr-pinterest','D pinterest');render()"><span class="toggle-track"></span></label>
-        </div>
-        <div class="tog-row" id="tr-youtube">
-          <div class="tog-info"><div class="tog-name">YouTube Community / Shorts</div><div class="tog-note">23.7K subscribers</div></div>
-          <div class="tog-price" id="tp-youtube">€250</div>
-          <label class="toggle-sw"><input type="checkbox" id="d-youtube" onchange="toggleFlat('d-youtube','tr-youtube','D youtube');render()"><span class="toggle-track"></span></label>
+      <!-- Production add-ons -->
+      <div class="sec-hd">
+        <div class="sec-num">3</div>
+        <h3 class="sec-title">Production add-ons</h3>
+      </div>
+      <div class="cat-panel">
+        <div class="tog-rows">
+          <div class="tog-row" id="tr-raw">
+            <div class="tog-info"><div class="tog-name">5× Raw video files</div><div class="tog-note">Unedited clips · min. 15 sec each</div></div>
+            <div class="tog-price" id="tp-raw">2.500 kr.</div>
+            <label class="toggle-sw"><input type="checkbox" id="a-raw" onchange="toggleKey('a-raw','tr-raw','addon_raw');render()"><span class="toggle-track"></span></label>
+          </div>
+          <div class="tog-row" id="tr-paidads">
+            <div class="tog-info"><div class="tog-name">Paid ads usage</div><div class="tog-note">Per video · boosting &amp; paid social · 3 months</div></div>
+            <div class="tog-price" id="tp-paidads">4.000 kr.</div>
+            <label class="toggle-sw"><input type="checkbox" id="a-paidads" onchange="toggleKey('a-paidads','tr-paidads','addon_paidads');render()"><span class="toggle-track"></span></label>
+          </div>
+          <div class="tog-row" id="tr-horizontal">
+            <div class="tog-info"><div class="tog-name">Horizontal versions</div><div class="tog-note">Per video · 16:9 landscape format</div></div>
+            <div class="tog-price" id="tp-horizontal">2.000 kr.</div>
+            <label class="toggle-sw"><input type="checkbox" id="a-horizontal" onchange="toggleKey('a-horizontal','tr-horizontal','addon_horizontal');render()"><span class="toggle-track"></span></label>
+          </div>
+          <div class="tog-row" id="tr-giveaway">
+            <div class="tog-info"><div class="tog-name">Giveaway on Byggeligt</div><div class="tog-note">Hosted giveaway · drives brand engagement</div></div>
+            <div class="tog-price" id="tp-giveaway">4.500 kr.</div>
+            <label class="toggle-sw"><input type="checkbox" id="a-giveaway" onchange="toggleKey('a-giveaway','tr-giveaway','addon_giveaway');render()"><span class="toggle-track"></span></label>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- ── ADDITIONAL SERVICES ── -->
-    <div class="sec-hd">
-      <div class="sec-num">4</div>
-      <h3 class="sec-title">Additional services</h3>
-    </div>
-    <div class="cat-panel">
-      <div class="tog-rows">
-        <div class="tog-row" id="tr-bio">
-          <div class="tog-info"><div class="tog-name">7-day link in bio</div><div class="tog-note">Instagram bio link for 7 consecutive days</div></div>
-          <div class="tog-price" id="tp-bio">€150</div>
-          <label class="toggle-sw"><input type="checkbox" id="a-bio" onchange="toggleFlat('a-bio','tr-bio','A bio');render()"><span class="toggle-track"></span></label>
-        </div>
-        <div class="tog-row" id="tr-priority">
-          <div class="tog-info"><div class="tog-name">Priority delivery</div><div class="tog-note">Content ready within 7 days from briefing</div></div>
-          <div class="tog-price" id="tp-priority">€300</div>
-          <label class="toggle-sw"><input type="checkbox" id="a-priority" onchange="toggleFlat('a-priority','tr-priority','A priority');render()"><span class="toggle-track"></span></label>
-        </div>
-        <div class="tog-row" id="tr-raw">
-          <div class="tog-info"><div class="tog-name">Raw footage delivery</div><div class="tog-note">All unedited clips from the shoot</div></div>
-          <div class="tog-price" id="tp-raw">€500</div>
-          <label class="toggle-sw"><input type="checkbox" id="a-raw" onchange="toggleFlat('a-raw','tr-raw','A raw');render()"><span class="toggle-track"></span></label>
-        </div>
-        <div class="tog-row" id="tr-whitelist">
-          <div class="tog-info"><div class="tog-name">Whitelisting / Spark Ads</div><div class="tog-note">Ad manager access to our account · per month</div></div>
-          <div class="tog-price" id="tp-whitelist">€350</div>
-          <label class="toggle-sw"><input type="checkbox" id="a-whitelist" onchange="toggleFlat('a-whitelist','tr-whitelist','A whitelist');render()"><span class="toggle-track"></span></label>
-        </div>
-        <div class="tog-row" id="tr-excl">
-          <div class="tog-info"><div class="tog-name">Category exclusivity</div><div class="tog-note">No competing brands · per month</div></div>
-          <div class="tog-price" id="tp-excl">€500+</div>
-          <label class="toggle-sw"><input type="checkbox" id="a-excl" onchange="toggleFlat('a-excl','tr-excl','A excl');render()"><span class="toggle-track"></span></label>
+    </div><!-- /tab-collab -->
+
+    <!-- ── UGC TAB ── -->
+    <div class="tab-content" id="tab-ugc">
+
+      <div class="strip-hd">
+        <h2 class="strip-title">UGC Package</h2>
+        <span class="strip-hint">Content created for your brand to own</span>
+      </div>
+      <div class="pkg-strip one-col">
+        <div class="pkg-tile" id="pkg-ugc">
+          <div class="pkg-name">UGC Content Package</div>
+          <div class="pkg-items">30 sec vertical Reel<br>2 lifestyle photographs<br>Full usage rights included</div>
+          <div class="pkg-price" id="pp-ugc">5.000 kr.</div>
+          <button class="pkg-btn" onclick="addPkg('ugc')">Select package +</button>
         </div>
       </div>
-    </div>
 
-    <!-- ── QUOTE SUMMARY (full width, bottom) ── -->
+      <!-- UGC add-ons -->
+      <div class="sec-hd">
+        <div class="sec-num">1</div>
+        <h3 class="sec-title">Production add-ons</h3>
+      </div>
+      <div class="cat-panel">
+        <div class="tog-rows">
+          <div class="tog-row" id="tr-ugc-raw">
+            <div class="tog-info"><div class="tog-name">5× Raw video files</div><div class="tog-note">Unedited clips · min. 15 sec each</div></div>
+            <div class="tog-price" id="tp-ugc-raw">2.500 kr.</div>
+            <label class="toggle-sw"><input type="checkbox" id="a-ugc-raw" onchange="toggleKey('a-ugc-raw','tr-ugc-raw','ugc_raw');render()"><span class="toggle-track"></span></label>
+          </div>
+          <div class="tog-row" id="tr-ugc-paidads">
+            <div class="tog-info"><div class="tog-name">Paid ads usage</div><div class="tog-note">Boosting &amp; paid social rights</div></div>
+            <div class="tog-price" id="tp-ugc-paidads">4.000 kr.</div>
+            <label class="toggle-sw"><input type="checkbox" id="a-ugc-paidads" onchange="toggleKey('a-ugc-paidads','tr-ugc-paidads','ugc_paidads');render()"><span class="toggle-track"></span></label>
+          </div>
+          <div class="tog-row" id="tr-ugc-horizontal">
+            <div class="tog-info"><div class="tog-name">Horizontal versions</div><div class="tog-note">Per video · 16:9 landscape format</div></div>
+            <div class="tog-price" id="tp-ugc-horizontal">2.000 kr.</div>
+            <label class="toggle-sw"><input type="checkbox" id="a-ugc-horizontal" onchange="toggleKey('a-ugc-horizontal','tr-ugc-horizontal','ugc_horizontal');render()"><span class="toggle-track"></span></label>
+          </div>
+          <div class="tog-row" id="tr-ugc-giveaway">
+            <div class="tog-info"><div class="tog-name">Giveaway on Byggeligt</div><div class="tog-note">Hosted giveaway · drives brand engagement</div></div>
+            <div class="tog-price" id="tp-ugc-giveaway">4.500 kr.</div>
+            <label class="toggle-sw"><input type="checkbox" id="a-ugc-giveaway" onchange="toggleKey('a-ugc-giveaway','tr-ugc-giveaway','ugc_giveaway');render()"><span class="toggle-track"></span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- UGC Distribution -->
+      <div class="sec-hd">
+        <div class="sec-num">2</div>
+        <h3 class="sec-title">Distribution channels</h3>
+        <span class="sec-aside">€250 / platform</span>
+      </div>
+      <div class="cat-panel">
+        <div class="tog-rows">
+          <div class="tog-row" id="tr-ugc-tiktok">
+            <div class="tog-info"><div class="tog-name">TikTok</div><div class="tog-note">173K followers</div></div>
+            <div class="tog-price" id="tp-ugc-tiktok">€250</div>
+            <label class="toggle-sw"><input type="checkbox" id="d-ugc-tiktok" onchange="toggleKey('d-ugc-tiktok','tr-ugc-tiktok','ugc_tiktok');render()"><span class="toggle-track"></span></label>
+          </div>
+          <div class="tog-row" id="tr-ugc-facebook">
+            <div class="tog-info"><div class="tog-name">Facebook</div><div class="tog-note">62K followers</div></div>
+            <div class="tog-price" id="tp-ugc-facebook">€250</div>
+            <label class="toggle-sw"><input type="checkbox" id="d-ugc-facebook" onchange="toggleKey('d-ugc-facebook','tr-ugc-facebook','ugc_facebook');render()"><span class="toggle-track"></span></label>
+          </div>
+          <div class="tog-row" id="tr-ugc-youtube">
+            <div class="tog-info"><div class="tog-name">YouTube Shorts</div><div class="tog-note">23.7K monthly views</div></div>
+            <div class="tog-price" id="tp-ugc-youtube">€250</div>
+            <label class="toggle-sw"><input type="checkbox" id="d-ugc-youtube" onchange="toggleKey('d-ugc-youtube','tr-ugc-youtube','ugc_youtube');render()"><span class="toggle-track"></span></label>
+          </div>
+          <div class="tog-row" id="tr-ugc-pinterest">
+            <div class="tog-info"><div class="tog-name">Pinterest</div><div class="tog-note">19.7K monthly views</div></div>
+            <div class="tog-price" id="tp-ugc-pinterest">€250</div>
+            <label class="toggle-sw"><input type="checkbox" id="d-ugc-pinterest" onchange="toggleKey('d-ugc-pinterest','tr-ugc-pinterest','ugc_pinterest');render()"><span class="toggle-track"></span></label>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-ugc -->
+
+    <!-- QUOTE SUMMARY -->
     <div class="quote-section" id="quote-section">
       <div class="quote-card">
-
         <div class="print-header">Byggeligt<em>.</em><small>Content Quote · byggeligt.com · contact@byggeligt.com</small></div>
-
         <div class="q-card-top">
-          <div class="q-card-title-wrap">
-            <p class="q-eyebrow">Your estimate</p>
-            <h3 class="q-title">Quote <em>summary</em></h3>
-          </div>
-          <div class="q-disc-badge" id="q-disc-badge" style="display:none">
-            <div class="q-disc-pct" id="q-disc-pct-big">0%</div>
-            <div class="q-disc-tag">volume discount</div>
-          </div>
+          <p class="q-eyebrow">Your estimate</p>
+          <h3 class="q-title">Quote <em>summary</em></h3>
         </div>
-
         <div class="q-layout">
-
-          <!-- Items list -->
           <div>
             <div class="q-items" id="q-items">
-              <p class="q-empty">Nothing added yet — pick a package or add items from the catalog above.</p>
+              <p class="q-empty">Nothing added yet — pick a package or add items from the sections above.</p>
             </div>
             <div class="q-rule" id="q-rule" style="display:none"></div>
           </div>
-
-          <!-- Totals + buttons -->
           <div class="q-totals">
-            <div class="q-sub-row" id="q-sub-row" style="display:none">
-              <span class="q-sub-label">Before discount</span>
-              <span class="q-sub-val" id="q-sub">€0</span>
-            </div>
-            <div class="q-disc-row" id="q-disc-row" style="display:none">
-              <span class="q-disc-label"><strong id="q-disc-pct">0%</strong> saved</span>
-              <span class="q-disc-val" id="q-disc-save">−€0</span>
-            </div>
             <div class="q-total-row">
               <span class="q-total-label">Total</span>
-              <span class="q-total-val" id="q-total">€0</span>
+              <span class="q-total-val" id="q-total">—</span>
             </div>
-            <p class="q-vat">Excl. VAT · prices in <span id="cur-label">EUR</span></p>
-
+            <p class="q-vat">Excl. VAT · prices in <span id="cur-label">DKK</span></p>
             <button class="q-req-btn" onclick="openModal()">Request this quote →</button>
             <button class="q-pdf-btn" onclick="savePDF()">Save as PDF</button>
             <button class="q-copy-btn" onclick="copyQuote()">Copy to clipboard</button>
-
             <p class="q-foot">Prices are starting rates. Final proposal depends on brief, timeline &amp; scope.</p>
           </div>
-
         </div>
       </div>
     </div>
 
-  </div><!-- /page -->
+  </div>
 </section>
 
-<!-- CTA SECTION -->
 <section class="contact" style="margin-top:0">
   <div class="page">
     <p class="c-hand">Ready to collaborate?</p>
@@ -690,7 +496,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="page" style="display:flex;width:100%;justify-content:space-between;align-items:center">
     <p>© 2025 Byggeligt Home · All rights reserved</p>
@@ -698,11 +503,10 @@
   </div>
 </footer>
 
-<!-- STICKY SCROLL BAR -->
 <div class="sticky-bar" id="sticky-bar">
   <div class="sb-left">
     <span class="sb-label">Your total</span>
-    <span class="sb-total" id="sb-total">€0</span>
+    <span class="sb-total" id="sb-total">—</span>
   </div>
   <div class="sb-right">
     <button class="sb-view" onclick="scrollToQuote()">View quote ↓</button>
@@ -710,19 +514,16 @@
   </div>
 </div>
 
-<!-- REQUEST MODAL -->
 <div id="req-modal">
   <div class="modal-card">
     <button class="modal-close" onclick="closeModal()">×</button>
     <p class="modal-eyebrow">Send your quote</p>
     <h3 class="modal-title">Let's talk <em>collaboration</em></h3>
     <p class="modal-sub">Fill in your details and we'll send a tailored proposal to your inbox within 48 hours.</p>
-
     <form id="modal-form" action="https://formspree.io/f/xqevewoz" method="POST" onsubmit="sendQuote(event)">
       <input type="hidden" name="_subject" value="Content Quote Request">
       <input type="hidden" name="quote_details" id="hidden-quote">
       <input type="hidden" name="_replyto" id="hidden-replyto">
-
       <div class="modal-field">
         <label class="modal-label" for="m-name">Your name</label>
         <input class="modal-input" type="text" id="m-name" name="name" placeholder="Full name" required>
@@ -736,12 +537,9 @@
         <input class="modal-input" type="email" id="m-email" name="email" placeholder="your@email.com" required
           oninput="document.getElementById('hidden-replyto').value=this.value">
       </div>
-
-      <!-- Quote preview inside modal -->
       <div class="modal-quote-preview" id="modal-preview">
         <p style="font-size:11px;color:var(--mid);font-style:italic">Your quote will appear here once you add items.</p>
       </div>
-
       <button type="submit" class="modal-send-btn" id="modal-send">Send quote →</button>
       <p class="modal-err" id="modal-err"></p>
     </form>
@@ -749,254 +547,228 @@
 </div>
 
 <script>
-/* ─────────────────────────────────
-   PRICING + CURRENCY
-───────────────────────────────── */
-const EUR_PRICES = {
-  reel: 1300, stories: 250, photo: 350, newsletter: 400,
-  usage: { organic:0, '1m':450, '3m':800, '6m':1200, '12m':1800 },
-  flat: {
-    'D collab':250,'D tiktok':350,'D facebook':250,'D pinterest':200,'D youtube':250,
-    'A bio':150,'A priority':300,'A raw':500,'A whitelist':350,'A excl':500
-  },
-  pkgWas:  { starter:1550, creator:3200, campaign:5150, full:9350 },
-  pkgNow:  { starter:1473, creator:2880, campaign:4378, full:7948 }
+/* ── PRICING ── */
+const EUR_DKK = 7.46;
+const EUR_USD = 1.10;
+const SYMS = { EUR:'€', DKK:'', USD:'$' };
+let currency = 'DKK';
+
+const DKK_PRICES = {
+  single:9500, campaign:38000, campaignWas:47000,
+  ambassador:25000, ambassadorMonth:8500,
+  ugc:5000,
+  addon_raw:2500, addon_paidads:4000, addon_horizontal:2000, addon_giveaway:4500,
+  ugc_raw:2500, ugc_paidads:4000, ugc_horizontal:2000, ugc_giveaway:4500
 };
 
-const RATES  = { EUR:1, DKK:7.46, USD:1.10 };
-const SYMS   = { EUR:'€', DKK:'kr.', USD:'$' };
-let currency = 'EUR';
+const EUR_PRICES = {
+  igcopost:350, tiktok:250, facebook:250, youtube:250, pinterest:250,
+  ugc_tiktok:250, ugc_facebook:250, ugc_youtube:250, ugc_pinterest:250,
+  usage:{ organic:0, '1m':750, '3m':1500, '6m':2500, '12m':4000 }
+};
 
-function p(eur) { return Math.round(eur * RATES[currency]); }
-function fmt(eur) {
-  const n = p(eur);
-  const s = n.toLocaleString('de-DE');
+const EUR_KEYS = ['igcopost','tiktok','facebook','youtube','pinterest','ugc_tiktok','ugc_facebook','ugc_youtube','ugc_pinterest'];
+const DKK_KEYS = ['addon_raw','addon_paidads','addon_horizontal','addon_giveaway','ugc_raw','ugc_paidads','ugc_horizontal','ugc_giveaway'];
+
+const PKG_LABELS = { single:'Single Feature', campaign:'Campaign (5 months)', ambassador:'Ambassadorship · 3 months', ugc:'UGC Package' };
+const ADDON_LABELS = {
+  igcopost:'IG Reel Co-post', tiktok:'TikTok distribution', facebook:'Facebook distribution',
+  youtube:'YouTube Shorts distribution', pinterest:'Pinterest distribution',
+  ugc_tiktok:'TikTok distribution', ugc_facebook:'Facebook distribution',
+  ugc_youtube:'YouTube Shorts distribution', ugc_pinterest:'Pinterest distribution',
+  addon_raw:'5× Raw video files', addon_paidads:'Paid ads usage (3 months)',
+  addon_horizontal:'Horizontal versions', addon_giveaway:'Giveaway on Byggeligt',
+  ugc_raw:'5× Raw video files', ugc_paidads:'Paid ads usage',
+  ugc_horizontal:'Horizontal versions', ugc_giveaway:'Giveaway on Byggeligt'
+};
+
+function toEUR_fromDKK(dkk) { return dkk / EUR_DKK; }
+
+function fmtN(n) {
+  const s = Math.round(n).toLocaleString('de-DE');
   return currency === 'DKK' ? s + ' kr.' : SYMS[currency] + s;
 }
+function fmtDKK(dkk) {
+  if (currency === 'DKK') return fmtN(dkk);
+  if (currency === 'EUR') return fmtN(dkk / EUR_DKK);
+  return fmtN(dkk / EUR_DKK * EUR_USD);
+}
+function fmtEUR(eur) {
+  if (currency === 'EUR') return fmtN(eur);
+  if (currency === 'DKK') return fmtN(eur * EUR_DKK);
+  return fmtN(eur * EUR_USD);
+}
+function grandFmt(eur) {
+  if (currency === 'EUR') return fmtN(eur);
+  if (currency === 'DKK') return fmtN(eur * EUR_DKK);
+  return fmtN(eur * EUR_USD);
+}
 
+/* ── STATE ── */
+const qty = { single:0, campaign:0, ambassador:0, ugc:0 };
+const toggles = new Set();
+let _lines = [], _grandEur = 0;
+
+/* ── ACTIONS ── */
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach(b =>
+    b.classList.toggle('active', b.textContent.toLowerCase() === tab)
+  );
+  document.querySelectorAll('.tab-content').forEach(c =>
+    c.classList.toggle('active', c.id === 'tab-' + tab)
+  );
+}
+
+function addPkg(key) {
+  qty[key]++;
+  render();
+  const t = document.getElementById('pkg-' + key);
+  if (t) { t.style.transform='scale(1.03)'; setTimeout(()=>{ t.style.transform=''; }, 200); }
+}
+function changePkg(key, dir) {
+  qty[key] = Math.max(0, qty[key] + dir);
+  render();
+}
+function removePkg(key) { qty[key] = 0; render(); }
+
+function toggleKey(chkId, rowId, key) {
+  const on = document.getElementById(chkId).checked;
+  if (on) toggles.add(key); else toggles.delete(key);
+  document.getElementById(rowId).classList.toggle('tog-on', on);
+}
+
+function getUsage() { return document.querySelector('input[name=usage]:checked')?.value || 'organic'; }
+
+/* ── RENDER ── */
+function render() {
+  document.querySelectorAll('.usage-pill').forEach(p =>
+    p.classList.toggle('active', p.querySelector('input').checked)
+  );
+
+  _lines = [];
+  let grandEur = 0;
+
+  // Packages (DKK-based)
+  const pkgDKK = { single: DKK_PRICES.single, campaign: DKK_PRICES.campaign, ambassador: DKK_PRICES.ambassador, ugc: DKK_PRICES.ugc };
+  for (const [k, v] of Object.entries(qty)) {
+    if (v <= 0) continue;
+    const dkk = pkgDKK[k] * v;
+    grandEur += toEUR_fromDKK(dkk);
+    _lines.push({ key: k, label: v > 1 ? `${PKG_LABELS[k]} ×${v}` : PKG_LABELS[k], dkk: pkgDKK[k] * v, ctrl: true });
+  }
+
+  // Usage license (EUR-based)
+  const uKey = getUsage();
+  if (uKey !== 'organic' && EUR_PRICES.usage[uKey]) {
+    const eur = EUR_PRICES.usage[uKey];
+    grandEur += eur;
+    const months = uKey.replace('m', '');
+    _lines.push({ label: `Commercial license · ${months} month${months==='1'?'':'s'}`, eur });
+  }
+
+  // Toggles
+  for (const k of toggles) {
+    if (EUR_KEYS.includes(k)) {
+      const eur = EUR_PRICES[k] || 0;
+      grandEur += eur;
+      _lines.push({ label: ADDON_LABELS[k], eur });
+    } else if (DKK_KEYS.includes(k)) {
+      const dkk = DKK_PRICES[k] || 0;
+      grandEur += toEUR_fromDKK(dkk);
+      _lines.push({ label: ADDON_LABELS[k], dkk });
+    }
+  }
+
+  _grandEur = grandEur;
+
+  // Render items
+  const container = document.getElementById('q-items');
+  if (_lines.length === 0) {
+    container.innerHTML = '<p class="q-empty">Nothing added yet — pick a package or add items from the sections above.</p>';
+  } else {
+    container.innerHTML = _lines.map(it => {
+      const price = it.dkk !== undefined ? fmtDKK(it.dkk) : fmtEUR(it.eur);
+      const ctrl = it.ctrl ? `
+        <div class="q-qty-ctrl">
+          <button class="qq-btn" onclick="changePkg('${it.key}',-1)">−</button>
+          <span class="qq-val">${qty[it.key]}</span>
+          <button class="qq-btn" onclick="changePkg('${it.key}',1)">+</button>
+        </div>
+        <button class="q-rm" onclick="removePkg('${it.key}')" title="Remove">×</button>`
+        : '<span style="width:28px;flex-shrink:0"></span>';
+      return `<div class="q-item">
+        ${!it.ctrl ? '<span style="width:20px;flex-shrink:0"></span>' : ''}
+        <span class="q-item-name">${it.label}</span>
+        ${ctrl}
+        <span class="q-item-price">${price}</span>
+      </div>`;
+    }).join('');
+  }
+
+  document.getElementById('q-rule').style.display = _lines.length ? 'block' : 'none';
+
+  const total = grandEur > 0 ? grandFmt(grandEur) : '—';
+  document.getElementById('q-total').textContent = total;
+  document.getElementById('sb-total').textContent = total;
+  document.getElementById('sticky-bar').classList.toggle('visible', grandEur > 0);
+
+  // Usage note
+  const note = document.getElementById('usage-note');
+  if (note) {
+    if (uKey === 'organic') note.innerHTML = 'Organic usage is included with all Collab packages at no extra cost.';
+    else note.innerHTML = `<strong>+${fmtEUR(EUR_PRICES.usage[uKey])}</strong> flat rate for commercial use of all content in this campaign.`;
+  }
+
+  syncModalPreview();
+}
+
+/* ── CURRENCY ── */
 function setCurrency(c) {
   currency = c;
   document.querySelectorAll('.cur-pill').forEach(el =>
     el.classList.toggle('active', el.textContent === c)
   );
   document.getElementById('cur-label').textContent = c;
-  updatePriceLabels();
+  updateLabels();
   render();
 }
 
-function updatePriceLabels() {
-  // catalog unit prices
-  document.getElementById('dp-reel').textContent       = fmt(EUR_PRICES.reel);
-  document.getElementById('dp-stories').textContent    = fmt(EUR_PRICES.stories);
-  document.getElementById('dp-photo').textContent      = fmt(EUR_PRICES.photo);
-  document.getElementById('dp-newsletter').textContent = fmt(EUR_PRICES.newsletter);
-  // usage sub-labels
-  document.getElementById('us-1m').textContent  = fmt(450)  + '/reel';
-  document.getElementById('us-3m').textContent  = fmt(800)  + '/reel';
-  document.getElementById('us-6m').textContent  = fmt(1200) + '/reel';
-  document.getElementById('us-12m').textContent = fmt(1800) + '/reel';
-  // flat prices
-  const flatMap = {collab:250,tiktok:350,facebook:250,pinterest:200,youtube:250,bio:150,priority:300,raw:500,whitelist:350,excl:500};
-  for (const [k,v] of Object.entries(flatMap)) {
-    const el = document.getElementById('tp-' + k);
-    if (el) el.textContent = k === 'excl' ? fmt(v) + '+' : fmt(v);
+function updateLabels() {
+  document.getElementById('pp-single').textContent     = fmtDKK(DKK_PRICES.single);
+  document.getElementById('pp-campaign').textContent   = fmtDKK(DKK_PRICES.campaign);
+  document.getElementById('pw-campaign').textContent   = fmtDKK(DKK_PRICES.campaignWas);
+  document.getElementById('pp-ambassador').textContent = fmtDKK(DKK_PRICES.ambassador);
+  document.getElementById('pp-per').textContent        = fmtDKK(DKK_PRICES.ambassadorMonth) + ' / month';
+  document.getElementById('pp-ugc').textContent        = fmtDKK(DKK_PRICES.ugc);
+
+  const eurDist = { igcopost:350, tiktok:250, facebook:250, youtube:250, pinterest:250 };
+  for (const [k,v] of Object.entries(eurDist)) {
+    const el = document.getElementById('tp-'+k);
+    if (el) el.textContent = fmtEUR(v);
   }
-  // package prices
-  for (const k of ['starter','creator','campaign','full']) {
-    document.getElementById('pp-' + k).textContent = fmt(EUR_PRICES.pkgNow[k]);
-    document.getElementById('pw-' + k).textContent = fmt(EUR_PRICES.pkgWas[k]);
-  }
-}
+  ['tiktok','facebook','youtube','pinterest'].forEach(k => {
+    const el = document.getElementById('tp-ugc-'+k);
+    if (el) el.textContent = fmtEUR(250);
+  });
 
-/* ─────────────────────────────────
-   STATE
-───────────────────────────────── */
-const qty  = { reel:0, stories:0, photo:0, newsletter:0 };
-const flat = new Set();
-
-const DELIV_LABELS = {
-  reel:'Instagram Reel', stories:'Instagram Stories (×5)',
-  photo:'Lifestyle Photo Set', newsletter:'Newsletter Article'
-};
-const FLAT_LABELS = {
-  'D collab':'Instagram Collab Post','D tiktok':'TikTok Repost',
-  'D facebook':'Facebook Repost','D pinterest':'Pinterest Repost','D youtube':'YouTube Repost',
-  'A bio':'7-day link in bio','A priority':'Priority delivery',
-  'A raw':'Raw footage delivery','A whitelist':'Whitelisting / Spark Ads',
-  'A excl':'Category exclusivity'
-};
-const DISC_TIERS = [[8,0.20],[5,0.15],[3,0.10],[2,0.05]];
-const USAGE_LABELS = {'1m':'1 month','3m':'3 months','6m':'6 months','12m':'12 months'};
-const PACKAGES = {
-  starter:{reel:1,stories:1},
-  creator:{reel:2,stories:1,photo:1},
-  campaign:{reel:3,stories:2,photo:1,newsletter:1},
-  full:{reel:5,stories:3,photo:2,newsletter:1}
-};
-
-/* ─────────────────────────────────
-   ACTIONS
-───────────────────────────────── */
-function addItem(key) { qty[key]++; syncCatRow(key); render(); }
-
-function removeItem(key) { qty[key]=0; syncCatRow(key); render(); }
-
-function changeQty(key, dir) {
-  qty[key] = Math.max(0, qty[key] + dir);
-  if (qty[key] === 0) removeItem(key); else { syncCatRow(key); render(); }
-}
-
-function addPackage(pk) {
-  for (const [k,v] of Object.entries(PACKAGES[pk])) { qty[k]+=v; syncCatRow(k); }
-  render();
-}
-
-function toggleFlat(chkId, rowId, key) {
-  const on = document.getElementById(chkId).checked;
-  if (on) flat.add(key); else flat.delete(key);
-  document.getElementById(rowId).classList.toggle('tog-on', on);
-}
-
-function syncCatRow(key) {
-  const n = qty[key];
-  document.getElementById('cr-'+key).classList.toggle('in-cart', n>0);
-  const badge = document.getElementById('cq-'+key);
-  badge.textContent = n || '';
-  badge.style.display = n > 0 ? 'inline' : 'none';
-  const btn = document.getElementById('ca-'+key);
-  btn.classList.toggle('added', n>0);
-  btn.title = n > 0 ? `${n} added` : 'Add';
-}
-
-/* ─────────────────────────────────
-   DISCOUNT
-───────────────────────────────── */
-function delivUnits() { return Object.values(qty).reduce((a,v)=>a+v,0); }
-function delivSubEur() { return Object.entries(qty).reduce((s,[k,v])=>s+(EUR_PRICES[k]||0)*v,0); }
-function discPct(u) { for (const [m,p] of DISC_TIERS) if (u>=m) return p; return 0; }
-function getUsage()  { return document.querySelector('input[name=usage]:checked')?.value||'organic'; }
-
-/* ─────────────────────────────────
-   RENDER
-───────────────────────────────── */
-let _grandEur = 0; // cached for modal preview
-let _lines    = [];
-
-function render() {
-  // Usage pill active state
-  document.querySelectorAll('.usage-pill').forEach(p =>
-    p.classList.toggle('active', p.querySelector('input').checked)
-  );
-
-  const units    = delivUnits();
-  const disc     = discPct(units);
-  const delivSub = delivSubEur();
-  const savings  = delivSub * disc;
-  const uKey     = getUsage();
-  const uPrice   = uKey !== 'organic' ? EUR_PRICES.usage[uKey] * qty.reel : 0;
-  let flatTotal  = 0; for (const k of flat) flatTotal += EUR_PRICES.flat[k]||0;
-
-  const grandEur = delivSub - savings + uPrice + flatTotal;
-  _grandEur = grandEur;
-
-  // Build lines
-  _lines = [];
-  for (const [k,v] of Object.entries(qty)) {
-    if (v>0) _lines.push({ key:k, label:v>1?`${DELIV_LABELS[k]} ×${v}`:DELIV_LABELS[k], eur:EUR_PRICES[k]*v, ctrl:true });
-  }
-  if (qty.reel>0 && uPrice>0) {
-    const suffix = qty.reel>1 ? ` ×${qty.reel}` : '';
-    _lines.push({ label:`Usage rights · ${USAGE_LABELS[uKey]}${suffix}`, eur:uPrice });
-  }
-  for (const k of flat) _lines.push({ label:FLAT_LABELS[k], eur:EUR_PRICES.flat[k]||0 });
-
-  // Render q-items
-  const container = document.getElementById('q-items');
-  if (_lines.length === 0) {
-    container.innerHTML = '<p class="q-empty">Nothing added yet — pick a package or add items from the catalog above.</p>';
-  } else {
-    container.innerHTML = _lines.map(it => {
-      const ctrl = it.ctrl ? `
-        <div class="q-qty-ctrl">
-          <button class="qq-btn" onclick="changeQty('${it.key}',-1)">−</button>
-          <span class="qq-val">${qty[it.key]}</span>
-          <button class="qq-btn" onclick="changeQty('${it.key}',1)">+</button>
-        </div>
-        <button class="q-rm" onclick="removeItem('${it.key}')" title="Remove">×</button>` : `<span style="width:28px;flex-shrink:0"></span>`;
-      return `<div class="q-item">
-        ${!it.ctrl?'<span style="width:20px;flex-shrink:0"></span>':''}
-        <span class="q-item-name">${it.label}</span>
-        ${ctrl}
-        <span class="q-item-price">${fmt(it.eur)}</span>
-      </div>`;
-    }).join('');
-  }
-  document.getElementById('q-rule').style.display = _lines.length ? 'block' : 'none';
-
-  // Discount rows
-  const hasDisc = disc > 0;
-  const discBadge = document.getElementById('q-disc-badge');
-  discBadge.style.display = hasDisc ? 'block' : 'none';
-  if (hasDisc) {
-    document.getElementById('q-disc-pct-big').textContent = (disc*100).toFixed(0)+'%';
-    document.getElementById('q-disc-pct').textContent     = (disc*100).toFixed(0)+'%';
-    document.getElementById('q-disc-save').textContent    = '−'+fmt(savings);
-    document.getElementById('q-sub').textContent          = fmt(delivSub+uPrice+flatTotal);
-  }
-  document.getElementById('q-sub-row').style.display  = hasDisc ? 'flex' : 'none';
-  document.getElementById('q-disc-row').style.display = hasDisc ? 'flex' : 'none';
-
-  // Total
-  const totalFmt = grandEur > 0 ? fmt(grandEur) : '€0';
-  document.getElementById('q-total').textContent  = totalFmt;
-  document.getElementById('sb-total').textContent = totalFmt;
-
-  // Discount nudge banner
-  const banner = document.getElementById('disc-banner');
-  if (units > 0 && disc < 0.20) {
-    const next = DISC_TIERS.slice().reverse().find(([m]) => m > units);
-    if (next) {
-      const need = next[0] - units;
-      document.getElementById('disc-text').innerHTML =
-        `Add <strong>${need} more deliverable${need>1?'s':''}</strong> to unlock a <strong>${(next[1]*100).toFixed(0)}% discount</strong>`;
-      document.getElementById('disc-badge').textContent =
-        disc > 0 ? `Currently ${(disc*100).toFixed(0)}% off` : 'Save up to 20%';
-      banner.classList.add('show');
-    } else {
-      banner.classList.remove('show');
-    }
-  } else if (units===0 || disc===0.20) {
-    banner.classList.remove('show');
+  const dkkAddon = { raw:2500, paidads:4000, horizontal:2000, giveaway:4500 };
+  for (const [k,v] of Object.entries(dkkAddon)) {
+    const el = document.getElementById('tp-'+k);
+    if (el) el.textContent = fmtDKK(v);
+    const ugc = document.getElementById('tp-ugc-'+k);
+    if (ugc) ugc.textContent = fmtDKK(v);
   }
 
-  // Usage note
-  const note = document.getElementById('usage-note');
-  if (qty.reel===0) note.innerHTML='Add Reels above to unlock paid usage licensing.';
-  else if (uKey==='organic') note.innerHTML='<strong>Organic only</strong> is included at no extra cost with all Reels.';
-  else note.innerHTML=`<strong>+${fmt(uPrice)}</strong> — ${qty.reel} Reel${qty.reel>1?'s':''} × ${fmt(EUR_PRICES.usage[uKey])} per Reel.`;
-
-  // Sticky bar
-  document.getElementById('sticky-bar').classList.toggle('visible', grandEur>0);
-
-  // Modal preview sync
-  syncModalPreview();
+  document.getElementById('us-1m').textContent  = fmtEUR(750);
+  document.getElementById('us-3m').textContent  = fmtEUR(1500);
+  document.getElementById('us-6m').textContent  = fmtEUR(2500);
+  document.getElementById('us-12m').textContent = fmtEUR(4000);
 }
 
-/* ─────────────────────────────────
-   MODAL
-───────────────────────────────── */
-function openModal() {
-  syncModalPreview();
-  document.getElementById('req-modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeModal() {
-  document.getElementById('req-modal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-document.getElementById('req-modal').addEventListener('click', e => {
-  if (e.target === document.getElementById('req-modal')) closeModal();
-});
+/* ── MODAL ── */
+function openModal() { syncModalPreview(); document.getElementById('req-modal').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeModal() { document.getElementById('req-modal').classList.remove('open'); document.body.style.overflow=''; }
+document.getElementById('req-modal').addEventListener('click', e => { if (e.target===document.getElementById('req-modal')) closeModal(); });
 
 function syncModalPreview() {
   const prev = document.getElementById('modal-preview');
@@ -1005,23 +777,17 @@ function syncModalPreview() {
     document.getElementById('hidden-quote').value = '';
     return;
   }
-  let html = _lines.map(l => `
-    <div class="modal-q-line">
-      <span>${l.label}</span><span>${fmt(l.eur)}</span>
-    </div>`).join('');
-  const disc = discPct(delivUnits());
-  if (disc > 0) {
-    const savings = delivSubEur() * disc;
-    html += `<div class="modal-q-line" style="color:var(--rust)"><span>${(disc*100).toFixed(0)}% volume discount</span><span>−${fmt(savings)}</span></div>`;
-  }
-  html += `<div class="modal-q-line"><span>Total (excl. VAT · ${currency})</span><span>${fmt(_grandEur)}</span></div>`;
+  let html = _lines.map(l => {
+    const p = l.dkk !== undefined ? fmtDKK(l.dkk) : fmtEUR(l.eur);
+    return `<div class="modal-q-line"><span>${l.label}</span><span>${p}</span></div>`;
+  }).join('');
+  const total = grandFmt(_grandEur);
+  html += `<div class="modal-q-line"><span>Total (excl. VAT · ${currency})</span><span>${total}</span></div>`;
   prev.innerHTML = html;
 
-  // hidden field for Formspree
   let txt = 'QUOTE DETAILS\n';
-  _lines.forEach(l => { txt += `• ${l.label}: ${fmt(l.eur)}\n`; });
-  if (disc > 0) txt += `  ${(disc*100).toFixed(0)}% volume discount: −${fmt(delivSubEur()*disc)}\n`;
-  txt += `TOTAL: ${fmt(_grandEur)} (excl. VAT, ${currency})`;
+  _lines.forEach(l => { const p = l.dkk !== undefined ? fmtDKK(l.dkk) : fmtEUR(l.eur); txt += `• ${l.label}: ${p}\n`; });
+  txt += `TOTAL: ${total} (excl. VAT, ${currency})`;
   document.getElementById('hidden-quote').value = txt;
 }
 
@@ -1032,12 +798,10 @@ async function sendQuote(e) {
   const err  = document.getElementById('modal-err');
   btn.disabled = true; btn.textContent = 'Sending…'; err.textContent = '';
   try {
-    const res = await fetch(form.action, {
-      method:'POST', body:new FormData(form), headers:{'Accept':'application/json'}
-    });
+    const res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
     if (res.ok) { window.location.href = '/thank-you.html'; return; }
     const d = await res.json().catch(()=>({}));
-    err.textContent = (d.errors&&d.errors.map(x=>x.message).join(', '))||'Something went wrong — please email contact@byggeligt.com directly.';
+    err.textContent = (d.errors&&d.errors.map(x=>x.message).join(', ')) || 'Something went wrong — please email contact@byggeligt.com directly.';
     btn.disabled=false; btn.textContent='Send quote →';
   } catch {
     err.textContent = 'Network error — please email contact@byggeligt.com directly.';
@@ -1045,47 +809,28 @@ async function sendQuote(e) {
   }
 }
 
-/* ─────────────────────────────────
-   PDF
-───────────────────────────────── */
-function savePDF() {
-  if (_grandEur === 0) { alert('Add items to your quote first.'); return; }
-  window.print();
-}
+/* ── PDF / COPY ── */
+function savePDF() { if (_grandEur===0) { alert('Add items to your quote first.'); return; } window.print(); }
+function scrollToQuote() { document.getElementById('quote-section').scrollIntoView({ behavior:'smooth', block:'start' }); }
 
-function scrollToQuote() {
-  document.getElementById('quote-section').scrollIntoView({ behavior:'smooth', block:'start' });
-}
-
-/* ─────────────────────────────────
-   COPY
-───────────────────────────────── */
 function copyQuote() {
   if (!_lines.length) return;
-  let text = 'Byggeligt Home — Content Quote 2025\n'+'─'.repeat(36)+'\n';
-  _lines.forEach(l => { text += `${l.label}: ${fmt(l.eur)}\n`; });
-  const disc = discPct(delivUnits());
-  if (disc>0) text += `${(disc*100).toFixed(0)}% volume discount: −${fmt(delivSubEur()*disc)}\n`;
-  text += '─'.repeat(36)+'\nTotal: '+fmt(_grandEur)+' (excl. VAT, '+currency+')\n\ncontact@byggeligt.com';
+  let text = 'Byggeligt Home — Content Quote 2025\n' + '─'.repeat(36) + '\n';
+  _lines.forEach(l => { const p = l.dkk!==undefined?fmtDKK(l.dkk):fmtEUR(l.eur); text+=`${l.label}: ${p}\n`; });
+  text += '─'.repeat(36) + '\nTotal: ' + grandFmt(_grandEur) + ' (excl. VAT, ' + currency + ')\n\ncontact@byggeligt.com';
   navigator.clipboard.writeText(text).then(() => {
     const b = document.querySelector('.q-copy-btn');
-    b.textContent='✓ Copied!';
-    setTimeout(()=>{ b.textContent='Copy to clipboard'; }, 2000);
+    b.textContent = '✓ Copied!';
+    setTimeout(() => { b.textContent = 'Copy to clipboard'; }, 2000);
   });
 }
 
-/* ─────────────────────────────────
-   INTERSECTION — hide sticky when quote visible
-───────────────────────────────── */
-const qs = document.getElementById('quote-section');
-const sb = document.getElementById('sticky-bar');
+/* ── INTERSECTION ── */
 new IntersectionObserver(([e]) => {
-  if (e.isIntersecting) sb.style.transform='translateY(100%)';
-}, { threshold:0.25 }).observe(qs);
+  if (e.isIntersecting) document.getElementById('sticky-bar').style.transform = 'translateY(100%)';
+}, { threshold:0.25 }).observe(document.getElementById('quote-section'));
 
-/* ─────────────────────────────────
-   CUSTOM CURSOR
-───────────────────────────────── */
+/* ── CURSOR ── */
 const cur=document.getElementById('cur'),curR=document.getElementById('cur-r');
 let mx=0,my=0,rx=0,ry=0;
 window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
@@ -1095,16 +840,12 @@ document.querySelectorAll('a,button,label').forEach(el=>{
   el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
 });
 
-/* ─────────────────────────────────
-   NAV SCROLL
-───────────────────────────────── */
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>nav.classList.toggle('sc',window.scrollY>20),{passive:true});
+/* ── NAV ── */
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll',()=>navEl.classList.toggle('sc',window.scrollY>20),{passive:true});
 
-/* ─────────────────────────────────
-   INIT
-───────────────────────────────── */
-updatePriceLabels();
+/* ── INIT ── */
+updateLabels();
 render();
 </script>
 </body>
