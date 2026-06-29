@@ -268,7 +268,7 @@
             9× Stories<br>
             Organic usage rights included
           </div>
-          <div class="pkg-per" id="pp-ambassador-reel">8.333 kr./reel</div>
+          <div class="pkg-per" id="pp-ambassador-reel">8.300 kr./reel</div>
           <div class="pkg-value" id="pv-ambassador">Value ~35.000 kr.</div>
           <div class="pkg-price" id="pp-ambassador">25.000 kr.</div>
           <button class="pkg-btn" onclick="addPkg('ambassador')">Select package +</button>
@@ -832,9 +832,9 @@ function updateLabels() {
   document.getElementById('pv-ambassador').textContent   = 'Value ~'+fmtDKK(DKK.ambassadorValue);
   document.getElementById('pv-campaign').textContent     = 'Value '+fmtDKK(DKK.campaignValue);
   // Per-reel prices
-  document.getElementById('pp-single-reel').textContent    = fmtDKK(DKK.single)+'/reel';
-  document.getElementById('pp-ambassador-reel').textContent = fmtDKK(Math.round(DKK.ambassador/3))+'/reel';
-  document.getElementById('pp-campaign-reel').textContent   = fmtDKK(Math.round(DKK.campaign/5))+'/reel';
+  document.getElementById('pp-single-reel').textContent    = fmtDKK(Math.round(DKK.single/100)*100)+'/reel';
+  document.getElementById('pp-ambassador-reel').textContent = fmtDKK(Math.round(DKK.ambassador/3/100)*100)+'/reel';
+  document.getElementById('pp-campaign-reel').textContent   = fmtDKK(Math.round(DKK.campaign/5/100)*100)+'/reel';
 
   // Usage rights pills — show cheapest (5-video) rate
   document.getElementById('us-1m').textContent  = 'from '+fmtDKK(USAGE_TIERS['1m'][5])+'/video';
