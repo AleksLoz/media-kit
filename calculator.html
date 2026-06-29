@@ -149,9 +149,10 @@
 .q-copy-btn{display:block;width:100%;background:transparent;border:none;font-family:var(--sans);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(138,112,96,.5);cursor:pointer;padding:6px;transition:color .2s}
 .q-copy-btn:hover{color:var(--rust)}
 .q-foot{font-size:10px;color:var(--mid);opacity:.6;line-height:1.6;margin-top:14px}
-.quote-note{font-size:12px;color:var(--mid);text-align:center;margin-top:16px;line-height:1.7;padding:0 20px}
-.quote-note a{color:var(--rust);text-decoration:none}
-.quote-note a:hover{text-decoration:underline}
+.flex-cta{text-align:center;padding:48px 20px 36px;border-top:0.5px solid rgba(122,32,32,.1);margin-top:32px}
+.flex-cta-title{font-family:var(--serif);font-size:38px;font-weight:900;line-height:1.05;color:var(--dark);margin-bottom:10px;letter-spacing:-.02em}
+.flex-cta-title em{font-style:italic;color:var(--rust)}
+.flex-cta-sub{font-size:13px;color:var(--mid);margin-bottom:28px;line-height:1.8}
 
 /* MODAL */
 #req-modal{display:none;position:fixed;inset:0;z-index:999;background:rgba(26,15,10,.6);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
@@ -194,7 +195,7 @@
   nav,.calc-hero,.currency-widget,.tab-row,.pkg-strip,.ugc-base,
   .sec-hd,.cat-panel,.add-rows,.usage-pills,.usage-note,.organic-row,
   .contact,footer,.sticky-bar,#req-modal,
-  .q-rm,.q-qty-ctrl,.q-pdf-btn,.q-copy-btn,.q-req-btn,.q-clear-btn,.quote-note{display:none!important}
+  .q-rm,.q-qty-ctrl,.q-pdf-btn,.q-copy-btn,.q-req-btn,.q-clear-btn,.flex-cta{display:none!important}
   body{background:#fff;cursor:auto}
   .calc-wrap{padding:0}
   .quote-section{margin:0;padding:0}
@@ -557,7 +558,12 @@
           </div>
         </div>
       </div>
-      <p class="quote-note">Smaller brand with a cool vision? <a href="mailto:contact@byggeligt.com">Contact us</a> — we're always open to being flexible and helping out.</p>
+      <div class="flex-cta">
+        <p class="c-hand">Limited budget?</p>
+        <h3 class="flex-cta-title">Smaller brand with a <em>cool vision</em></h3>
+        <p class="flex-cta-sub">We're always open to being flexible and helping out — reach out and let's talk.</p>
+        <a class="c-btn" href="mailto:contact@byggeligt.com">Get in touch →</a>
+      </div>
     </div>
 
   </div>
@@ -568,7 +574,7 @@
     <p class="c-hand">Ready to collaborate?</p>
     <h2 class="c-title">Let's make it <em>happen</em></h2>
     <p class="c-sub">Build your quote above, then send it — we'll come back within 48 hours with a tailored proposal.</p>
-    <a class="c-btn" href="/#s-collab">Get in touch</a>
+    <a class="c-btn" href="mailto:contact@byggeligt.com">Get in touch</a>
     <div class="c-handles">
       <a class="handle" href="mailto:contact@byggeligt.com">
         <svg class="ico" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
