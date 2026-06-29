@@ -673,6 +673,7 @@ const DKK_KEYS = ['newsletter','raw','horizontal','giveaway',
 /* ── DISCOUNT TIERS ── */
 const DISCOUNT_TIERS = [{count:3,pct:15},{count:5,pct:20},{count:8,pct:30}];
 let _lastDiscountPct = 0;
+let _lastAddonCount = 0;
 
 const REEL_COUNTS = {single:1, ambassador:3, campaign:5};
 
@@ -786,7 +787,7 @@ function clearAll() {
   for(const k of Object.keys(qty)) qty[k]=0;
   toggles.clear();
   document.querySelectorAll('input[name=usage],input[name=ugc_usage]').forEach(r=>r.checked=false);
-  _lastDiscountPct = 0;
+  _lastDiscountPct = 0; _lastAddonCount = 0;
   document.querySelectorAll('.plus-btn.active').forEach(b=>{b.textContent='+';b.classList.remove('active');});
   document.querySelectorAll('.add-row.active').forEach(r=>r.classList.remove('active'));
   render();
@@ -964,11 +965,16 @@ function render() {
     }
   }
 
-  // Toast on tier change
+  // Toast on tier change or add-on added
+  const _nextTierToast = DISCOUNT_TIERS.find(t => n < t.count);
   if(pct !== _lastDiscountPct) {
     if(pct > _lastDiscountPct && pct > 0) showToast(`${pct}% bundle discount unlocked!`);
     _lastDiscountPct = pct;
+  } else if(n > _lastAddonCount && _nextTierToast) {
+    const needed = _nextTierToast.count - n;
+    showToast(`Add ${needed} more to unlock ${_nextTierToast.pct}%`);
   }
+  _lastAddonCount = n;
 
   // UGC usage note
   const ugcNote=document.getElementById('ugc-usage-note');
