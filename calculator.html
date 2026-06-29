@@ -766,6 +766,9 @@ function addPkg(key) {
 }
 function changePkg(key,dir) { qty[key]=Math.max(0,qty[key]+dir); render(); }
 function removePkg(key)     { qty[key]=0; render(); }
+function removeToggle(key)  { toggleItem(key); }
+function removeUsage()      { document.querySelectorAll('input[name=usage]').forEach(r=>r.checked=false); render(); }
+function removeUgcUsage()   { document.querySelectorAll('input[name=ugc_usage]').forEach(r=>r.checked=false); render(); }
 
 function toggleItem(key) {
   const id  = key.replace(/_/g,'-');
@@ -822,7 +825,7 @@ function render() {
   if(autoOrganic) {
     _lines.push({label:'Organic usage rights', dkk:0, free:true});
   } else if(uKey === 'organic') {
-    _lines.push({label:'Organic usage rights', dkk:0, free:true});
+    _lines.push({label:'Organic usage rights', dkk:0, free:true, removeType:'usage'});
   }
   if(uKey !== 'none' && uKey !== 'organic') {
     const reels = reelCount();
@@ -830,7 +833,7 @@ function render() {
       const ppv = DKK.usage[uKey], dkk = ppv * reels;
       grandEur += toEUR(dkk);
       const mLabel = {'1m':'1 month','3m':'3 months','6m':'6 months','12m':'12 months'}[uKey];
-      _lines.push({label:`Usage rights · ${mLabel}${reels>1?` · ${reels} videos`:''}`, dkk});
+      _lines.push({label:`Usage rights · ${mLabel}${reels>1?` · ${reels} videos`:''}`, dkk, removeType:'usage'});
     }
   }
 
@@ -848,7 +851,7 @@ function render() {
       const dkk=ppv*vCount;
       grandEur+=toEUR(dkk);
       const mLabel={'1m':'1 month','3m':'3 months','6m':'6 months','12m':'12 months'}[ugcUKey];
-      _lines.push({label:`Paid ads rights · ${mLabel}${vCount>1?` · ${vCount} videos`:''}`, dkk});
+      _lines.push({label:`Paid ads rights · ${mLabel}${vCount>1?` · ${vCount} videos`:''}`, dkk, removeType:'ugc_usage'});
     }
   }
 
@@ -856,10 +859,10 @@ function render() {
   for(const k of toggles) {
     if(EUR_KEYS.includes(k)) {
       const eur=EUR[k]||0; grandEur+=eur;
-      _lines.push({label:ADDON_LABELS[k], eur});
+      _lines.push({label:ADDON_LABELS[k], eur, removeType:'toggle', key:k});
     } else if(DKK_KEYS.includes(k)) {
       const dkk=DKK[k]||0; grandEur+=toEUR(dkk);
-      _lines.push({label:ADDON_LABELS[k], dkk});
+      _lines.push({label:ADDON_LABELS[k], dkk, removeType:'toggle', key:k});
     }
   }
 
@@ -891,6 +894,12 @@ function render() {
              <button class="qq-btn" onclick="changePkg('${it.key}',1)">+</button>
            </div>
            <button class="q-rm" onclick="removePkg('${it.key}')" title="Remove">×</button>`
+        : it.removeType === 'toggle'
+        ? `<button class="q-rm" onclick="removeToggle('${it.key}')" title="Remove">×</button>`
+        : it.removeType === 'usage'
+        ? `<button class="q-rm" onclick="removeUsage()" title="Remove">×</button>`
+        : it.removeType === 'ugc_usage'
+        ? `<button class="q-rm" onclick="removeUgcUsage()" title="Remove">×</button>`
         : '<span style="width:28px;flex-shrink:0"></span>';
       return `<div class="q-item${it.discount?' discount-line':''}">
         ${(!it.ctrl||it.free||it.discount)?'<span style="width:20px;flex-shrink:0"></span>':''}
