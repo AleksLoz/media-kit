@@ -149,34 +149,20 @@
 .q-copy-btn{display:block;width:100%;background:transparent;border:none;font-family:var(--sans);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(138,112,96,.5);cursor:pointer;padding:6px;transition:color .2s}
 .q-copy-btn:hover{color:var(--rust)}
 .q-foot{font-size:10px;color:var(--mid);opacity:.6;line-height:1.6;margin-top:14px}
+/* INLINE CONTACT FIELDS */
+.q-contact-fields{display:flex;flex-direction:column;gap:10px;margin-top:20px;padding-top:18px;border-top:0.5px solid rgba(122,32,32,.1)}
+.q-field-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);display:block;margin-bottom:5px}
+.q-field-opt{font-size:8px;opacity:.5;letter-spacing:.1em}
+.q-field-input{width:100%;padding:10px 13px;border:0.5px solid rgba(122,32,32,.18);border-radius:7px;font-family:var(--sans);font-size:13px;color:var(--dark);background:#fff;outline:none;transition:border-color .2s;box-sizing:border-box;resize:vertical}
+.q-field-input:focus{border-color:var(--rust)}
+.q-field-input::placeholder{color:rgba(138,112,96,.45);font-size:12px}
+.q-field{display:flex;flex-direction:column}
+
 .flex-cta{text-align:center;padding:48px 20px 36px;border-top:0.5px solid rgba(122,32,32,.1);margin-top:32px}
 .flex-cta-title{font-family:var(--serif);font-size:38px;font-weight:900;line-height:1.05;color:var(--dark);margin-bottom:10px;letter-spacing:-.02em}
 .flex-cta-title em{font-style:italic;color:var(--rust)}
 .flex-cta-sub{font-size:13px;color:var(--mid);margin-bottom:28px;line-height:1.8}
 
-/* MODAL */
-#req-modal{display:none;position:fixed;inset:0;z-index:999;background:rgba(26,15,10,.6);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
-#req-modal.open{display:flex}
-.modal-card{background:var(--offwhite);border-radius:18px;padding:40px 36px;width:100%;max-width:480px;box-shadow:0 32px 80px rgba(26,15,10,.28);position:relative;max-height:90vh;overflow-y:auto}
-.modal-close{position:absolute;top:18px;right:18px;width:30px;height:30px;border-radius:50%;background:rgba(122,32,32,.08);border:none;color:var(--rust);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s}
-.modal-close:hover{background:rgba(122,32,32,.15)}
-.modal-eyebrow{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--rust);margin-bottom:6px}
-.modal-title{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--dark);margin-bottom:6px;line-height:1.1}
-.modal-title em{font-style:italic;color:var(--rust)}
-.modal-sub{font-size:12px;color:var(--mid);line-height:1.7;margin-bottom:22px}
-.modal-field{margin-bottom:12px}
-.modal-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);display:block;margin-bottom:5px}
-.modal-input{width:100%;padding:11px 14px;border:0.5px solid rgba(122,32,32,.18);border-radius:8px;font-family:var(--sans);font-size:13px;color:var(--dark);background:#fff;outline:none;transition:border-color .2s;box-sizing:border-box}
-.modal-input:focus{border-color:var(--rust)}
-.modal-input::placeholder{color:rgba(138,112,96,.5)}
-.modal-quote-preview{background:var(--cream);border:0.5px solid rgba(122,32,32,.12);border-radius:8px;padding:12px 14px;margin-bottom:16px;max-height:160px;overflow-y:auto}
-.modal-q-line{display:flex;justify-content:space-between;font-size:11px;color:var(--mid);padding:3px 0;border-bottom:0.5px solid rgba(122,32,32,.07)}
-.modal-q-line:last-child{border-bottom:none;color:var(--dark);font-weight:500}
-.modal-q-line span:last-child{font-family:var(--serif);font-weight:700;color:var(--rust)}
-.modal-send-btn{width:100%;padding:13px;border:none;border-radius:8px;background:var(--rust);color:#fff;font-family:var(--sans);font-size:10px;letter-spacing:.17em;text-transform:uppercase;cursor:pointer;font-weight:500;transition:background .2s}
-.modal-send-btn:hover{background:var(--rust-deep)}
-.modal-send-btn:disabled{opacity:.6;cursor:not-allowed}
-.modal-err{font-size:11px;color:var(--rust);margin-top:8px;min-height:16px}
 
 /* STICKY BAR */
 .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--dark);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 -4px 20px rgba(26,15,10,.3);transform:translateY(100%);transition:transform .3s cubic-bezier(.16,1,.3,1)}
@@ -195,7 +181,7 @@
   nav,.calc-hero,.currency-widget,.tab-row,.pkg-strip,.ugc-base,
   .sec-hd,.cat-panel,.add-rows,.usage-pills,.usage-note,.organic-row,
   .contact,footer,.sticky-bar,#req-modal,
-  .q-rm,.q-qty-ctrl,.q-pdf-btn,.q-copy-btn,.q-req-btn,.q-clear-btn,.flex-cta{display:none!important}
+  .q-rm,.q-qty-ctrl,.q-pdf-btn,.q-copy-btn,.q-req-btn,.q-clear-btn,.flex-cta,.q-contact-fields{display:none!important}
   body{background:#fff;cursor:auto}
   .calc-wrap{padding:0}
   .quote-section{margin:0;padding:0}
@@ -538,25 +524,38 @@
           </div>
           <button class="q-clear-btn" onclick="clearAll()">Clear all</button>
         </div>
-        <div class="q-layout">
-          <div>
-            <div class="q-items" id="q-items">
-              <p class="q-empty">Nothing added yet — pick a package or add items from the sections above.</p>
+        <form id="quote-form" action="https://formspree.io/f/xqevewoz" method="POST" onsubmit="prepareSubmit(event)">
+          <input type="hidden" name="_subject" value="Content Quote Request — Byggeligt Home">
+          <input type="hidden" name="quote_details" id="hidden-quote">
+          <div class="q-layout">
+            <div>
+              <div class="q-items" id="q-items">
+                <p class="q-empty">Nothing added yet — pick a package or add items from the sections above.</p>
+              </div>
+              <div class="q-rule" id="q-rule" style="display:none"></div>
+              <div class="q-contact-fields" id="q-contact-fields">
+                <div class="q-field">
+                  <label class="q-field-label" for="q-email">Your email</label>
+                  <input class="q-field-input" type="email" name="email" id="q-email" placeholder="your@email.com" required>
+                </div>
+                <div class="q-field">
+                  <label class="q-field-label" for="q-message">Message <span class="q-field-opt">optional</span></label>
+                  <textarea class="q-field-input" name="message" id="q-message" rows="4" placeholder="Do you have any comments, or are you working with a strict budget? Tell us about your brand — we're always open to a partnership that works for both of us."></textarea>
+                </div>
+              </div>
             </div>
-            <div class="q-rule" id="q-rule" style="display:none"></div>
-          </div>
-          <div class="q-totals">
-            <div class="q-total-row">
-              <span class="q-total-label">Total</span>
-              <span class="q-total-val" id="q-total">—</span>
+            <div class="q-totals">
+              <div class="q-total-row">
+                <span class="q-total-label">Total</span>
+                <span class="q-total-val" id="q-total">—</span>
+              </div>
+              <p class="q-vat">Excl. VAT · prices in <span id="cur-label">DKK</span></p>
+              <button type="submit" class="q-req-btn">Request this quote →</button>
+              <button type="button" class="q-pdf-btn" onclick="savePDF()">Save as PDF</button>
+              <button type="button" class="q-copy-btn" onclick="copyQuote()">Copy to clipboard</button>
             </div>
-            <p class="q-vat">Excl. VAT · prices in <span id="cur-label">DKK</span></p>
-            <button class="q-req-btn" onclick="openModal()">Request this quote →</button>
-            <button class="q-pdf-btn" onclick="savePDF()">Save as PDF</button>
-            <button class="q-copy-btn" onclick="copyQuote()">Copy to clipboard</button>
-            <p class="q-foot">Prices are starting rates. Final proposal depends on brief, timeline &amp; scope.</p>
           </div>
-        </div>
+        </form>
       </div>
       <div class="flex-cta">
         <p class="c-hand">Limited budget?</p>
@@ -598,41 +597,10 @@
   </div>
   <div class="sb-right">
     <button class="sb-view" onclick="scrollToQuote()">View quote ↓</button>
-    <button class="sb-req" onclick="openModal()">Request →</button>
+    <button class="sb-req" onclick="scrollToQuote()">Request →</button>
   </div>
 </div>
 
-<div id="req-modal">
-  <div class="modal-card">
-    <button class="modal-close" onclick="closeModal()">×</button>
-    <p class="modal-eyebrow">Send your quote</p>
-    <h3 class="modal-title">Let's talk <em>collaboration</em></h3>
-    <p class="modal-sub">Fill in your details and we'll send a tailored proposal to your inbox within 48 hours.</p>
-    <form id="modal-form" action="https://formspree.io/f/xqevewoz" method="POST" onsubmit="sendQuote(event)">
-      <input type="hidden" name="_subject" value="Content Quote Request">
-      <input type="hidden" name="quote_details" id="hidden-quote">
-      <input type="hidden" name="_replyto" id="hidden-replyto">
-      <div class="modal-field">
-        <label class="modal-label" for="m-name">Your name</label>
-        <input class="modal-input" type="text" id="m-name" name="name" placeholder="Full name" required>
-      </div>
-      <div class="modal-field">
-        <label class="modal-label" for="m-company">Brand / company</label>
-        <input class="modal-input" type="text" id="m-company" name="company" placeholder="e.g. IKEA Denmark">
-      </div>
-      <div class="modal-field">
-        <label class="modal-label" for="m-email">Your email</label>
-        <input class="modal-input" type="email" id="m-email" name="email" placeholder="your@email.com" required
-          oninput="document.getElementById('hidden-replyto').value=this.value">
-      </div>
-      <div class="modal-quote-preview" id="modal-preview">
-        <p style="font-size:11px;color:var(--mid);font-style:italic">Your quote will appear here once you add items.</p>
-      </div>
-      <button type="submit" class="modal-send-btn" id="modal-send">Send quote →</button>
-      <p class="modal-err" id="modal-err"></p>
-    </form>
-  </div>
-</div>
 
 <script>
 /* ── PRICING ── */
@@ -886,7 +854,6 @@ function render() {
     }
   }
 
-  syncModalPreview();
 }
 
 /* ── CURRENCY ── */
@@ -944,44 +911,20 @@ function updateLabels() {
   document.getElementById('tp-ugc-express').textContent   = fmtDKK(DKK.ugc_express);
 }
 
-/* ── MODAL ── */
-function openModal(){syncModalPreview();document.getElementById('req-modal').classList.add('open');document.body.style.overflow='hidden';}
-function closeModal(){document.getElementById('req-modal').classList.remove('open');document.body.style.overflow='';}
-document.getElementById('req-modal').addEventListener('click',e=>{if(e.target===document.getElementById('req-modal'))closeModal();});
-
-function syncModalPreview() {
-  const prev=document.getElementById('modal-preview');
-  if(_lines.length===0){
-    prev.innerHTML='<p style="font-size:11px;color:var(--mid);font-style:italic">Your quote will appear here once you add items.</p>';
-    document.getElementById('hidden-quote').value=''; return;
+/* ── FORM SUBMIT ── */
+function prepareSubmit(e) {
+  if(_lines.length === 0) {
+    e.preventDefault();
+    alert('Add at least one item to your quote before sending.');
+    return;
   }
-  let html=_lines.map(l=>{
-    const p=l.free?'Included':l.dkk!==undefined?fmtDKK(l.dkk):fmtEUR(l.eur);
-    return `<div class="modal-q-line"><span>${l.label}</span><span>${p}</span></div>`;
-  }).join('');
-  const total=grandFmt(_grandEur);
-  html+=`<div class="modal-q-line"><span>Total (excl. VAT · ${currency})</span><span>${total}</span></div>`;
-  prev.innerHTML=html;
-  let txt='QUOTE DETAILS\n';
-  _lines.forEach(l=>{const p=l.free?'Included':l.dkk!==undefined?fmtDKK(l.dkk):fmtEUR(l.eur);txt+=`• ${l.label}: ${p}\n`;});
-  txt+=`TOTAL: ${total} (excl. VAT, ${currency})`;
-  document.getElementById('hidden-quote').value=txt;
-}
-
-async function sendQuote(e){
-  e.preventDefault();
-  const form=document.getElementById('modal-form'),btn=document.getElementById('modal-send'),err=document.getElementById('modal-err');
-  btn.disabled=true;btn.textContent='Sending…';err.textContent='';
-  try{
-    const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
-    if(res.ok){window.location.href='/thank-you.html';return;}
-    const d=await res.json().catch(()=>({}));
-    err.textContent=(d.errors&&d.errors.map(x=>x.message).join(', '))||'Something went wrong — please email contact@byggeligt.com directly.';
-    btn.disabled=false;btn.textContent='Send quote →';
-  }catch{
-    err.textContent='Network error — please email contact@byggeligt.com directly.';
-    btn.disabled=false;btn.textContent='Send quote →';
-  }
+  let txt = 'QUOTE DETAILS\n';
+  _lines.forEach(l => {
+    const p = l.free ? 'Included' : l.contact ? 'Contact us' : l.dkk !== undefined ? fmtDKK(l.dkk) : fmtEUR(l.eur);
+    txt += `• ${l.label}: ${p}\n`;
+  });
+  txt += `TOTAL: ${grandFmt(_grandEur)} (excl. VAT, ${currency})`;
+  document.getElementById('hidden-quote').value = txt;
 }
 
 function savePDF(){if(_grandEur===0){alert('Add items to your quote first.');return;}window.print();}
