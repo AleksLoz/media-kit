@@ -149,6 +149,25 @@
 .q-copy-btn{display:block;width:100%;background:transparent;border:none;font-family:var(--sans);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(138,112,96,.5);cursor:pointer;padding:6px;transition:color .2s}
 .q-copy-btn:hover{color:var(--rust)}
 .q-foot{font-size:10px;color:var(--mid);opacity:.6;line-height:1.6;margin-top:14px}
+/* DISCOUNT NUDGE */
+.discount-nudge{display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,rgba(70,15,15,.07),rgba(70,15,15,.03));border:0.5px solid rgba(122,32,32,.22);border-radius:12px;padding:14px 18px;margin-bottom:24px;flex-wrap:wrap}
+.dn-left{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.dn-pct{font-family:var(--serif);font-size:22px;font-weight:900;color:var(--rust);line-height:1}
+.dn-label{font-size:11px;color:var(--mid);line-height:1.4}
+.dn-dots{display:flex;gap:5px;flex:1;justify-content:center;flex-wrap:wrap}
+.dn-dot{width:10px;height:10px;border-radius:50%;background:rgba(122,32,32,.14);transition:background .25s,transform .2s}
+.dn-dot.filled{background:var(--rust);transform:scale(1.15)}
+.dn-dot.milestone{outline:2px solid var(--rust);outline-offset:2px}
+.dn-next{font-size:10px;color:var(--rust);font-weight:500;background:rgba(122,32,32,.1);padding:5px 11px;border-radius:50px;white-space:nowrap;flex-shrink:0;letter-spacing:.04em}
+
+/* DISCOUNT TOAST */
+.discount-toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--rust);color:#fff;padding:11px 22px;border-radius:50px;font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:.04em;z-index:600;opacity:0;transition:opacity .35s,transform .35s cubic-bezier(.16,1,.3,1);pointer-events:none;white-space:nowrap}
+.discount-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* DISCOUNT LINE IN QUOTE */
+.q-item.discount-line{background:rgba(122,32,32,.04);border-color:rgba(122,32,32,.18)}
+.q-item-saving{font-family:var(--serif);font-size:13px;font-weight:700;color:var(--rust);min-width:64px;text-align:right;flex-shrink:0}
+
 /* INLINE CONTACT FIELDS */
 .q-contact-fields{display:flex;flex-direction:column;gap:10px;margin-top:20px;padding-top:18px;border-top:0.5px solid rgba(122,32,32,.1)}
 .q-field-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);display:block;margin-bottom:5px}
@@ -311,13 +330,35 @@
         <span class="sec-aside">Paid social · website · digital marketing</span>
       </div>
       <div class="cat-panel">
-        <div class="add-rows">
-          <div class="add-row" id="ar-usage-unlimited">
-            <div class="add-info"><div class="add-name">Unlimited usage rights</div><div class="add-note">All platforms · paid ads · website · digital · forever</div></div>
-            <div class="add-price" style="font-size:11px;font-weight:400;color:var(--mid)">Contact us</div>
-            <button class="plus-btn" id="pb-usage-unlimited" onclick="toggleItem('usage_unlimited')" title="Add">+</button>
-          </div>
+        <div class="usage-pills">
+          <label class="usage-pill">
+            <input type="radio" name="usage" value="organic" onchange="render()">
+            <span class="u-label">Organic</span>
+            <span class="u-sub">website + social</span>
+          </label>
+          <label class="usage-pill">
+            <input type="radio" name="usage" value="1m" onchange="render()">
+            <span class="u-label">1 month paid ads</span>
+            <span class="u-sub" id="us-1m">2.000 kr./video</span>
+          </label>
+          <label class="usage-pill">
+            <input type="radio" name="usage" value="3m" onchange="render()">
+            <span class="u-label">3 months paid ads</span>
+            <span class="u-sub" id="us-3m">5.000 kr./video</span>
+          </label>
+          <label class="usage-pill">
+            <input type="radio" name="usage" value="6m" onchange="render()">
+            <span class="u-label">6 months paid ads</span>
+            <span class="u-sub" id="us-6m">8.000 kr./video</span>
+          </label>
+          <label class="usage-pill">
+            <input type="radio" name="usage" value="12m" onchange="render()">
+            <span class="u-label">12 months paid ads</span>
+            <span class="u-sub" id="us-12m">13.000 kr./video</span>
+          </label>
         </div>
+        <p class="usage-note" id="usage-note">Select a duration to add usage rights for paid ads, website use &amp; digital marketing.</p>
+        <p class="usage-caption">Need unlimited usage rights? Mention it in your message — we'll tailor the price to your campaign.</p>
       </div>
 
       <!-- Section 2: Add-ons -->
@@ -513,6 +554,16 @@
 
     </div><!-- /tab-ugc -->
 
+    <!-- DISCOUNT NUDGE -->
+    <div class="discount-nudge" id="discount-nudge" style="display:none">
+      <div class="dn-left">
+        <span class="dn-pct" id="dn-pct"></span>
+        <span class="dn-label" id="dn-label"></span>
+      </div>
+      <div class="dn-dots" id="dn-dots"></div>
+      <span class="dn-next" id="dn-next"></span>
+    </div>
+
     <!-- QUOTE SUMMARY -->
     <div class="quote-section" id="quote-section">
       <div class="quote-card">
@@ -540,7 +591,7 @@
                 </div>
                 <div class="q-field">
                   <label class="q-field-label" for="q-message">Message <span class="q-field-opt">optional</span></label>
-                  <textarea class="q-field-input" name="message" id="q-message" rows="4" placeholder="Do you have any comments, or are you working with a strict budget? Tell us about your brand — we're always open to a partnership that works for both of us."></textarea>
+                  <textarea class="q-field-input" name="message" id="q-message" rows="4" placeholder="Do you have any comments, or are you working with a strict budget? Need unlimited usage rights? Tell us about your brand — we'll tailor a partnership that works for both of us."></textarea>
                 </div>
               </div>
             </div>
@@ -602,6 +653,8 @@
 </div>
 
 
+<div class="discount-toast" id="discount-toast"></div>
+
 <script>
 /* ── PRICING ── */
 const EUR_DKK = 7.46;
@@ -635,7 +688,9 @@ const DKK_KEYS = ['newsletter','raw','horizontal','giveaway',
                   'linkbio','whitelist','sparkad',
                   'ugc_raw','ugc_horizontal','ugc_square','ugc_hook',
                   'ugc_cta','ugc_textfree','ugc_express'];
-const CONTACT_KEYS = ['usage_unlimited'];
+/* ── DISCOUNT TIERS ── */
+const DISCOUNT_TIERS = [{count:3,pct:15},{count:5,pct:20},{count:8,pct:30}];
+let _lastDiscountPct = 0;
 
 const REEL_COUNTS = {single:1, ambassador:3, campaign:5};
 
@@ -649,7 +704,6 @@ const UGC_QTY_LABELS = {
   ugc_photo: 'Lifestyle photo'
 };
 const ADDON_LABELS = {
-  usage_unlimited:'Unlimited usage rights',
   igcopost:'Instagram Reel Co-post', tiktok:'TikTok', facebook:'Facebook',
   youtube:'YouTube Shorts', pinterest:'Pinterest',
   newsletter:'Newsletter feature',
@@ -698,7 +752,22 @@ function reelCount() {
   return Object.entries(qty).reduce((s,[k,v])=>s+(REEL_COUNTS[k]||0)*v, 0);
 }
 function ugcVideoCount() { return qty.ugc_video; }
+function getUsage()    { return document.querySelector('input[name=usage]:checked')?.value    || 'none'; }
 function getUgcUsage() { return document.querySelector('input[name=ugc_usage]:checked')?.value || 'none'; }
+function addonCount()  { return toggles.size; }
+function discountPct() {
+  const n = addonCount(); let pct = 0;
+  for(const t of DISCOUNT_TIERS) { if(n >= t.count) pct = t.pct; }
+  return pct;
+}
+let _toastTimer = null;
+function showToast(msg) {
+  const el = document.getElementById('discount-toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => el.classList.remove('show'), 3200);
+}
 
 /* ── ACTIONS ── */
 function switchTab(tab) {
@@ -734,7 +803,8 @@ function toggleItem(key) {
 function clearAll() {
   for(const k of Object.keys(qty)) qty[k]=0;
   toggles.clear();
-  document.querySelectorAll('input[name=ugc_usage]').forEach(r=>r.checked=false);
+  document.querySelectorAll('input[name=usage],input[name=ugc_usage]').forEach(r=>r.checked=false);
+  _lastDiscountPct = 0;
   document.querySelectorAll('.plus-btn.active').forEach(b=>{b.textContent='+';b.classList.remove('active');});
   document.querySelectorAll('.add-row.active').forEach(r=>r.classList.remove('active'));
   render();
@@ -742,7 +812,7 @@ function clearAll() {
 
 /* ── RENDER ── */
 function render() {
-  document.querySelectorAll('.usage-pill').forEach(p=>
+  document.querySelectorAll('.usage-pill').forEach(p =>
     p.classList.toggle('active', p.querySelector('input')?.checked)
   );
 
@@ -763,9 +833,22 @@ function render() {
     }
   }
 
-  // Organic usage rights (free) for Campaign & Ambassadorship
-  if(qty.ambassador > 0 || qty.campaign > 0) {
+  // Collab usage rights
+  const uKey = getUsage();
+  const autoOrganic = (qty.ambassador > 0 || qty.campaign > 0);
+  if(autoOrganic) {
     _lines.push({label:'Organic usage rights', dkk:0, free:true});
+  } else if(uKey === 'organic') {
+    _lines.push({label:'Organic usage rights', dkk:0, free:true});
+  }
+  if(uKey !== 'none' && uKey !== 'organic') {
+    const reels = reelCount();
+    if(reels > 0) {
+      const ppv = DKK.usage[uKey], dkk = ppv * reels;
+      grandEur += toEUR(dkk);
+      const mLabel = {'1m':'1 month','3m':'3 months','6m':'6 months','12m':'12 months'}[uKey];
+      _lines.push({label:`Usage rights · ${mLabel}${reels>1?` · ${reels} videos`:''}`, dkk});
+    }
   }
 
   // Organic usage rights (free) for UGC
@@ -788,15 +871,21 @@ function render() {
 
   // Toggle add-ons
   for(const k of toggles) {
-    if(CONTACT_KEYS.includes(k)) {
-      _lines.push({label:ADDON_LABELS[k], contact:true});
-    } else if(EUR_KEYS.includes(k)) {
+    if(EUR_KEYS.includes(k)) {
       const eur=EUR[k]||0; grandEur+=eur;
       _lines.push({label:ADDON_LABELS[k], eur});
     } else if(DKK_KEYS.includes(k)) {
       const dkk=DKK[k]||0; grandEur+=toEUR(dkk);
       _lines.push({label:ADDON_LABELS[k], dkk});
     }
+  }
+
+  // Bundle discount
+  const pct = discountPct();
+  if(pct > 0 && grandEur > 0) {
+    const savingEur = grandEur * pct / 100;
+    grandEur -= savingEur;
+    _lines.push({label:`Bundle discount · ${pct}% off`, savingEur, discount:true});
   }
 
   _grandEur=grandEur;
@@ -809,8 +898,8 @@ function render() {
     cont.innerHTML=_lines.map(it=>{
       const priceHtml = it.free
         ? '<span style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--rust);font-weight:500;min-width:64px;text-align:right;flex-shrink:0">Included</span>'
-        : it.contact
-        ? '<span style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);font-weight:500;min-width:64px;text-align:right;flex-shrink:0">Contact us</span>'
+        : it.discount
+        ? `<span class="q-item-saving">−${grandFmt(it.savingEur)}</span>`
         : `<span class="q-item-price">${it.dkk!==undefined?fmtDKK(it.dkk):fmtEUR(it.eur)}</span>`;
       const ctrl = it.ctrl && !it.free
         ? `<div class="q-qty-ctrl">
@@ -820,8 +909,8 @@ function render() {
            </div>
            <button class="q-rm" onclick="removePkg('${it.key}')" title="Remove">×</button>`
         : '<span style="width:28px;flex-shrink:0"></span>';
-      return `<div class="q-item">
-        ${(!it.ctrl||it.free)?'<span style="width:20px;flex-shrink:0"></span>':''}
+      return `<div class="q-item${it.discount?' discount-line':''}">
+        ${(!it.ctrl||it.free||it.discount)?'<span style="width:20px;flex-shrink:0"></span>':''}
         <span class="q-item-name">${it.label}</span>
         ${ctrl}
         ${priceHtml}
@@ -838,6 +927,66 @@ function render() {
   // UGC qty display
   const elV=document.getElementById('qv-ugc-video'); if(elV)elV.textContent=qty.ugc_video;
   const elP=document.getElementById('qv-ugc-photo'); if(elP)elP.textContent=qty.ugc_photo;
+
+  // Collab usage note
+  const note = document.getElementById('usage-note');
+  if(note) {
+    const reels = reelCount();
+    if(uKey==='none') {
+      note.innerHTML='Select a duration to add usage rights for paid ads, website use &amp; digital marketing.';
+    } else if(uKey==='organic') {
+      note.innerHTML='<strong>Organic usage rights added</strong> — website, social &amp; owned channels. Free.';
+    } else if(reels===0) {
+      note.innerHTML='Select a package above to apply usage rights to your videos.';
+    } else {
+      const ppv=DKK.usage[uKey], tot=ppv*reels;
+      const mLabel={'1m':'1 month','3m':'3 months','6m':'6 months','12m':'12 months'}[uKey];
+      note.innerHTML=`<strong>${fmtDKK(tot)}</strong> — ${reels} video${reels>1?'s':''} × ${fmtDKK(ppv)} · ${mLabel}.`;
+    }
+  }
+
+  // Discount nudge
+  const n = addonCount();
+  const nudge = document.getElementById('discount-nudge');
+  if(nudge) {
+    if(n === 0) {
+      nudge.style.display = 'none';
+    } else {
+      nudge.style.display = 'flex';
+      const MAX_DOTS = 8;
+      const dotsEl = document.getElementById('dn-dots');
+      let dots = '';
+      for(let i=1;i<=MAX_DOTS;i++) {
+        const isMilestone = [3,5,8].includes(i);
+        dots += `<span class="dn-dot${i<=n?' filled':''}${isMilestone?' milestone':''}"></span>`;
+      }
+      dotsEl.innerHTML = dots;
+      const nextTier = DISCOUNT_TIERS.find(t => n < t.count);
+      const pctEl = document.getElementById('dn-pct');
+      const lblEl = document.getElementById('dn-label');
+      const nxtEl = document.getElementById('dn-next');
+      if(pct > 0) {
+        pctEl.textContent = pct + '%';
+        lblEl.textContent = 'bundle discount applied';
+      } else {
+        pctEl.textContent = '';
+        lblEl.textContent = n + (n===1?' add-on selected':' add-ons selected');
+      }
+      if(nextTier) {
+        nxtEl.textContent = `+${nextTier.count - n} more for ${nextTier.pct}% off`;
+        nxtEl.style.display = '';
+      } else {
+        nxtEl.textContent = 'Max discount unlocked!';
+        nxtEl.style.display = '';
+      }
+    }
+  }
+
+  // Toast on tier change
+  if(pct !== _lastDiscountPct) {
+    if(pct > _lastDiscountPct && pct > 0) showToast(`${pct}% bundle discount unlocked!`);
+    _lastDiscountPct = pct;
+  }
 
   // UGC usage note
   const ugcNote=document.getElementById('ugc-usage-note');
@@ -877,6 +1026,12 @@ function updateLabels() {
   document.getElementById('pp-single-reel').textContent    = fmtDKK(Math.round(DKK.single/100)*100)+'/reel';
   document.getElementById('pp-ambassador-reel').textContent = fmtDKK(Math.round(DKK.ambassador/3/100)*100)+'/reel';
   document.getElementById('pp-campaign-reel').textContent   = fmtDKK(Math.round(DKK.campaign/5/100)*100)+'/reel';
+
+  // Collab usage pills
+  document.getElementById('us-1m').textContent  = fmtDKK(DKK.usage['1m'])+'/video';
+  document.getElementById('us-3m').textContent  = fmtDKK(DKK.usage['3m'])+'/video';
+  document.getElementById('us-6m').textContent  = fmtDKK(DKK.usage['6m'])+'/video';
+  document.getElementById('us-12m').textContent = fmtDKK(DKK.usage['12m'])+'/video';
 
   // UGC usage pills
   document.getElementById('uus-1m').textContent  = fmtDKK(DKK.ugcusage['1m'])+'/video';
