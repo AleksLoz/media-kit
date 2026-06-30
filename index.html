@@ -51,8 +51,8 @@
         <li><a href="#about">About</a></li>
         <li><a href="#audience">Audience</a></li>
         <li><a href="#niches">Content</a></li>
-        <li><a href="#s-collab">Work with us</a></li>
-        <li><a href="#s-collab" class="nav-pill">Packages</a></li>
+        <li><a href="#s-contact">Work with us</a></li>
+        <li><a href="calculator.html" class="nav-pill">Packages</a></li>
       </ul>
     </div>
   </div>
@@ -326,214 +326,19 @@
   </div>
 </section>
 
-<!-- ── COLLAB FORM ── -->
-<section class="collab editwrap rv" id="s-collab">
-  <button class="sec-hide" onclick="hideEl('s-collab')">✕ Hide section</button>
-  <div class="page">
-    <div class="rule" style="margin-bottom:24px"></div>
-    <p class="s-eyebrow">Work with us</p>
-    <h2 class="s-title" style="margin-bottom:10px">Build your <em>campaign.</em></h2>
-    <p class="cf-intro">Tell us what you need — we'll tailor the price.</p>
-
-    <!-- Tabs -->
-    <div class="cf-tabs">
-      <button class="cf-tab active" onclick="switchTab('collab',this)">
-        <span class="cf-tab-label">Brand Collaboration</span>
-      </button>
-      <button class="cf-tab" onclick="switchTab('ugc',this)">
-        <span class="cf-tab-label">UGC Content</span>
-      </button>
-      <button class="cf-tab" onclick="switchTab('classic',this)">
-        <span class="cf-tab-label">Email Us</span>
-      </button>
+<!-- ── CONTACT ── -->
+<section class="contact editwrap" id="s-contact">
+  <button class="sec-hide" onclick="hideEl('s-contact')">✕ Hide section</button>
+  <div class="page" id="contact">
+    <div class="c-hand">Let's work together</div>
+    <h2 class="c-title">Build a <em>partnership,</em><br>not just a campaign.</h2>
+    <p class="c-sub">We work with brands that value quality, authenticity, and beautiful design.</p>
+    <div class="c-btns">
+      <a class="c-btn" href="mailto:contact@byggeligt.com">Get in touch</a>
+      <a class="c-btn c-btn-outline" href="https://mediakit-steel.vercel.app/calculator.html">See our packages</a>
     </div>
-
-    <!-- COLLABORATION PANEL -->
-    <div class="cf-panel" id="panel-collab" style="">
-      <div class="collab-box">
-        <form id="collab-form" action="https://formspree.io/f/xqevewoz" method="POST" onsubmit="prepareCollab(event)">
-          <p style="font-size:13px;color:var(--mid);line-height:1.8;margin:0 0 24px">Reach a highly engaged audience of homeowners, families, and design-conscious consumers through content published on our channels.</p>
-          <input type="hidden" name="_subject" value="Brand Collaboration Inquiry — Byggeligt Home">
-          <input type="hidden" name="Type" value="Brand Collaboration">
-          <input type="hidden" name="Reels" id="h-reels">
-          <input type="hidden" name="Stories" id="h-stories">
-          <input type="hidden" name="Photos" id="h-pics">
-          <input type="hidden" name="Usage Rights" id="h-usage">
-          <input type="hidden" name="Reshare on" id="h-reshare">
-          <input type="hidden" name="Email" id="h-email-val">
-          <input type="hidden" name="Message" id="h-msg-val">
-          <input type="text" name="_gotcha" style="display:none">
-
-          <div class="deliv-section">
-            <div class="deliv-head-wrap">
-              <div class="deliv-head">What would you like us to create?</div>
-              
-            </div>
-            <div class="deliv-grid">
-              <div class="deliv-row">
-                <div class="deliv-info">
-                  <span class="deliv-label">Reels</span>
-                  <span class="deliv-desc">Short-form video for awareness and engagement.</span>
-                </div>
-                <div class="stepper sm">
-                  <button type="button" class="step-btn" onclick="step('f-reels',-1)">−</button>
-                  <div class="step-val" id="f-reels">1</div>
-                  <button type="button" class="step-btn" onclick="step('f-reels',1)">+</button>
-                </div>
-              </div>
-              <div class="deliv-row">
-                <div class="deliv-info">
-                  <span class="deliv-label">Stories</span>
-                  <span class="deliv-desc">Behind-the-scenes content that builds trust.</span>
-                </div>
-                <div class="stepper sm">
-                  <button type="button" class="step-btn" onclick="step('f-stories',-1)">−</button>
-                  <div class="step-val" id="f-stories">0</div>
-                  <button type="button" class="step-btn" onclick="step('f-stories',1)">+</button>
-                </div>
-              </div>
-              <div class="deliv-row">
-                <div class="deliv-info">
-                  <span class="deliv-label">Photos</span>
-                  <span class="deliv-desc">Lifestyle imagery for social, web, and ads.</span>
-                </div>
-                <div class="stepper sm">
-                  <button type="button" class="step-btn" onclick="step('f-pics',-1)">−</button>
-                  <div class="step-val" id="f-pics">0</div>
-                  <button type="button" class="step-btn" onclick="step('f-pics',1)">+</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="deliv-section">
-            <div class="deliv-head-wrap">
-              <div class="deliv-head">How will you use the content?</div>
-              
-            </div>
-            <div class="ur-group" id="ur-group">
-              <button type="button" class="ur-pill active" data-val="None" onclick="selectUR(this,'ur-group')">None</button>
-              <button type="button" class="ur-pill" data-val="1 month" onclick="selectUR(this,'ur-group')">1 month</button>
-              <button type="button" class="ur-pill" data-val="3 months" onclick="selectUR(this,'ur-group')">3 months</button>
-              <button type="button" class="ur-pill" data-val="6 months" onclick="selectUR(this,'ur-group')">6 months</button>
-              <button type="button" class="ur-pill" data-val="1 year" onclick="selectUR(this,'ur-group')">1 year</button>
-            </div>
-          </div>
-
-          <div class="deliv-section">
-            <div class="deliv-head">Also reshare on</div>
-            <div class="toggle-row">
-              <div class="toggle-item"><span class="toggle-name">TikTok<span class="toggle-count">174K</span></span><label class="toggle-sw"><input type="checkbox" id="f-tiktok"><span class="toggle-track"></span></label></div>
-              <div class="toggle-item"><span class="toggle-name">YouTube<span class="toggle-count">23.7K views/mo</span></span><label class="toggle-sw"><input type="checkbox" id="f-youtube"><span class="toggle-track"></span></label></div>
-              <div class="toggle-item"><span class="toggle-name">Pinterest<span class="toggle-count">19.7K views/mo</span></span><label class="toggle-sw"><input type="checkbox" id="f-pinterest"><span class="toggle-track"></span></label></div>
-              <div class="toggle-item"><span class="toggle-name">Facebook<span class="toggle-count">62K</span></span><label class="toggle-sw"><input type="checkbox" id="f-facebook"><span class="toggle-track"></span></label></div>
-            </div>
-          </div>
-
-          <div class="deliv-section" style="border-bottom:none;padding-bottom:0">
-            <div class="deliv-head">Your details</div>
-            <input class="cf-email" type="email" id="f-email" placeholder="Email address" required="" style="margin-bottom:10px">
-            <textarea class="cf-msg" id="f-msg" placeholder="Any other details, campaign goals, or launch dates…" rows="3"></textarea>
-            <button class="cf-submit" type="submit" style="margin-top:12px;width:100%">Send inquiry →</button>
-          </div>
-
-        </form>
-        <div class="cf-success" id="cf-success" style="display:none">
-          <div class="cf-success-icon">✓</div>
-          <h3>Inquiry sent!</h3>
-          <p>We'll be in touch with a tailored price shortly.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- UGC PANEL -->
-    <div class="cf-panel" id="panel-ugc" style="display: none;">
-      <div class="collab-box">
-        <form id="ugc-form" action="https://formspree.io/f/xqevewoz" method="POST" onsubmit="prepareUGC(event)">
-          <p style="font-size:13px;color:var(--mid);line-height:1.8;margin:0 0 24px">Authentic, high-performing content created for your brand to use across ads, social media, website, email, and more.</p>
-          <input type="hidden" name="_subject" value="UGC Content Inquiry — Byggeligt Home">
-          <input type="hidden" name="Type" value="UGC Content">
-          <input type="hidden" name="Videos" id="h-uvideos">
-          <input type="hidden" name="Photos" id="h-upics">
-          <input type="hidden" name="Usage Rights" id="h-uusage">
-          <input type="hidden" name="Email" id="h-uemail-val">
-          <input type="hidden" name="Message" id="h-umsg-val">
-          <input type="text" name="_gotcha" style="display:none">
-
-          <div class="deliv-section">
-            <div class="deliv-head-wrap">
-              <div class="deliv-head">What would you like us to create?</div>
-              
-            </div>
-            <div class="deliv-grid">
-              <div class="deliv-row">
-                <div class="deliv-info">
-                  <span class="deliv-label">Videos</span>
-                  <span class="deliv-desc">Short-form video for awareness and engagement.</span>
-                </div>
-                <div class="stepper sm">
-                  <button type="button" class="step-btn" onclick="step('u-videos',-1)">−</button>
-                  <div class="step-val" id="u-videos">1</div>
-                  <button type="button" class="step-btn" onclick="step('u-videos',1)">+</button>
-                </div>
-              </div>
-              <div class="deliv-row">
-                <div class="deliv-info">
-                  <span class="deliv-label">Photos</span>
-                  <span class="deliv-desc">Lifestyle imagery for social, web, and ads.</span>
-                </div>
-                <div class="stepper sm">
-                  <button type="button" class="step-btn" onclick="step('u-pics',-1)">−</button>
-                  <div class="step-val" id="u-pics">0</div>
-                  <button type="button" class="step-btn" onclick="step('u-pics',1)">+</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="deliv-section">
-            <div class="deliv-head-wrap">
-              <div class="deliv-head">How will you use the content?</div>
-              
-            </div>
-            <div class="ur-group" id="ur-group-ugc">
-              <button type="button" class="ur-pill active" data-val="None" onclick="selectUR(this,'ur-group-ugc')">None</button>
-              <button type="button" class="ur-pill" data-val="1 month" onclick="selectUR(this,'ur-group-ugc')">1 month</button>
-              <button type="button" class="ur-pill" data-val="3 months" onclick="selectUR(this,'ur-group-ugc')">3 months</button>
-              <button type="button" class="ur-pill" data-val="6 months" onclick="selectUR(this,'ur-group-ugc')">6 months</button>
-              <button type="button" class="ur-pill" data-val="1 year" onclick="selectUR(this,'ur-group-ugc')">1 year</button>
-            </div>
-          </div>
-
-          <div class="deliv-section" style="border-bottom:none;padding-bottom:0">
-            <div class="deliv-head">Your details</div>
-            <input class="cf-email" type="email" id="u-email" placeholder="Email address" required="" style="margin-bottom:10px">
-            <textarea class="cf-msg" id="u-msg" placeholder="Any other details, campaign goals, or product info…" rows="3"></textarea>
-            <button class="cf-submit" type="submit" style="margin-top:12px;width:100%">Send inquiry →</button>
-          </div>
-
-        </form>
-        <div class="cf-success" id="ugc-success" style="display:none">
-          <div class="cf-success-icon">✓</div>
-          <h3>Inquiry sent!</h3>
-          <p>We'll be in touch with a tailored price shortly.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- CLASSIC EMAIL PANEL -->
-    <div class="cf-panel" id="panel-classic" style="display: none;">
-      <div class="collab-box" style="text-align:center;padding:48px 32px">
-        <div style="font-family:var(--serif);font-size:26px;font-weight:700;color:var(--dark);margin-bottom:12px">Let's talk</div>
-        <p style="font-size:13px;color:var(--mid);line-height:1.9;max-width:340px;margin:0 auto 32px">Drop us an email with your brief, product, and campaign goals — we'll reply with a tailored proposal.</p>
-        <a href="mailto:contact@byggeligt.com?subject=Partnership%20Inquiry%20%E2%80%94%20Byggeligt%20Home&amp;body=Hi%20Aleksandra%2C%0A%0AI'd%20love%20to%20discuss%20a%20collaboration%20with%20Byggeligt%20Home.%0A%0ABrand%2FProduct%3A%20%0ACampaign%20goal%3A%20%0ATimeline%3A%20" style="display:inline-block;background:var(--rust,#7A2020);color:#fff;font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:14px 32px;border-radius:8px;text-decoration:none;transition:opacity .2s">contact@byggeligt.com</a>
-        <p style="font-size:11px;color:var(--mid);margin-top:20px;letter-spacing:.06em;opacity:.7">We typically respond within 48 hours.</p>
-      </div>
-    </div>
-
   </div>
 </section>
-
 <!-- ── PLATFORMS ── -->
 <section class="platforms editwrap rv" id="s-plat">
   <button class="sec-hide" onclick="hideEl('s-plat')">✕ Hide section</button>
@@ -569,24 +374,6 @@
     </div>
   </div>
 </section>
-<!-- ── CONTACT ── -->
-<section class="contact editwrap" id="s-contact">
-  <button class="sec-hide" onclick="hideEl('s-contact')">✕ Hide section</button>
-  <div class="page" id="contact">
-    <div class="c-hand">Let's work together</div>
-    <h2 class="c-title">Build a <em>partnership,</em><br>not just a campaign.</h2>
-    <p class="c-sub">We work with brands that value quality, authenticity, and beautiful design.</p>
-    <a class="c-btn" href="mailto:contact@byggeligt.com" style="">Get in touch</a>
-    <p style="font-size:12px;color:var(--mid);margin-top:10px;letter-spacing:.05em">contact@byggeligt.com</p>
-    <div class="c-handles">
-      <a href="https://instagram.com/byggeligt.home" class="handle editable-link" target="_blank" style=""><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg><span>@byggeligt.home</span></a>
-      <a href="https://tiktok.com/@byggeligt.home" class="handle editable-link" target="_blank" style=""><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg><span>@byggeligt.home</span></a>
-      <a href="mailto:contact@byggeligt.com" class="handle editable-link" style=""><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><span>contact@byggeligt.com</span></a>
-      <a href="https://byggeligt.com" class="handle editable-link" target="_blank" style=""><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg><span>byggeligt.com</span></a>
-    </div>
-  </div>
-</section>
-
 <footer>
   <div class="page" style="width:100%;display:flex;justify-content:space-between">
     <p>© 2025 Byggeligt Home</p>
