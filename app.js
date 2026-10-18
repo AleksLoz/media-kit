@@ -459,6 +459,12 @@ function applyVidPreview(card,url){
     observeVideo(vid);
     vid.load();
     vid.addEventListener('canplay',()=>vid.play().catch(()=>{}),{once:true});
+    vid.addEventListener('error',()=>{
+      wrap.remove();
+      if(ph){ph.style.display='';}
+      const ov=card.querySelector('.vid-upload-overlay');
+      if(ov)ov.style.display='';
+    },{once:true});
   });
   // Video cards do NOT open links on click — videos just play silently
 })();
