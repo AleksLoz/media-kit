@@ -786,3 +786,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
   .case{padding:32px 0}
   .case > .page{width:calc(100% - 32px);border-radius:18px;padding:36px 20px}
 }
+
+/* Audience heading subline (polish-7) */
+.s-subline{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--label);margin:10px 0 0}
+@media (max-width:768px){.s-subline{font-size:15px;margin-top:8px}}

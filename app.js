@@ -129,7 +129,7 @@ const EDITABLE_SEL=[
   '.hero-badge','.hero-pill','.h-sub-l','.h-sub-r','.h-stat-n','.h-stat-l',
   '.hs-n','.hs-l',
   '.s-hand','.s-head','.s-body p',
-  '.s-eyebrow','.s-title','.s-title em',
+  '.s-eyebrow','.s-title','.s-title em','.s-subline',
   '.pie-card-title','.pie-card-sub',
   '.niche-eyebrow','.niche-title','.niche-title em',
   '.bq-t','.bq-a',
