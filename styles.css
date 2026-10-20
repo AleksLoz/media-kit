@@ -820,3 +820,7 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
   .case-vid-native{max-width:280px;margin:0 auto}
   .case-grid>div:first-child .case-vid-caption{max-width:280px;margin-left:auto;margin-right:auto}
 }
+
+/* Modu case: organic-views note under the stats row */
+.case-organic{margin:-16px 0 0;text-align:center;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,240,232,.72)}
+@media (max-width:768px){.case-organic{margin-top:-12px}}
