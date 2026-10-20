@@ -392,12 +392,22 @@ function applyVidPreview(card,url){
   const gdId=getGDriveId(url);
 
   if(gdId){
-    // Google Drive — use the preview iframe which streams the video
-    // Use direct streaming URL — gives us a clean <video> element (no controls, covers card)
-    // confirm=t bypasses Google's virus-scan warning page for larger files
+    // Google Drive — try a direct streaming URL first, which gives us a clean
+    // <video> element (no controls, covers the card). This 404s/HTML-errors
+    // for anything behind Drive's virus-scan interstitial (common past ~25MB,
+    // regardless of confirm=t), so fall back to Drive's own embeddable player,
+    // which always plays a file shared as "anyone with the link".
     const vid=document.createElement('video');
     vid.src=`https://drive.google.com/uc?export=download&id=${gdId}&confirm=t`;
     vid.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+    vid.addEventListener('error',()=>{
+      vid.remove();
+      const frame=document.createElement('iframe');
+      frame.src=`https://drive.google.com/file/d/${gdId}/preview`;
+      frame.allow='autoplay';
+      frame.style.cssText='position:absolute;inset:0;width:100%;height:100%;border:0;';
+      wrapper.appendChild(frame);
+    },{once:true});
     wrapper.appendChild(vid);
     observeVideo(vid); // muted + loop + plays on scroll via IntersectionObserver
   } else if(isVideoUrl(url)){
@@ -421,9 +431,12 @@ function applyVidPreview(card,url){
   card.insertBefore(wrapper,ph||card.firstChild);
 }
 
-// On page load, restore previews for cards that have data-href
+// On page load, restore previews for cards that have data-href.
+// Skip cards that also have data-src (a permanently uploaded video) — that's
+// the more reliable source and takes priority, otherwise the two previews
+// stack on top of each other.
 (function(){
-  document.querySelectorAll('.vid-card[data-href]').forEach(card=>{
+  document.querySelectorAll('.vid-card[data-href]:not([data-src])').forEach(card=>{
     applyVidPreview(card,card.dataset.href);
     card.classList.add('has-link');
   });
