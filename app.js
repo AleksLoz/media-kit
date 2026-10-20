@@ -507,12 +507,14 @@ function applyVidPreview(card,url){
     const native=card.classList.contains('case-vid-native');
     const vid=document.createElement('video');
     if(native){
-      vid.controls=true;
+      // case film: controls + sound, poster frame, no autoplay; fetch only metadata up front
+      vid.controls=true;vid.playsInline=true;vid.setAttribute('playsinline','');
+      if(card.dataset.poster)vid.poster=card.dataset.poster;
     }else{
       vid.setAttribute('muted','');vid.setAttribute('autoplay','');vid.setAttribute('playsinline','');vid.setAttribute('loop','');
       vid.muted=true;vid.loop=true;vid.playsInline=true;vid.autoplay=true;
     }
-    vid.preload='auto';
+    vid.preload=native?'metadata':'auto';
     vid.src=card.dataset.src;
     vid.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:0';
     const wrap=document.createElement('div');
