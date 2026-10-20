@@ -714,3 +714,36 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
   .testi-fl-quote{font-size:17px;max-width:68ch}
   .case-grid{grid-template-columns:420px 1fr;gap:64px}
 }
+
+/* ════════════════════════════════════════════════════
+   AUDIENCE — compact reach list, 4-up stat row
+════════════════════════════════════════════════════ */
+.reach-card{padding:18px 22px 10px;margin-top:14px}
+.reach-card .bars-head{padding-bottom:10px;margin-bottom:2px}
+/* one line per country: name | thin bar | number + share */
+.reach-list .bar-row{display:grid;grid-template-columns:150px minmax(40px,1fr) 150px;align-items:center;column-gap:14px;padding:9px 0}
+.reach-list .bar-top{display:contents}
+.reach-list .reach-name{grid-column:1;grid-row:1;font-size:14px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.reach-list .reach-name small{display:block;font-size:10px;margin-top:1px;white-space:normal}
+.reach-list .bar-track{grid-column:2;grid-row:1;height:4px;border-radius:2px}
+.reach-list .bar-fill{border-radius:2px}
+.reach-list .reach-count{grid-column:3;grid-row:1;font-size:14px;display:flex;align-items:baseline;gap:8px;justify-content:flex-end}
+.reach-list .reach-count small{display:inline-block;margin:0;font-size:11px;min-width:38px;text-align:right;color:var(--label)}
+.pct-sfx{display:none}
+@media (min-width:900px){
+  /* two columns of countries on desktop */
+  .reach-list{display:grid;grid-template-columns:1fr 1fr;column-gap:48px}
+  .reach-list .bar-row:nth-last-child(2){border-bottom:none}
+}
+.aud-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:10px}
+.aud-stats .stat-card{padding:14px 10px}
+.trusted-repeat{text-align:center;margin-top:22px;font-family:var(--serif);font-style:italic;font-size:15px;color:var(--dark)}
+@media (max-width:768px){
+  .reach-card{padding:14px 14px 6px}
+  .reach-list .bar-row{grid-template-columns:104px minmax(36px,1fr) 128px;column-gap:10px;padding:8px 0}
+  .reach-list .reach-name,.reach-list .reach-count{font-size:13px}
+  .reach-list .reach-count{gap:6px}
+  .reach-list .reach-count small{font-size:10.5px;min-width:34px}
+  .aud-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .trusted-repeat{font-size:14px;padding:0 8px}
+}
