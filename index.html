@@ -24,12 +24,6 @@
   </div>
 </div>
 
-<!-- EDIT FAB -->
-<button id="edit-fab" onclick="toggleEdit()">
-  <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-  Login
-</button>
-
 <!-- EDIT TOOLBAR -->
 <div id="et">
   <div class="et-left">
@@ -47,13 +41,17 @@
   <div class="nav-wrap">
     <div class="nav-i">
       <a href="#" class="nav-logo">Byggeligt<em>.</em></a>
-      <ul class="nav-links">
+      <ul class="nav-links" id="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#audience">Audience</a></li>
         <li><a href="#niches">Content</a></li>
         <li><a href="#s-contact">Work with us</a></li>
         <li><a href="calculator.html" class="nav-pill">Packages</a></li>
       </ul>
+      <div class="nav-m">
+        <a href="calculator.html" class="nav-pill">Packages</a>
+        <button class="nav-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links" onclick="toggleNav()"><span></span><span></span><span></span></button>
+      </div>
     </div>
   </div>
 </nav>
@@ -63,7 +61,7 @@
   <button class="sec-hide" onclick="hideEl('s-hero')">✕ Hide section</button>
   <div class="page">
     <div class="hero-top">
-      <span class="hero-badge">Byggeligt Home · Media Kit 2025</span>
+      <span class="hero-badge">Byggeligt Home · Media Kit 2026</span>
     </div>
     <div class="hero-main">
       <!-- hero title: animate on load, then fully editable as one block -->
@@ -237,15 +235,15 @@
     <div class="vids rv d1">
       <div class="vid-card" data-src="/videos/homedecor-1.mp4"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Terrace reveal — outdoor styling transformation</div></div></div>
       <div class="vid-card" data-src="/videos/outdoor-2.mp4"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Garden furniture &amp; product integration</div></div></div>
-      <div class="vid-card" data-src="/videos/outdoor-3.mp4"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Scandinavian summer outdoor styling</div></div></div>
+      <div class="vid-card" data-src="/videos/outdoor-3-v2.mp4"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Scandinavian summer outdoor styling</div></div></div>
     </div>
 
     <div class="niche-rule"></div>
     <div class="rv"><p class="niche-eyebrow">Niche 02</p><h2 class="niche-title"><em>Home</em> Decor</h2></div>
     <div class="vids rv d1">
       <div class="vid-card" data-src="/videos/outdoor-1.mp4"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">16M views</div></div><div class="vid-meta"><div class="vid-desc">Living room reveal — before &amp; after</div></div></div>
-      <div class="vid-card has-link" data-src="https://8wjjpstna9kmnd1d.public.blob.vercel-storage.com/video_1782462585610-vWMOHkPTUYQjMRYzP6NUJEjAdJ6vQZ.mp4" data-href="https://drive.google.com/file/d/1JMNWPsLDYUZwuhsVbdY-sJ0TkR4-TjLi/view?usp=drive_link"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style=""><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">13M views</div></div><div class="vid-meta"><div class="vid-desc">Scandinavian kitchen — product campaign</div></div></div>
-      <div class="vid-card" data-src="https://8wjjpstna9kmnd1d.public.blob.vercel-storage.com/video_1782412547699-VPFjKgWyWPHtJGB50XcMyYrq6d6Xlo.mp4"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style=""><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Room transformation — interior styling</div></div></div>
+      <div class="vid-card has-link" data-src="/videos/homedecor-2-v3.mp4" data-href="https://drive.google.com/file/d/1JMNWPsLDYUZwuhsVbdY-sJ0TkR4-TjLi/view?usp=drive_link"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style=""><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">13M views</div></div><div class="vid-meta"><div class="vid-desc">Scandinavian kitchen — product campaign</div></div></div>
+      <div class="vid-card" data-src="/videos/homedecor-2-new.mp4"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style=""><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Room transformation — interior styling</div></div></div>
     </div>
 
     <div class="niche-rule"></div>
@@ -253,15 +251,15 @@
     <div class="vids rv d1">
       <div class="vid-card" data-src="/videos/smarthome-1.mp4"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Smart lighting setup — product integration</div></div></div>
       <div class="vid-card" data-src="/videos/smarthome-2.mp4"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Home automation — real home walkthrough</div></div></div>
-      <div class="vid-card" data-src="/videos/smarthome-3.mp4"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Tech meets Scandinavian design</div></div></div>
+      <div class="vid-card" data-src="/videos/smarthome-aqara-replacement.mp4"><div class="vid-upload-overlay" onclick="uploadVideo(this)"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Tech meets Scandinavian design</div></div></div>
     </div>
 
     <div class="niche-rule"></div>
     <div class="rv"><p class="niche-eyebrow">Niche 04</p><h2 class="niche-title">Life with <em>kids</em></h2></div>
     <div class="vids rv d1">
-      <div class="vid-card has-link" data-src="https://8wjjpstna9kmnd1d.public.blob.vercel-storage.com/video_1782462517098-0LBUYPEsc9l6Hlvo1ySoChMbEMLxNA.mp4" data-href="https://drive.google.com/file/d/1JMNWPsLDYUZwuhsVbdY-sJ0TkR4-TjLi/view?usp=drive_link"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style=""><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Family moments — everyday life at home</div></div></div>
-      <div class="vid-card has-link" data-src="https://8wjjpstna9kmnd1d.public.blob.vercel-storage.com/video_1782462527555-6anqsM1K6aIEjTF2mGipz4GUml9BbE.mp4" data-href="https://drive.google.com/file/d/1Br8Mif0bBV3GvFyE92QRinHWn0WlenK8/view?usp=drive_link"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style=""><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Kids' room styling &amp; cozy interiors</div></div></div>
-      <div class="vid-card has-link" data-src="https://8wjjpstna9kmnd1d.public.blob.vercel-storage.com/video_1782462547663-tCWZW7Z37Xr0Y8xy4AhOeiJ5u9bMlV.mp4" data-href="https://drive.google.com/file/d/1Br8Mif0bBV3GvFyE92QRinHWn0WlenK8/view?usp=drive_link"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style=""><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Family-friendly home &amp; parenting life</div></div></div>
+      <div class="vid-card has-link" data-src="/videos/kids-1.mp4" data-href="https://drive.google.com/file/d/1JMNWPsLDYUZwuhsVbdY-sJ0TkR4-TjLi/view?usp=drive_link"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style=""><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Family moments — everyday life at home</div></div></div>
+      <div class="vid-card has-link" data-src="/videos/kids-2.mp4" data-href="https://drive.google.com/file/d/1Br8Mif0bBV3GvFyE92QRinHWn0WlenK8/view?usp=drive_link"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style=""><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Kids' room styling &amp; cozy interiors</div></div></div>
+      <div class="vid-card has-link" data-src="/videos/kids-3.mp4" data-href="https://drive.google.com/file/d/1Br8Mif0bBV3GvFyE92QRinHWn0WlenK8/view?usp=drive_link"><div class="vid-upload-overlay" onclick="uploadVideo(this)" style=""><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg><span>Upload video</span></div><button class="vid-link-btn" onclick="setVidLink(this)">🔗 Video URL</button><div class="vid-placeholder" style=""><div class="vid-icon">▶</div><div class="vid-hint">Reel / TikTok</div><div class="vid-views">—M views</div></div><div class="vid-meta"><div class="vid-desc">Family-friendly home &amp; parenting life</div></div></div>
     </div>
   </div>
 </section>
@@ -363,15 +361,10 @@
 <section class="case editwrap rv" id="s-case">
   <button class="sec-hide" onclick="hideEl('s-case')">✕ Hide section</button>
   <div class="page">
-    <div class="rule" style="margin-bottom:28px"></div>
     <div class="case-head">
       <div>
         <p class="s-eyebrow">— Customer case · Modu</p>
         <h2 class="case-title">Everyday play.<br><em>Extraordinary results.</em></h2>
-      </div>
-      <div class="case-head-note">
-        <p>A little glimpse of family life.</p>
-        <p>A measurable impact for MODU.</p>
       </div>
     </div>
 
@@ -386,11 +379,7 @@
       </div>
 
       <div class="case-panel">
-        <div class="case-panel-top"><span class="case-brand">Modu</span><span class="case-tags">Family · Play · Real life</span></div>
-        <div class="rule"></div>
-        <h3 class="case-sub">Made for play.<br><em>Shared with our community.</em></h3>
         <p class="case-body">We brought MODU into our family's everyday life, showing the little moments that make play meaningful. Our audience could shop through a dedicated discount code, with conversions measured through campaign tracking.</p>
-        <div class="rule"></div>
         <div class="case-metrics">
           <div class="case-metric"><div class="sc-n">451K</div><div class="sc-l">Views</div></div>
           <div class="case-metric"><div class="sc-n">10K</div><div class="sc-l">Likes</div></div>
@@ -419,11 +408,6 @@
       </div>
     </div>
 
-    <div class="rule" style="margin-top:36px"></div>
-    <div class="case-close rv d2">
-      <p class="case-tagline">Stories people connect with. <em>Results brands can measure.</em></p>
-      <p class="case-close-note">Case story section · Exact discount and tracking codes can be added when provided.</p>
-    </div>
   </div>
 </section>
 
@@ -438,6 +422,7 @@
       <a class="c-btn" href="mailto:contact@byggeligt.com" style="">Get in touch</a>
       <a class="c-btn c-btn-outline" href="https://mediakit-steel.vercel.app/calculator.html" style="">See our packages</a>
     </div>
+    <p class="c-email"><a href="mailto:contact@byggeligt.com">contact@byggeligt.com</a></p>
   </div>
 </section>
 <!-- ── PLATFORMS ── -->
@@ -476,9 +461,17 @@
   </div>
 </section>
 <footer>
-  <div class="page" style="width:100%;display:flex;justify-content:space-between">
-    <p>© 2025 Byggeligt Home</p>
+  <div class="page foot-i">
+    <p>© 2026 Byggeligt Home</p>
+    <a class="foot-mail" href="mailto:contact@byggeligt.com">contact@byggeligt.com</a>
     <p>Aleksandra &amp; Jim Lozinska · Denmark</p>
+  </div>
+  <!-- EDIT LOGIN (admin only — small footer link, opens the login overlay) -->
+  <div class="page foot-admin">
+    <button id="edit-fab" type="button" onclick="toggleEdit()">
+      <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+      Login
+    </button>
   </div>
 </footer>
 
