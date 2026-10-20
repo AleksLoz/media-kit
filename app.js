@@ -137,7 +137,7 @@ const EDITABLE_SEL=[
   '.plat-n','.plat-h','.plat-num','.plat-sub',
   '.sc-n','.sc-l','.stat-card .sc-n','.stat-card .sc-l',
   '.case-title','.case-title em','.case-head-note p',
-  '.case-brand','.case-tags','.case-sub','.case-sub em','.case-body',
+  '.case-brand','.case-tags','.case-sub','.case-sub em','.case-body','.case-organic',
   '.case-roas-eyebrow','.case-roas-n','.case-roas-h','.case-roas-l',
   '.case-link-h','.case-link-l','.case-foot',
   '.case-tagline','.case-close-note','.case-vid-caption span',
