@@ -1,4 +1,5 @@
 const https = require('https');
+const { requireEditor } = require('./_auth');
 
 // Force every saved index.html into the canonical externalized form, no matter
 // what the (possibly stale) browser tab posts. The editor serializes the whole
@@ -35,8 +36,8 @@ function normalize(html) {
 }
 
 const handler = async function(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (!requireEditor(req, res)) return;
 
   const token = process.env.GITHUB_TOKEN;
   if (!token) return res.status(500).json({ error: 'GITHUB_TOKEN not configured' });

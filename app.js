@@ -144,7 +144,7 @@ const EDITABLE_SEL=[
   '.pkg-tag','.pkg-name','.pkg-price','.pkg-ideal','.li-text',
   '.utype','.usub','.uprice',
   '.c-hand','.c-title','.c-sub','.c-btn','.handle span',
-  'footer p',
+  'footer p','.trusted-repeat',
 ].join(',');
 
 function toggleEdit(){
@@ -155,8 +155,9 @@ function toggleEdit(){
     setTimeout(()=>document.getElementById('login-pw').focus(),80);
     return;
   }
-  // already in edit mode → exit
+  // already in edit mode → exit (and end the server session)
   editMode=false;
+  fetch('/api/login',{method:'DELETE',credentials:'same-origin'}).catch(()=>{});
   document.body.classList.toggle('edit-on',false);
 
   document.querySelectorAll(EDITABLE_SEL).forEach(el=>{
@@ -174,17 +175,32 @@ function toggleEdit(){
   }
 }
 
-function doLogin(){
-  const pw=document.getElementById('login-pw').value;
+// Password is checked server-side by /api/login, which sets an HttpOnly,
+// signed, 12h session cookie. /api/save and /api/upload-video require it.
+let _loginBusy=false;
+async function doLogin(){
+  if(_loginBusy)return;
+  const input=document.getElementById('login-pw');
+  const pw=input.value;
   const err=document.getElementById('login-err');
-  if(pw!=='byggeligt2024'){
-    err.textContent='Incorrect password. Try again.';
-    document.getElementById('login-pw').value='';
-    document.getElementById('login-pw').focus();
+  if(!pw){err.textContent='Enter your password.';input.focus();return;}
+  _loginBusy=true;err.textContent='Checking…';
+  let res;
+  try{
+    res=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({password:pw})});
+  }catch(e){
+    _loginBusy=false;err.textContent='Network error. Try again.';return;
+  }
+  _loginBusy=false;
+  if(!res.ok){
+    err.textContent=res.status===401?'Incorrect password. Try again.':(res.status===503?'Editing is not configured on this deployment.':'Login failed. Try again.');
+    input.value='';input.focus();
     return;
   }
   closeLogin();
-  // activate edit mode
+  enterEditMode();
+}
+function enterEditMode(){
   editMode=true;
   document.body.classList.add('edit-on');
   document.querySelectorAll(EDITABLE_SEL).forEach(el=>{
@@ -571,8 +587,8 @@ function sanitizeClone(clone){
 async function saveHTMLCore(){
   const clone=sanitizeClone(document.documentElement.cloneNode(true));
   const html='<!DOCTYPE html>\n'+clone.outerHTML;
-  const res=await fetch('/api/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:html})});
-  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error||'Save failed');}
+  const res=await fetch('/api/save',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:html})});
+  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(res.status===401?'Session expired, log in again':(e.error||'Save failed'));}
 }
 
 async function saveHTML(){
@@ -583,10 +599,10 @@ async function saveHTML(){
   const clone=sanitizeClone(document.documentElement.cloneNode(true));
   const html='<!DOCTYPE html>\n'+clone.outerHTML;
   try{
-    const res=await fetch('/api/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:html})});
+    const res=await fetch('/api/save',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({content:html})});
     if(reset)clearTimeout(reset);
     if(res.ok){if(btn){btn.textContent='✓ Saved — deploying…';setTimeout(()=>{btn.textContent=orig;btn.disabled=false;},5000);}}
-    else{let msg='Error';try{const e=await res.json();msg=e.error||'Error';}catch(_){}if(btn){btn.textContent='✗ '+msg;btn.style.minWidth='300px';setTimeout(()=>{btn.textContent=orig;btn.style.minWidth='';btn.disabled=false;},8000);}}
+    else{let msg='Error';try{const e=await res.json();msg=e.error||'Error';}catch(_){}if(res.status===401)msg='Session expired, log in again';if(btn){btn.textContent='✗ '+msg;btn.style.minWidth='300px';setTimeout(()=>{btn.textContent=orig;btn.style.minWidth='';btn.disabled=false;},8000);}}
   }catch(e){if(reset)clearTimeout(reset);if(btn){btn.textContent='✗ '+e.message;btn.style.minWidth='300px';setTimeout(()=>{btn.textContent=orig;btn.style.minWidth='';btn.disabled=false;},8000);}}
 }
 function switchTab(name,btn){

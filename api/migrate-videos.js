@@ -1,11 +1,13 @@
 const { put } = require('@vercel/blob');
 const fs = require('fs');
 const path = require('path');
+const { requireEditor } = require('./_auth');
 
 // One-time migration: upload git-committed /videos/* files to Vercel Blob
 // and return a map of filename → blob URL. Call once, then delete this file.
 module.exports = async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).json({ error: 'GET only' });
+  if (!requireEditor(req, res)) return;
 
   const token = process.env.BLOB_READ_WRITE_TOKEN;
   if (!token) return res.status(500).json({ error: 'BLOB_READ_WRITE_TOKEN not set' });
