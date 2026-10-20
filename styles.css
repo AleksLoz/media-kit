@@ -161,63 +161,51 @@ canvas.pie{display:block}
 .sc-n{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--rust);line-height:1}
 .sc-l{font-size:9.5px;text-transform:uppercase;letter-spacing:.12em;color:var(--label);margin-top:6px;line-height:1.35}
 
-/* CASE STUDY — one headline, aligned columns, 8px-based spacing rhythm */
-.case-head{display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:40px}
-.case-title{font-family:var(--serif);font-size:clamp(30px,4.2vw,46px);font-weight:700;line-height:1.1;color:var(--dark);margin:8px 0 0}
-.case-title em{font-style:italic;color:var(--rust);font-weight:500}
-/* former floating tagline -> quiet lede under the headline */
-.case-head-note{text-align:left;font-size:13.5px;color:var(--label);line-height:1.6;padding:0;max-width:56ch}
-.case-head-note p{margin:0;display:inline}
-.case-head-note p+p::before{content:" "}
+/* CASE STUDY — full-width burgundy band, one headline, one paragraph, stats, ROAS */
+.case{background:var(--rust-deep);color:var(--cream);padding:72px 0}
+.case .s-eyebrow{color:var(--sand)}
+.case-head{margin-bottom:40px}
+.case-title{font-family:var(--serif);font-size:clamp(30px,4.2vw,46px);font-weight:700;line-height:1.1;color:var(--cream);margin:8px 0 0}
+.case-title em{font-style:italic;color:var(--sand);font-weight:500}
 
 .case-grid{display:grid;grid-template-columns:380px 1fr;gap:48px;align-items:start}
 
-.case-vid-native{max-width:100%;aspect-ratio:4/5;border-radius:14px}
+.case-vid-native{max-width:100%;aspect-ratio:4/5;border-radius:14px;border:1px solid rgba(245,240,232,.14)}
 .case-vid-native video,.case-vid-native iframe{aspect-ratio:4/5}
-.case-vid-caption{display:flex;justify-content:space-between;margin-top:12px;font-size:11px;color:var(--label);letter-spacing:.02em}
-.case-vid-caption span:first-child{font-weight:600;color:var(--dark)}
+.case-vid-caption{display:flex;justify-content:space-between;margin-top:12px;font-size:11px;color:rgba(245,240,232,.72);letter-spacing:.02em}
+.case-vid-caption span:first-child{font-weight:600;color:var(--cream)}
 .case-vid-caption span:last-child{text-transform:uppercase;letter-spacing:.1em}
 
-.case-panel{display:flex;flex-direction:column;gap:24px;min-width:0}
-.case-panel>.rule{margin:0}
-.case-panel-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;line-height:1}
-.case-brand{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--dark);letter-spacing:.02em;text-transform:capitalize;line-height:1}
-.case-tags{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--label)}
-/* secondary line is a subhead, not a competing headline */
-.case-sub{font-family:var(--serif);font-size:18px;font-weight:700;line-height:1.35;color:var(--dark);margin:0 0 -12px}
-.case-sub br{display:none}
-.case-sub em{font-style:italic;color:var(--rust);font-weight:500;margin-left:.25em}
-.case-body{font-size:13.5px;color:var(--mid);line-height:1.7;max-width:60ch;margin:0}
+.case-panel{display:flex;flex-direction:column;gap:28px;min-width:0}
+.case .rule{background:rgba(245,240,232,.18);margin:0}
+.case-body{font-size:15px;color:rgba(245,240,232,.86);line-height:1.7;max-width:60ch;margin:0}
 
 /* stats: 4 equal columns with hairline dividers */
-.case-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
-.case-metric{padding:4px 0;text-align:center;border-left:1px solid rgba(122,32,32,.15)}
+.case-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:20px 0;border-top:1px solid rgba(245,240,232,.18);border-bottom:1px solid rgba(245,240,232,.18)}
+.case-metric{padding:2px 0;text-align:center;border-left:1px solid rgba(245,240,232,.18)}
 .case-metric:first-child{border-left:none}
-.case-metric .sc-n{font-size:26px}
+.case-metric .sc-n{font-size:28px;color:var(--cream)}
+.case-metric .sc-l{color:rgba(245,240,232,.75)}
 
-/* ROAS box spans the same width as the stats row */
-.case-roas{background:var(--rust-deep);border-radius:12px;padding:24px 28px;width:100%}
-.case-roas-eyebrow{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.8);margin-bottom:16px}
+/* ROAS: cream card so it still pops on the burgundy band; same width as stats */
+.case-roas{background:var(--cream);border-radius:12px;padding:24px 28px;width:100%}
+.case-roas-eyebrow{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--rust);margin-bottom:14px}
 .case-roas-row{display:flex;align-items:center;gap:20px}
-.case-roas-n{font-family:var(--serif);font-size:clamp(42px,5vw,56px);font-weight:700;color:#fff;line-height:1}
+.case-roas-n{font-family:var(--serif);font-size:clamp(46px,5vw,60px);font-weight:700;color:var(--rust);line-height:1}
 .case-roas-n small{font-size:.5em;font-weight:500;margin-left:2px}
-.case-roas-h{font-family:var(--serif);font-size:18px;font-weight:700;color:#fff;margin-bottom:4px}
-.case-roas-l{font-size:11.5px;color:rgba(255,255,255,.8);line-height:1.5}
+.case-roas-h{font-family:var(--serif);font-size:19px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.case-roas-l{font-size:12px;color:var(--label);line-height:1.5}
 
-/* "From watching to shopping" -> simple caption under the ROAS box */
-.case-link-row{display:flex;gap:10px;align-items:flex-start;margin-top:-8px}
-.case-link-row svg{width:14px;height:14px;color:var(--rust);flex-shrink:0;margin-top:2px}
-.case-link-h{display:inline;font-size:12px;font-weight:600;color:var(--dark)}
-.case-link-h::after{content:" — "}
-.case-link-l{display:inline;font-size:12px;color:var(--label);line-height:1.6}
+/* shopping note: simple caption */
+.case-link-row{display:flex;gap:10px;align-items:flex-start;margin-top:-10px}
+.case-link-row svg{width:14px;height:14px;color:var(--sand);flex-shrink:0;margin-top:3px}
 .case-link-row>div{line-height:1.6}
+.case-link-h{display:inline;font-size:12px;font-weight:600;color:var(--cream)}
+.case-link-h::after{content:" — "}
+.case-link-l{display:inline;font-size:12px;color:rgba(245,240,232,.75)}
 
-.case-foot{font-size:11px;color:var(--label);line-height:1.5;margin:0}
-
-.case-close{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-top:24px}
-.case-tagline{font-family:var(--serif);font-size:19px;font-style:italic;color:var(--dark);margin:0}
-.case-tagline em{color:var(--rust);font-style:italic}
-.case-close-note{font-size:11px;color:var(--label);text-align:right;line-height:1.5;margin:0}
+.case-foot{font-size:11px;color:rgba(245,240,232,.62);line-height:1.5;margin:0}
+.case .sec-hide{background:rgba(245,240,232,.92)}
 
 /* ── NICHES ── */
 .niches{padding:36px 0}
@@ -639,18 +627,18 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
   /* PLATFORMS */
   .plat-grid{grid-template-columns:1fr}
 
-  /* CASE STUDY */
+  /* CASE STUDY — video first, then content */
+  .case{padding:48px 0}
   .case-head{margin-bottom:28px}
   .case-grid{grid-template-columns:1fr;gap:32px}
   .case-vid-native{max-width:320px;margin:0 auto}
   .case-grid>div:first-child .case-vid-caption{max-width:320px;margin-left:auto;margin-right:auto}
-  .case-panel{gap:20px}
-  .case-sub{margin-bottom:-8px}
+  .case-panel{gap:24px}
+  .case-body{font-size:14px}
+  .case-metrics{padding:16px 0}
   .case-metric .sc-n{font-size:22px}
   .case-metric .sc-l{letter-spacing:.08em}
   .case-roas{padding:22px 20px}
-  .case-close{flex-direction:column;align-items:flex-start}
-  .case-close-note{text-align:left}
 
   /* NICHES — reels 2-up on mobile (3 tiny columns were too small);
      an odd last reel is centred under the pair */
