@@ -808,3 +808,15 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
   .vids>.vid-card,
   .vids>.vid-card:last-child:nth-child(odd){grid-column:auto;width:auto;max-width:none;justify-self:stretch;scroll-snap-align:start}
 }
+
+/* Modu case film: self-hosted portrait (9:16) video with controls (polish-9) */
+.case-vid-native,.case-vid-native video{aspect-ratio:9/16}
+.case-vid-native .vid-preview{border-radius:0!important}
+.case-vid-native{max-width:300px}
+.case-grid>div:first-child .case-vid-caption{max-width:300px}
+@media (min-width:769px){.case-grid{grid-template-columns:300px 1fr}}
+@media (min-width:1024px){.case-grid{grid-template-columns:300px 1fr;gap:64px}}
+@media (max-width:768px){
+  .case-vid-native{max-width:280px;margin:0 auto}
+  .case-grid>div:first-child .case-vid-caption{max-width:280px;margin-left:auto;margin-right:auto}
+}
