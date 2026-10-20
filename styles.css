@@ -775,3 +775,14 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
   .trusted-hook-n{font-size:40px}
   .trusted-hook-l{font-size:10px;letter-spacing:.16em;max-width:260px;line-height:1.6}
 }
+
+/* ════════════════════════════════════════════════════
+   CASE — contained burgundy card instead of full-bleed band (polish-6)
+════════════════════════════════════════════════════ */
+.case{background:transparent;padding:56px 0}
+.case > .page{background:var(--rust-deep);border-radius:22px;width:calc(100% - 56px);max-width:var(--w);padding:56px}
+.case .sec-hide{z-index:3}
+@media (max-width:768px){
+  .case{padding:32px 0}
+  .case > .page{width:calc(100% - 32px);border-radius:18px;padding:36px 20px}
+}
