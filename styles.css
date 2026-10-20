@@ -747,3 +747,8 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
   .aud-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
   .trusted-repeat{font-size:14px;padding:0 8px}
 }
+
+/* Testimonial placed directly after the Modu case band */
+.case + .testimonial{padding:64px 0 32px}
+.case + .testimonial .page>.rule:first-child{display:none}
+@media (max-width:768px){.case + .testimonial{padding:44px 0 20px}}
