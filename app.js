@@ -11,6 +11,19 @@ document.querySelectorAll('a,button,.pkg,.plat,.vid-card,.polaroid,.pie-card').f
 /* ══ NAV ══ */
 window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('sc',window.scrollY>36));
 
+/* ══ MOBILE NAV (hamburger) ══ */
+function setNav(open){
+  const nav=document.getElementById('nav');if(!nav)return;
+  nav.classList.toggle('open',open);
+  const btn=nav.querySelector('.nav-burger');
+  if(btn){btn.setAttribute('aria-expanded',open?'true':'false');btn.setAttribute('aria-label',open?'Close menu':'Open menu');}
+}
+function toggleNav(){setNav(!document.getElementById('nav').classList.contains('open'));}
+document.querySelectorAll('#nav-links a').forEach(a=>a.addEventListener('click',()=>setNav(false)));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')setNav(false);});
+document.addEventListener('click',e=>{const nav=document.getElementById('nav');if(nav&&nav.classList.contains('open')&&!nav.contains(e.target))setNav(false);});
+window.addEventListener('resize',()=>{if(window.innerWidth>768)setNav(false);});
+
 /* ══ SCROLL REVEAL ══ */
 const revObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('on');});},{threshold:0.1});
 document.querySelectorAll('.rv').forEach(el=>revObs.observe(el));
@@ -529,6 +542,9 @@ function sanitizeClone(clone){
   clone.querySelectorAll('#cur,#cur-r').forEach(el=>el.removeAttribute('style'));
   // scrolled-nav state (re-added on scroll)
   clone.querySelectorAll('nav.sc').forEach(n=>n.classList.remove('sc'));
+  // mobile menu open state
+  clone.querySelectorAll('nav.open').forEach(n=>n.classList.remove('open'));
+  clone.querySelectorAll('.nav-burger').forEach(b=>{b.setAttribute('aria-expanded','false');b.setAttribute('aria-label','Open menu');});
   // scroll-reveal state (re-added by the IntersectionObserver on load)
   clone.querySelectorAll('.rv.on').forEach(el=>el.classList.remove('on'));
   // preserve the hero load animation (edit mode strips it)

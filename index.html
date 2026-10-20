@@ -24,12 +24,6 @@
   </div>
 </div>
 
-<!-- EDIT FAB -->
-<button id="edit-fab" onclick="toggleEdit()">
-  <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-  Login
-</button>
-
 <!-- EDIT TOOLBAR -->
 <div id="et">
   <div class="et-left">
@@ -47,13 +41,17 @@
   <div class="nav-wrap">
     <div class="nav-i">
       <a href="#" class="nav-logo">Byggeligt<em>.</em></a>
-      <ul class="nav-links">
+      <ul class="nav-links" id="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#audience">Audience</a></li>
         <li><a href="#niches">Content</a></li>
         <li><a href="#s-contact">Work with us</a></li>
         <li><a href="calculator.html" class="nav-pill">Packages</a></li>
       </ul>
+      <div class="nav-m">
+        <a href="calculator.html" class="nav-pill">Packages</a>
+        <button class="nav-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links" onclick="toggleNav()"><span></span><span></span><span></span></button>
+      </div>
     </div>
   </div>
 </nav>
@@ -63,7 +61,7 @@
   <button class="sec-hide" onclick="hideEl('s-hero')">✕ Hide section</button>
   <div class="page">
     <div class="hero-top">
-      <span class="hero-badge">Byggeligt Home · Media Kit 2025</span>
+      <span class="hero-badge">Byggeligt Home · Media Kit 2026</span>
     </div>
     <div class="hero-main">
       <!-- hero title: animate on load, then fully editable as one block -->
@@ -438,6 +436,7 @@
       <a class="c-btn" href="mailto:contact@byggeligt.com" style="">Get in touch</a>
       <a class="c-btn c-btn-outline" href="https://mediakit-steel.vercel.app/calculator.html" style="">See our packages</a>
     </div>
+    <p class="c-email"><a href="mailto:contact@byggeligt.com">contact@byggeligt.com</a></p>
   </div>
 </section>
 <!-- ── PLATFORMS ── -->
@@ -476,9 +475,17 @@
   </div>
 </section>
 <footer>
-  <div class="page" style="width:100%;display:flex;justify-content:space-between">
-    <p>© 2025 Byggeligt Home</p>
+  <div class="page foot-i">
+    <p>© 2026 Byggeligt Home</p>
+    <a class="foot-mail" href="mailto:contact@byggeligt.com">contact@byggeligt.com</a>
     <p>Aleksandra &amp; Jim Lozinska · Denmark</p>
+  </div>
+  <!-- EDIT LOGIN (admin only — small footer link, opens the login overlay) -->
+  <div class="page foot-admin">
+    <button id="edit-fab" type="button" onclick="toggleEdit()">
+      <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+      Login
+    </button>
   </div>
 </footer>
 
