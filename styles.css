@@ -153,6 +153,20 @@ canvas.pie{display:block}
 .sc-n{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--rust);line-height:1}
 .sc-l{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--mid);margin-top:4px}
 
+/* CASE STUDY */
+.case-grid{display:grid;grid-template-columns:220px 1fr;gap:28px;align-items:start}
+.case-vid{max-width:220px}
+.case-stats{display:flex;flex-direction:column;gap:16px}
+.case-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.case-roas{background:var(--rust);border-radius:10px;padding:20px 22px;display:flex;align-items:baseline;gap:14px}
+.case-roas-n{font-family:var(--serif);font-size:44px;font-weight:700;color:#fff;line-height:1}
+.case-roas-n small{font-size:22px;font-weight:500;margin-left:1px}
+.case-roas-l{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.8);max-width:16ch;line-height:1.4}
+.case-codes{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.case-code{background:var(--offwhite);border:0.5px solid rgba(122,32,32,.14);border-radius:8px;padding:12px 14px}
+.case-code-l{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--mid);margin-bottom:5px}
+.case-code-v{font-family:var(--serif);font-size:15px;font-weight:700;color:var(--dark);letter-spacing:.02em}
+
 /* ── NICHES ── */
 .niches{padding:36px 0}
 .niche-eyebrow{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--rust);margin-bottom:5px}
@@ -562,6 +576,12 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
 
   /* PLATFORMS */
   .plat-grid{grid-template-columns:1fr}
+
+  /* CASE STUDY */
+  .case-grid{grid-template-columns:1fr}
+  .case-vid{max-width:160px;margin:0 auto}
+  .case-metrics{grid-template-columns:repeat(2,1fr)}
+  .case-codes{grid-template-columns:1fr}
 
   /* NICHES — keep reels 3-up on mobile (Instagram-style grid) */
   .niche-title{font-size:24px}

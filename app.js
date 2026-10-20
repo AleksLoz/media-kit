@@ -123,6 +123,7 @@ const EDITABLE_SEL=[
   '.vid-desc','.vid-views',
   '.plat-n','.plat-h','.plat-num','.plat-sub',
   '.sc-n','.sc-l','.stat-card .sc-n','.stat-card .sc-l',
+  '.case-roas-n','.case-roas-l','.case-code-l','.case-code-v',
   '.pkg-tag','.pkg-name','.pkg-price','.pkg-ideal','.li-text',
   '.utype','.usub','.uprice',
   '.c-hand','.c-title','.c-sub','.c-btn','.handle span',
