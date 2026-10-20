@@ -225,6 +225,13 @@ function uploadPhoto(imgId,phId){
 let _vidTarget=null;
 // Sequential GitHub upload queue — ensures each video's git commit lands before the next starts
 let _uploadChain=Promise.resolve();
+// Warn before leaving mid-upload: the blob preview looks "done" the instant a
+// file is picked, but the upload + GitHub save it still needs can take many
+// seconds, and refreshing before that finishes silently drops the video.
+let _uploadsInFlight=0;
+window.addEventListener('beforeunload',function(e){
+  if(_uploadsInFlight>0){e.preventDefault();e.returnValue='';}
+});
 document.getElementById('video-input').addEventListener('change',function(){
   if(!this.files[0]||!_vidTarget)return;
   const file=this.files[0];
@@ -263,6 +270,15 @@ document.getElementById('video-input').addEventListener('change',function(){
   target.insertBefore(wrap,placeholder||target.firstChild);
   observeVideo(vid);
 
+  // Visible save status — without this there's no sign the upload+save is
+  // still in flight, so it looks "done" the moment the local preview shows
+  // and people refresh right away, losing it before the save lands.
+  const status=document.createElement('div');
+  status.className='vid-save-status';
+  status.textContent='Saving — don’t close this tab…';
+  status.style.cssText='position:absolute;top:8px;left:8px;right:8px;z-index:7;background:rgba(26,15,10,.8);color:#fff;font-size:9px;letter-spacing:.06em;text-transform:uppercase;padding:5px 9px;border-radius:4px;font-family:var(--sans);text-align:center';
+  wrap.appendChild(status);
+
   // Upload sequentially — each upload+save waits for the previous to finish.
   // The file streams DIRECTLY from the browser to Vercel Blob storage (no
   // base64, no serverless body limit), then we record the returned URL in
@@ -270,6 +286,7 @@ document.getElementById('video-input').addEventListener('change',function(){
   const ext=file.name.split('.').pop()||'mp4';
   const pathname='video_'+Date.now()+'.'+ext;
   _uploadChain=_uploadChain.then(async()=>{
+    _uploadsInFlight++;
     try{
       if(typeof window.vercelBlobUpload!=='function'){
         throw new Error('Uploader still loading — try again in a moment.');
@@ -282,6 +299,8 @@ document.getElementById('video-input').addEventListener('change',function(){
       wrap.classList.remove('vid-blob');
       target.dataset.src=blob.url;
       await saveHTMLCore();
+      status.textContent='Saved ✓';
+      setTimeout(()=>status.remove(),2500);
     }catch(err){
       console.warn('Upload or save failed:',err);
       // Surface the failure instead of silently dropping the video
@@ -292,6 +311,8 @@ document.getElementById('video-input').addEventListener('change',function(){
       const ph=target.querySelector('.vid-placeholder');
       if(ph)ph.style.display='';
       alert('Video upload failed: '+((err&&err.message)?err.message:err));
+    }finally{
+      _uploadsInFlight--;
     }
   });
 });
