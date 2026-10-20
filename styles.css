@@ -137,6 +137,12 @@ canvas.pie{display:block}
 .plat-num{font-family:var(--serif);font-size:21px;font-weight:700;color:var(--rust);line-height:1}
 .plat-sub{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--mid)}
 .stat-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.reach-card{background:var(--offwhite);border:0.5px solid rgba(122,32,32,.15);border-radius:10px;padding:24px 22px;margin-top:16px}
+.reach-list{display:flex;flex-direction:column}
+.reach-row{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-bottom:1px solid rgba(122,32,32,.1)}
+.reach-row:last-child{border-bottom:none}
+.reach-name{font-size:12px;color:var(--mid)}
+.reach-count{font-family:var(--serif);font-size:15px;font-weight:700;color:var(--rust);font-variant-numeric:tabular-nums}
 .stat-card{background:var(--offwhite);border:0.5px solid rgba(122,32,32,.14);border-radius:8px;padding:16px;text-align:center}
 .sc-n{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--rust);line-height:1}
 .sc-l{font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--mid);margin-top:4px}
