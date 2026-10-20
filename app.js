@@ -123,7 +123,11 @@ const EDITABLE_SEL=[
   '.vid-desc','.vid-views',
   '.plat-n','.plat-h','.plat-num','.plat-sub',
   '.sc-n','.sc-l','.stat-card .sc-n','.stat-card .sc-l',
-  '.case-roas-n','.case-roas-l','.case-code-l','.case-code-v',
+  '.case-title','.case-title em','.case-head-note p',
+  '.case-brand','.case-tags','.case-sub','.case-sub em','.case-body',
+  '.case-roas-eyebrow','.case-roas-n','.case-roas-h','.case-roas-l',
+  '.case-link-h','.case-link-l','.case-foot',
+  '.case-tagline','.case-close-note','.case-vid-caption span',
   '.pkg-tag','.pkg-name','.pkg-price','.pkg-ideal','.li-text',
   '.utype','.usub','.uprice',
   '.c-hand','.c-title','.c-sub','.c-btn','.handle span',
@@ -407,6 +411,10 @@ function applyVidPreview(card,url){
   if(old)old.remove();
   const ph=card.querySelector('.vid-placeholder');
 
+  // Case-study films use native playback (controls, sound, no autoplay/loop)
+  // instead of the ambient muted-loop treatment reels use.
+  const native=card.classList.contains('case-vid-native');
+
   const wrapper=document.createElement('div');
   wrapper.className='vid-preview';
   wrapper.style.cssText='width:100%;aspect-ratio:9/16;position:relative;overflow:hidden;border-radius:10px 10px 0 0;background:#000;';
@@ -422,6 +430,7 @@ function applyVidPreview(card,url){
     const vid=document.createElement('video');
     vid.src=`https://drive.google.com/uc?export=download&id=${gdId}&confirm=t`;
     vid.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+    if(native)vid.controls=true;
     vid.addEventListener('error',()=>{
       vid.remove();
       const frame=document.createElement('iframe');
@@ -431,14 +440,15 @@ function applyVidPreview(card,url){
       wrapper.appendChild(frame);
     },{once:true});
     wrapper.appendChild(vid);
-    observeVideo(vid); // muted + loop + plays on scroll via IntersectionObserver
+    if(native){vid.muted=false;vid.loop=false;}else{observeVideo(vid);} // muted + loop + plays on scroll via IntersectionObserver
   } else if(isVideoUrl(url)){
     // Direct video URL — autoplay muted loop via IntersectionObserver
     const vid=document.createElement('video');
     vid.src=normalizeVideoUrl(url);
     vid.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;';
+    if(native)vid.controls=true;
     wrapper.appendChild(vid);
-    observeVideo(vid);
+    if(native){vid.muted=false;vid.loop=false;}else{observeVideo(vid);}
   } else {
     wrapper.style.background='linear-gradient(135deg,#1A0F0A,#3A2010)';
     const fb=document.createElement('div');
@@ -465,9 +475,14 @@ function applyVidPreview(card,url){
   // Restore permanently uploaded videos (data-src = GitHub URL)
   document.querySelectorAll('.vid-card[data-src]').forEach(card=>{
     const ph=card.querySelector('.vid-placeholder');
+    const native=card.classList.contains('case-vid-native');
     const vid=document.createElement('video');
-    vid.setAttribute('muted','');vid.setAttribute('autoplay','');vid.setAttribute('playsinline','');vid.setAttribute('loop','');
-    vid.muted=true;vid.loop=true;vid.playsInline=true;vid.autoplay=true;
+    if(native){
+      vid.controls=true;
+    }else{
+      vid.setAttribute('muted','');vid.setAttribute('autoplay','');vid.setAttribute('playsinline','');vid.setAttribute('loop','');
+      vid.muted=true;vid.loop=true;vid.playsInline=true;vid.autoplay=true;
+    }
     vid.preload='auto';
     vid.src=card.dataset.src;
     vid.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:0';
@@ -491,9 +506,7 @@ function applyVidPreview(card,url){
     };
     if(ph)ph.style.display='none';
     card.insertBefore(wrap,ph||card.firstChild);
-    observeVideo(vid);
-    vid.load();
-    vid.addEventListener('canplay',()=>vid.play().catch(()=>{}),{once:true});
+    if(native){vid.load();}else{observeVideo(vid);vid.load();vid.addEventListener('canplay',()=>vid.play().catch(()=>{}),{once:true});}
     vid.addEventListener('error',()=>{
       wrap.remove();
       if(ph){ph.style.display='';}
