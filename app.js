@@ -144,7 +144,7 @@ const EDITABLE_SEL=[
   '.pkg-tag','.pkg-name','.pkg-price','.pkg-ideal','.li-text',
   '.utype','.usub','.uprice',
   '.c-hand','.c-title','.c-sub','.c-btn','.handle span',
-  'footer p','.trusted-repeat',
+  'footer p','.trusted-hook-n','.trusted-hook-l',
 ].join(',');
 
 function toggleEdit(){
