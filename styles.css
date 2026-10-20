@@ -790,3 +790,21 @@ body.edit-on .vid-card.has-link .vid-placeholder::after{display:none}
 /* Audience heading subline (polish-7) */
 .s-subline{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--label);margin:10px 0 0}
 @media (max-width:768px){.s-subline{font-size:15px;margin-top:8px}}
+
+/* ════════════════════════════════════════════════════
+   NICHES — mobile: each niche is a horizontal swipe row (polish-8)
+   ~45vw tiles so two fit with a peek of the third; row bleeds to the
+   screen edge, left inset matches the page margin.
+════════════════════════════════════════════════════ */
+@media (max-width:768px){
+  .vids{
+    display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:44vw;gap:8px;
+    overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory;scroll-padding-inline:18px;
+    margin-left:-18px;margin-right:-18px;padding:0 18px;
+    scrollbar-width:none;-ms-overflow-style:none;
+  }
+  .vids::-webkit-scrollbar{display:none}
+  .vids>.vid-card,
+  .vids>.vid-card:last-child:nth-child(odd){grid-column:auto;width:auto;max-width:none;justify-self:stretch;scroll-snap-align:start}
+}
