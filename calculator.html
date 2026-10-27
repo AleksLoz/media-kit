@@ -278,16 +278,16 @@
       <p class="pkg-hint">Click a package to add it to your quote</p>
       <div class="pkg-strip">
 
-        <!-- Single Feature -->
+        <!-- Minimum -->
         <div class="pkg-tile" id="pkg-single">
           <span class="pkg-badge-placeholder"></span>
-          <div class="pkg-name">Single Feature</div>
+          <div class="pkg-name">Minimum</div>
           <div class="pkg-items">
             1× Reel<br>
             3× Story frames
           </div>
-          <div class="pkg-per" id="pp-single-reel">9.500 kr./reel</div>
-          <div class="pkg-price" id="pp-single">9.500 kr.</div>
+          <div class="pkg-per" id="pp-single-reel">10.500 kr./reel</div>
+          <div class="pkg-price" id="pp-single">10.500 kr.</div>
           <button class="pkg-btn" onclick="addPkg('single')">Select package +</button>
         </div>
 
@@ -459,7 +459,7 @@
         <div class="add-rows">
           <div class="add-row">
             <div class="add-info"><div class="add-name">Video 30 to 50 seconds</div><div class="add-note">Vertical Reel · delivered in 4K</div></div>
-            <div class="add-price" id="tp-ugc-video">2.000 kr.</div>
+            <div class="add-price" id="tp-ugc-video">5.000 kr.</div>
             <div class="qty-ctrl-inline">
               <button class="qq-btn" onclick="changePkg('ugc_video',-1)">−</button>
               <span class="qq-val" id="qv-ugc-video">0</span>
@@ -644,7 +644,7 @@ const EUR_USD = 1.10;
 let currency = 'DKK';
 
 const DKK = {
-  single: 9500,
+  single: 10500,
   ambassador: 25000, ambassadorValue: 35000,  // "Campaign" · 3 reels
   campaign: 38000,   campaignValue: 47500,     // "Ambassadorship" · 5 reels
   // Collab usage rights (per video, per duration)
@@ -655,7 +655,7 @@ const DKK = {
   newsletter:3500, raw:2500, horizontal:2000, giveaway:4500,
   linkbio:1500, whitelist:3500, sparkad:2500,
   // UGC qty deliverables
-  ugc_video:2000, ugc_photo:250,
+  ugc_video:5000, ugc_photo:250,
   // UGC toggle deliverables
   ugc_raw:2000, ugc_horizontal:750, ugc_square:500,
   ugc_hook:800, ugc_cta:500, ugc_textfree:500, ugc_express:1500
@@ -678,7 +678,7 @@ let _lastAddonCount = 0;
 const REEL_COUNTS = {single:1, ambassador:3, campaign:5};
 
 const PKG_LABELS = {
-  single: 'Single Feature',
+  single: 'Minimum',
   ambassador: 'Campaign · 3 Reels',
   campaign: 'Ambassadorship · 5 Reels'
 };
