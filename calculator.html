@@ -177,10 +177,13 @@
 .q-field-input::placeholder{color:rgba(138,112,96,.45);font-size:12px}
 .q-field{display:flex;flex-direction:column}
 
-.flex-cta{text-align:center;padding:48px 20px 36px;border-top:0.5px solid rgba(122,32,32,.1);margin-top:32px}
-.flex-cta-title{font-family:var(--serif);font-size:38px;font-weight:900;line-height:1.05;color:var(--dark);margin-bottom:10px;letter-spacing:-.02em}
-.flex-cta-title em{font-style:italic;color:var(--rust)}
-.flex-cta-sub{font-size:13px;color:var(--mid);margin-bottom:28px;line-height:1.8}
+.pkg-contact{font-size:12px;color:var(--mid);text-align:center;margin:-12px 0 22px}
+.pkg-contact a{color:var(--rust);font-weight:500;text-decoration:none;border-bottom:0.5px solid rgba(122,32,32,.35)}
+.pkg-contact a:hover{border-bottom-color:var(--rust)}
+.flex-cta{text-align:center;padding:22px 20px 4px;border-top:0.5px solid rgba(122,32,32,.1);margin-top:28px}
+.flex-cta-line{font-size:14px;color:var(--mid);line-height:1.5}
+.flex-cta-line a{color:var(--rust);font-weight:500;text-decoration:none;border-bottom:0.5px solid rgba(122,32,32,.35)}
+.flex-cta-line a:hover{border-bottom-color:var(--rust)}
 
 
 /* STICKY BAR */
@@ -248,11 +251,9 @@
 
 <section class="calc-hero">
   <div class="page">
-    <p class="calc-badge">Byggeligt Home · Content Pricing 2025</p>
+    <p class="calc-badge">Byggeligt Home · Content Pricing 2026</p>
     <h1 class="calc-h1">Build our <em>campaign</em></h1>
-    <p class="calc-intro">
-      We believe great partnerships start with transparency. Pick a package or build your own — then send it straight to us for a personal proposal within 48 hours.
-    </p>
+    <p class="calc-intro">Pick a package or build your own — we'll send a personal proposal within 48 hours.</p>
   </div>
 </section>
 
@@ -283,62 +284,64 @@
           <span class="pkg-badge-placeholder"></span>
           <div class="pkg-name">Minimum</div>
           <div class="pkg-items">
-            1× Reel<br>
-            3× Story frames
+            1 dedicated Instagram Reel<br>
+            3–4 Instagram Stories<br>
+            3 months organic usage rights
           </div>
-          <div class="pkg-per" id="pp-single-reel">10.500 kr./reel</div>
-          <div class="pkg-price" id="pp-single">10.500 kr.</div>
+          <div class="pkg-price" id="pp-single">12.500 kr.</div>
           <button class="pkg-btn" onclick="addPkg('single')">Select package +</button>
         </div>
 
-        <!-- Campaign — featured middle (internal key: ambassador · 3 reels) -->
-        <div class="pkg-tile featured" id="pkg-ambassador">
+        <!-- Standard — featured -->
+        <div class="pkg-tile featured" id="pkg-standard">
           <span class="pkg-badge">Popular</span>
-          <div class="pkg-name">Campaign</div>
+          <div class="pkg-name">Standard</div>
           <div class="pkg-items">
-            3× Reels<br>
-            9× Stories<br>
-            Organic usage rights included
+            1 dedicated Instagram Reel<br>
+            1 Instagram carousel<br>
+            5–6 Instagram Stories<br>
+            Reel cross-posted to TikTok and Facebook<br>
+            6 months organic usage rights
           </div>
-          <div class="pkg-per" id="pp-ambassador-reel">8.300 kr./reel</div>
-          <div class="pkg-value" id="pv-ambassador">Value ~35.000 kr.</div>
-          <div class="pkg-price" id="pp-ambassador">25.000 kr.</div>
-          <button class="pkg-btn" onclick="addPkg('ambassador')">Select package +</button>
+          <div class="pkg-price" id="pp-standard">21.500 kr.</div>
+          <button class="pkg-btn" onclick="addPkg('standard')">Select package +</button>
         </div>
 
-        <!-- Ambassadorship (internal key: campaign · 5 reels) -->
+        <!-- Campaign -->
         <div class="pkg-tile" id="pkg-campaign">
           <span class="pkg-badge-placeholder"></span>
-          <div class="pkg-name">Ambassadorship</div>
+          <div class="pkg-name">Campaign</div>
           <div class="pkg-items">
-            5× Reels<br>
-            15× Story sets<br>
-            Organic usage rights included
+            2 dedicated Instagram Reels<br>
+            1 Instagram carousel<br>
+            8–9 Instagram Stories<br>
+            Both Reels cross-posted to TikTok and Facebook<br>
+            12 months organic usage rights<br>
+            3 months paid advertising rights
           </div>
-          <div class="pkg-per" id="pp-campaign-reel">7.600 kr./reel</div>
-          <div class="pkg-value" id="pv-campaign">Value 47.500 kr.</div>
-          <div class="pkg-price" id="pp-campaign">38.000 kr.</div>
+          <div class="pkg-price" id="pp-campaign">34.500 kr.</div>
           <button class="pkg-btn" onclick="addPkg('campaign')">Select package +</button>
         </div>
 
       </div>
+      <p class="pkg-contact">Long-term ambassadorship? <a href="mailto:contact@byggeligt.com">Get in touch</a></p>
 
       <!-- Section 1: Usage rights -->
       <div class="sec-hd">
         <div class="sec-num">1</div>
         <h3 class="sec-title">Usage rights</h3>
+        <span class="sec-aside">paid ads · per video</span>
       </div>
       <div class="cat-panel">
+        <div class="organic-row">
+          <span>Organic usage</span>
+          <span class="incl-tag">Included in packages</span>
+        </div>
         <div class="usage-pills">
-          <label class="usage-pill">
-            <input type="radio" name="usage" value="organic" onchange="render()">
-            <span class="u-label">Organic</span>
-            <span class="u-sub">website + social</span>
-          </label>
           <label class="usage-pill">
             <input type="radio" name="usage" value="1m" onchange="render()">
             <span class="u-label">1 month paid ads</span>
-            <span class="u-sub" id="us-1m">2.000 kr./video</span>
+            <span class="u-sub" id="us-1m">2.500 kr./video</span>
           </label>
           <label class="usage-pill">
             <input type="radio" name="usage" value="3m" onchange="render()">
@@ -366,43 +369,33 @@
       </div>
       <div class="cat-panel">
         <div class="add-rows">
+          <div class="add-row" id="ar-carousel">
+            <div class="add-info"><div class="add-name">Extra Instagram carousel</div></div>
+            <div class="add-price" id="tp-carousel">5.000 kr.</div>
+            <button class="plus-btn" id="pb-carousel" onclick="toggleItem('carousel')" title="Add">+</button>
+          </div>
           <div class="add-row" id="ar-linkbio">
-            <div class="add-info"><div class="add-name">Link in bio</div><div class="add-note">30-day pinned placement in Byggeligt bio</div></div>
+            <div class="add-info"><div class="add-name">Link in bio</div><div class="add-note">30 days</div></div>
             <div class="add-price" id="tp-linkbio">1.500 kr.</div>
             <button class="plus-btn" id="pb-linkbio" onclick="toggleItem('linkbio')" title="Add">+</button>
           </div>
           <div class="add-row" id="ar-whitelist">
-            <div class="add-info"><div class="add-name">Partnership ads</div><div class="add-note">Run META ads through Byggeligt account · 30 days</div></div>
+            <div class="add-info"><div class="add-name">Partnership ads via our account</div><div class="add-note">30 days</div></div>
             <div class="add-price" id="tp-whitelist">3.500 kr.</div>
             <button class="plus-btn" id="pb-whitelist" onclick="toggleItem('whitelist')" title="Add">+</button>
           </div>
           <div class="add-row" id="ar-sparkad">
-            <div class="add-info"><div class="add-name">Spark ad</div><div class="add-note">TikTok boost authorisation · amplify organic content</div></div>
+            <div class="add-info"><div class="add-name">TikTok Spark ad authorisation</div></div>
             <div class="add-price" id="tp-sparkad">2.500 kr.</div>
             <button class="plus-btn" id="pb-sparkad" onclick="toggleItem('sparkad')" title="Add">+</button>
           </div>
-          <div class="add-row" id="ar-igcopost">
-            <div class="add-info"><div class="add-name">Instagram Reel Co-post</div><div class="add-note">Shared authorship · visible on both profiles</div></div>
-            <div class="add-price" id="tp-igcopost">€350</div>
-            <button class="plus-btn" id="pb-igcopost" onclick="toggleItem('igcopost')" title="Add">+</button>
-          </div>
-          <div class="add-row" id="ar-newsletter">
-            <div class="add-info"><div class="add-name">Newsletter feature</div><div class="add-note">Written article + 3 images licensed for your brand newsletter</div></div>
-            <div class="add-price" id="tp-newsletter">3.500 kr.</div>
-            <button class="plus-btn" id="pb-newsletter" onclick="toggleItem('newsletter')" title="Add">+</button>
-          </div>
           <div class="add-row" id="ar-raw">
-            <div class="add-info"><div class="add-name">5× Raw video files</div><div class="add-note">Unedited clips · min. 15 sec each</div></div>
-            <div class="add-price" id="tp-raw">2.500 kr.</div>
+            <div class="add-info"><div class="add-name">Raw video files</div><div class="add-note">Per video</div></div>
+            <div class="add-price" id="tp-raw">2.000 kr.</div>
             <button class="plus-btn" id="pb-raw" onclick="toggleItem('raw')" title="Add">+</button>
           </div>
-          <div class="add-row" id="ar-horizontal">
-            <div class="add-info"><div class="add-name">Horizontal versions</div><div class="add-note">Per video · 16:9 landscape format</div></div>
-            <div class="add-price" id="tp-horizontal">2.000 kr.</div>
-            <button class="plus-btn" id="pb-horizontal" onclick="toggleItem('horizontal')" title="Add">+</button>
-          </div>
           <div class="add-row" id="ar-giveaway">
-            <div class="add-info"><div class="add-name">Giveaway on Byggeligt</div><div class="add-note">Hosted giveaway · drives brand engagement</div></div>
+            <div class="add-info"><div class="add-name">Giveaway on Byggeligt</div></div>
             <div class="add-price" id="tp-giveaway">4.500 kr.</div>
             <button class="plus-btn" id="pb-giveaway" onclick="toggleItem('giveaway')" title="Add">+</button>
           </div>
@@ -415,27 +408,17 @@
         <h3 class="sec-title">Cross-platform distribution</h3>
       </div>
       <div class="cat-panel">
-        <p class="dist-note">We share your videos across our other platforms for maximum reach — no extra production needed.</p>
+        <p class="dist-note">Optional extra reach on our other channels.</p>
         <div class="add-rows">
           <div class="add-row" id="ar-tiktok">
-            <div class="add-info"><div class="add-name">TikTok</div><div class="add-note">173K followers</div></div>
-            <div class="add-price" id="tp-tiktok">€350</div>
+            <div class="add-info"><div class="add-name">TikTok</div><div class="add-note">174K followers</div></div>
+            <div class="add-price" id="tp-tiktok">2.500 kr.</div>
             <button class="plus-btn" id="pb-tiktok" onclick="toggleItem('tiktok')" title="Add">+</button>
           </div>
           <div class="add-row" id="ar-facebook">
-            <div class="add-info"><div class="add-name">Facebook</div><div class="add-note">62K followers</div></div>
-            <div class="add-price" id="tp-facebook">€300</div>
+            <div class="add-info"><div class="add-name">Facebook</div><div class="add-note">70K followers</div></div>
+            <div class="add-price" id="tp-facebook">1.500 kr.</div>
             <button class="plus-btn" id="pb-facebook" onclick="toggleItem('facebook')" title="Add">+</button>
-          </div>
-          <div class="add-row" id="ar-youtube">
-            <div class="add-info"><div class="add-name">YouTube Shorts</div><div class="add-note">23.7K monthly views</div></div>
-            <div class="add-price" id="tp-youtube">€250</div>
-            <button class="plus-btn" id="pb-youtube" onclick="toggleItem('youtube')" title="Add">+</button>
-          </div>
-          <div class="add-row" id="ar-pinterest">
-            <div class="add-info"><div class="add-name">Pinterest</div><div class="add-note">19.7K monthly views</div></div>
-            <div class="add-price" id="tp-pinterest">€250</div>
-            <button class="plus-btn" id="pb-pinterest" onclick="toggleItem('pinterest')" title="Add">+</button>
           </div>
         </div>
       </div>
@@ -447,7 +430,7 @@
 
       <div class="ugc-header">
         <h2 class="ugc-title">Build your UGC campaign</h2>
-        <p class="ugc-sub">Creative content made for your brand — own it, run ads with it, scale it.</p>
+        <p class="ugc-sub">Video and photos your brand can own and run as ads.</p>
       </div>
 
       <!-- Section 1: Deliverables -->
@@ -458,7 +441,7 @@
       <div class="cat-panel">
         <div class="add-rows">
           <div class="add-row">
-            <div class="add-info"><div class="add-name">Video 30 to 50 seconds</div><div class="add-note">Vertical Reel · delivered in 4K</div></div>
+            <div class="add-info"><div class="add-name">Video 30–50 sec</div><div class="add-note">Vertical · 4K</div></div>
             <div class="add-price" id="tp-ugc-video">5.000 kr.</div>
             <div class="qty-ctrl-inline">
               <button class="qq-btn" onclick="changePkg('ugc_video',-1)">−</button>
@@ -467,8 +450,8 @@
             </div>
           </div>
           <div class="add-row">
-            <div class="add-info"><div class="add-name">Lifestyle photo</div><div class="add-note">Styled product &amp; lifestyle shots · per photo</div></div>
-            <div class="add-price" id="tp-ugc-photo">250 kr.</div>
+            <div class="add-info"><div class="add-name">Lifestyle photo</div><div class="add-note">Per photo</div></div>
+            <div class="add-price" id="tp-ugc-photo">500 kr.</div>
             <div class="qty-ctrl-inline">
               <button class="qq-btn" onclick="changePkg('ugc_photo',-1)">−</button>
               <span class="qq-val" id="qv-ugc-photo">0</span>
@@ -476,37 +459,22 @@
             </div>
           </div>
           <div class="add-row" id="ar-ugc-raw">
-            <div class="add-info"><div class="add-name">Raw footage</div><div class="add-note">Unedited clips · full resolution</div></div>
+            <div class="add-info"><div class="add-name">Raw footage</div><div class="add-note">Per video</div></div>
             <div class="add-price" id="tp-ugc-raw">2.000 kr.</div>
             <button class="plus-btn" id="pb-ugc-raw" onclick="toggleItem('ugc_raw')" title="Add">+</button>
           </div>
           <div class="add-row" id="ar-ugc-horizontal">
-            <div class="add-info"><div class="add-name">Horizontal 16:9 version</div><div class="add-note">Landscape format for YouTube &amp; web</div></div>
+            <div class="add-info"><div class="add-name">Horizontal 16:9 version</div></div>
             <div class="add-price" id="tp-ugc-horizontal">750 kr.</div>
             <button class="plus-btn" id="pb-ugc-horizontal" onclick="toggleItem('ugc_horizontal')" title="Add">+</button>
           </div>
-          <div class="add-row" id="ar-ugc-square">
-            <div class="add-info"><div class="add-name">Square version</div><div class="add-note">1:1 format for feed posts</div></div>
-            <div class="add-price" id="tp-ugc-square">500 kr.</div>
-            <button class="plus-btn" id="pb-ugc-square" onclick="toggleItem('ugc_square')" title="Add">+</button>
-          </div>
           <div class="add-row" id="ar-ugc-hook">
-            <div class="add-info"><div class="add-name">Extra hook variation</div><div class="add-note">Alternative opening · A/B test your ads</div></div>
+            <div class="add-info"><div class="add-name">Extra hook variation</div></div>
             <div class="add-price" id="tp-ugc-hook">800 kr.</div>
             <button class="plus-btn" id="pb-ugc-hook" onclick="toggleItem('ugc_hook')" title="Add">+</button>
           </div>
-          <div class="add-row" id="ar-ugc-cta">
-            <div class="add-info"><div class="add-name">Extra CTA ending</div><div class="add-note">Alternative call-to-action · swap without a reshoot</div></div>
-            <div class="add-price" id="tp-ugc-cta">500 kr.</div>
-            <button class="plus-btn" id="pb-ugc-cta" onclick="toggleItem('ugc_cta')" title="Add">+</button>
-          </div>
-          <div class="add-row" id="ar-ugc-textfree">
-            <div class="add-info"><div class="add-name">Text-free master file</div><div class="add-note">Clean version for adding your own subtitles</div></div>
-            <div class="add-price" id="tp-ugc-textfree">500 kr.</div>
-            <button class="plus-btn" id="pb-ugc-textfree" onclick="toggleItem('ugc_textfree')" title="Add">+</button>
-          </div>
           <div class="add-row" id="ar-ugc-express">
-            <div class="add-info"><div class="add-name">Express delivery</div><div class="add-note">Under 7 days from brief approval</div></div>
+            <div class="add-info"><div class="add-name">Express delivery</div><div class="add-note">Under 7 days</div></div>
             <div class="add-price" id="tp-ugc-express">1.500 kr.</div>
             <button class="plus-btn" id="pb-ugc-express" onclick="toggleItem('ugc_express')" title="Add">+</button>
           </div>
@@ -606,10 +574,7 @@
         </form>
       </div>
       <div class="flex-cta">
-        <p class="c-hand">Limited budget?</p>
-        <h3 class="flex-cta-title">Smaller brand with a <em>cool vision</em></h3>
-        <p class="flex-cta-sub">We're always open to being flexible and helping out — reach out and let's talk.</p>
-        <a class="c-btn" href="mailto:contact@byggeligt.com">Get in touch →</a>
+        <p class="flex-cta-line">Limited budget? <a href="mailto:contact@byggeligt.com">Get in touch</a></p>
       </div>
     </div>
 
@@ -644,62 +609,57 @@ const EUR_USD = 1.10;
 let currency = 'DKK';
 
 const DKK = {
-  single: 10500,
-  ambassador: 25000, ambassadorValue: 35000,  // "Campaign" · 3 reels
-  campaign: 38000,   campaignValue: 47500,     // "Ambassadorship" · 5 reels
-  // Collab usage rights (per video, per duration)
-  usage: {'1m':2000, '3m':5000, '6m':8000, '12m':13000},
-  // UGC usage rights (paid ads, per video, per duration)
+  single: 12500,
+  standard: 21500,
+  campaign: 34500,
+  // Collab usage rights (paid ads, per video)
+  usage: {'1m':2500, '3m':5000, '6m':8000, '12m':13000},
+  // UGC usage rights (paid ads, per video)
   ugcusage: {'1m':500, '3m':1000, '6m':2000, '12m':4000},
   // Collab add-ons
-  newsletter:3500, raw:2500, horizontal:2000, giveaway:4500,
-  linkbio:1500, whitelist:3500, sparkad:2500,
+  carousel:5000, linkbio:1500, whitelist:3500, sparkad:2500, raw:2000, giveaway:4500,
+  // Cross-platform
+  tiktok:2500, facebook:1500,
   // UGC qty deliverables
-  ugc_video:5000, ugc_photo:250,
+  ugc_video:5000, ugc_photo:500,
   // UGC toggle deliverables
-  ugc_raw:2000, ugc_horizontal:750, ugc_square:500,
-  ugc_hook:800, ugc_cta:500, ugc_textfree:500, ugc_express:1500
+  ugc_raw:2000, ugc_horizontal:750, ugc_hook:800, ugc_express:1500
 };
 
-const EUR = {
-  igcopost:350, tiktok:350, facebook:300, youtube:250, pinterest:250
-};
-
-const EUR_KEYS = ['igcopost','tiktok','facebook','youtube','pinterest'];
-const DKK_KEYS = ['newsletter','raw','horizontal','giveaway',
-                  'linkbio','whitelist','sparkad',
-                  'ugc_raw','ugc_horizontal','ugc_square','ugc_hook',
-                  'ugc_cta','ugc_textfree','ugc_express'];
+const DKK_KEYS = ['carousel','linkbio','whitelist','sparkad','raw','giveaway','tiktok','facebook',
+                  'ugc_raw','ugc_horizontal','ugc_hook','ugc_express'];
 /* ── DISCOUNT TIERS ── */
 const DISCOUNT_TIERS = [{count:3,pct:15},{count:5,pct:20},{count:8,pct:30}];
 let _lastDiscountPct = 0;
 let _lastAddonCount = 0;
 
-const REEL_COUNTS = {single:1, ambassador:3, campaign:5};
+const REEL_COUNTS = {single:1, standard:1, campaign:2};
 
 const PKG_LABELS = {
   single: 'Minimum',
-  ambassador: 'Campaign · 3 Reels',
-  campaign: 'Ambassadorship · 5 Reels'
+  standard: 'Standard',
+  campaign: 'Campaign'
 };
 const UGC_QTY_LABELS = {
-  ugc_video: 'Video 30–50s',
+  ugc_video: 'Video 30–50 sec',
   ugc_photo: 'Lifestyle photo'
 };
 const ADDON_LABELS = {
-  igcopost:'Instagram Reel Co-post', tiktok:'TikTok', facebook:'Facebook',
-  youtube:'YouTube Shorts', pinterest:'Pinterest',
-  newsletter:'Newsletter feature',
-  raw:'5× Raw video files', horizontal:'Horizontal versions', giveaway:'Giveaway on Byggeligt',
-  linkbio:'Link in bio (30 days)', whitelist:'Partnership ads (META, 30 days)', sparkad:'Spark ad (TikTok)',
-  ugc_raw:'Raw footage', ugc_horizontal:'Horizontal 16:9', ugc_square:'Square version',
-  ugc_hook:'Extra hook variation', ugc_cta:'Extra CTA ending',
-  ugc_textfree:'Text-free master file', ugc_express:'Express delivery'
+  carousel:'Extra Instagram carousel',
+  linkbio:'Link in bio (30 days)',
+  whitelist:'Partnership ads via our account (30 days)',
+  sparkad:'TikTok Spark ad authorisation',
+  raw:'Raw video files',
+  giveaway:'Giveaway on Byggeligt',
+  tiktok:'TikTok',
+  facebook:'Facebook',
+  ugc_raw:'Raw footage',
+  ugc_horizontal:'Horizontal 16:9',
+  ugc_hook:'Extra hook variation',
+  ugc_express:'Express delivery'
 };
 
 /* ── HELPERS ── */
-function toEUR(dkk) { return dkk / EUR_DKK; }
-
 function niceRound(n) {
   if (n >= 2000) return Math.round(n / 100) * 100;
   if (n >= 200)  return Math.round(n / 50)  * 50;
@@ -715,24 +675,20 @@ function fmtDKK(dkk) {
   if (currency==='EUR') return fmtN(niceRound(dkk / EUR_DKK));
   return fmtN(niceRound(dkk / EUR_DKK * EUR_USD));
 }
-function fmtEUR(eur) {
-  if (currency==='EUR') return fmtN(eur);
-  if (currency==='DKK') return fmtN(niceRound(eur * EUR_DKK));
-  return fmtN(niceRound(eur * EUR_USD));
-}
-function grandFmt(eurTotal) {
-  if (currency==='EUR') return fmtN(niceRound(eurTotal));
-  if (currency==='DKK') return fmtN(niceRound(eurTotal * EUR_DKK));
-  return fmtN(niceRound(eurTotal * EUR_USD));
-}
 
 /* ── STATE ── */
-const qty     = {single:0, ambassador:0, campaign:0, ugc_video:0, ugc_photo:0};
+const qty     = {single:0, standard:0, campaign:0, ugc_video:0, ugc_photo:0};
 const toggles = new Set();
-let _lines = [], _grandEur = 0;
+let _lines = [], _grandDkk = 0;
 
 function reelCount() {
   return Object.entries(qty).reduce((s,[k,v])=>s+(REEL_COUNTS[k]||0)*v, 0);
+}
+// Campaign already includes 3 months of paid ads on its reels.
+function billableReels(uKey) {
+  let reels = reelCount();
+  if (uKey === '3m') reels -= (qty.campaign || 0) * (REEL_COUNTS.campaign || 0);
+  return Math.max(0, reels);
 }
 function ugcVideoCount() { return qty.ugc_video; }
 function getUsage()    { return document.querySelector('input[name=usage]:checked')?.value    || 'none'; }
@@ -802,36 +758,37 @@ function render() {
     p.classList.toggle('active', p.querySelector('input')?.checked)
   );
 
-  _lines=[]; let grandEur=0;
+  _lines=[]; let grandDkk=0;
 
   // Packages
   for(const [k,v] of Object.entries(qty)) {
     if(v <= 0) continue;
     if(UGC_QTY_LABELS[k]) {
-      // UGC qty deliverables (video / photo)
       const dkk=DKK[k]*v;
-      grandEur+=toEUR(dkk);
+      grandDkk+=dkk;
       _lines.push({key:k, label:UGC_QTY_LABELS[k]+(v>1?` ×${v}`:''), dkk, ctrl:true});
     } else if(PKG_LABELS[k]) {
       const dkk=DKK[k]*v;
-      grandEur+=toEUR(dkk);
+      grandDkk+=dkk;
       _lines.push({key:k, label:v>1?`${PKG_LABELS[k]} ×${v}`:PKG_LABELS[k], dkk, ctrl:true});
     }
   }
 
-  // Collab usage rights
+  // Collab usage rights — organic is included in every package.
+  // Campaign's price already includes 3 months of paid ads on its reels.
   const uKey = getUsage();
-  const autoOrganic = (qty.ambassador > 0 || qty.campaign > 0);
-  if(autoOrganic) {
+  const hasPkg = (qty.single > 0 || qty.standard > 0 || qty.campaign > 0);
+  if(hasPkg) {
     _lines.push({label:'Organic usage rights', dkk:0, free:true});
-  } else if(uKey === 'organic') {
-    _lines.push({label:'Organic usage rights', dkk:0, free:true, removeType:'usage'});
   }
-  if(uKey !== 'none' && uKey !== 'organic') {
-    const reels = reelCount();
+  if(qty.campaign > 0 && (uKey === 'none' || uKey === '3m')) {
+    _lines.push({label:'Paid advertising rights · 3 months', dkk:0, free:true});
+  }
+  if(uKey !== 'none') {
+    const reels = billableReels(uKey);
     if(reels > 0) {
       const ppv = DKK.usage[uKey], dkk = ppv * reels;
-      grandEur += toEUR(dkk);
+      grandDkk += dkk;
       const mLabel = {'1m':'1 month','3m':'3 months','6m':'6 months','12m':'12 months'}[uKey];
       _lines.push({label:`Usage rights · ${mLabel}${reels>1?` · ${reels} videos`:''}`, dkk, removeType:'usage'});
     }
@@ -849,32 +806,29 @@ function render() {
     if(vCount>0) {
       const ppv=DKK.ugcusage[ugcUKey];
       const dkk=ppv*vCount;
-      grandEur+=toEUR(dkk);
+      grandDkk+=dkk;
       const mLabel={'1m':'1 month','3m':'3 months','6m':'6 months','12m':'12 months'}[ugcUKey];
       _lines.push({label:`Paid ads rights · ${mLabel}${vCount>1?` · ${vCount} videos`:''}`, dkk, removeType:'ugc_usage'});
     }
   }
 
-  // Toggle add-ons
+  // Toggle add-ons (all priced in DKK)
   for(const k of toggles) {
-    if(EUR_KEYS.includes(k)) {
-      const eur=EUR[k]||0; grandEur+=eur;
-      _lines.push({label:ADDON_LABELS[k], eur, removeType:'toggle', key:k});
-    } else if(DKK_KEYS.includes(k)) {
-      const dkk=DKK[k]||0; grandEur+=toEUR(dkk);
+    if(DKK_KEYS.includes(k)) {
+      const dkk=DKK[k]||0; grandDkk+=dkk;
       _lines.push({label:ADDON_LABELS[k], dkk, removeType:'toggle', key:k});
     }
   }
 
   // Bundle discount
   const pct = discountPct();
-  if(pct > 0 && grandEur > 0) {
-    const savingEur = grandEur * pct / 100;
-    grandEur -= savingEur;
-    _lines.push({label:`Bundle discount · ${pct}% off`, savingEur, discount:true});
+  if(pct > 0 && grandDkk > 0) {
+    const savingDkk = grandDkk * pct / 100;
+    grandDkk -= savingDkk;
+    _lines.push({label:`Bundle discount · ${pct}% off`, savingDkk, discount:true});
   }
 
-  _grandEur=grandEur;
+  _grandDkk=grandDkk;
 
   // Render items list
   const cont=document.getElementById('q-items');
@@ -885,8 +839,8 @@ function render() {
       const priceHtml = it.free
         ? '<span style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--rust);font-weight:500;min-width:64px;text-align:right;flex-shrink:0">Included</span>'
         : it.discount
-        ? `<span class="q-item-saving">−${grandFmt(it.savingEur)}</span>`
-        : `<span class="q-item-price">${it.dkk!==undefined?fmtDKK(it.dkk):fmtEUR(it.eur)}</span>`;
+        ? `<span class="q-item-saving">−${fmtDKK(it.savingDkk)}</span>`
+        : `<span class="q-item-price">${fmtDKK(it.dkk)}</span>`;
       const ctrl = it.ctrl && !it.free
         ? `<div class="q-qty-ctrl">
              <button class="qq-btn" onclick="changePkg('${it.key}',-1)">−</button>
@@ -911,10 +865,10 @@ function render() {
   }
   document.getElementById('q-rule').style.display=_lines.length?'block':'none';
 
-  const total=grandEur>0?grandFmt(grandEur):'—';
+  const total=grandDkk>0?fmtDKK(grandDkk):'—';
   document.getElementById('q-total').textContent=total;
   document.getElementById('sb-total').textContent=total;
-  document.getElementById('sticky-bar').classList.toggle('visible',grandEur>0);
+  document.getElementById('sticky-bar').classList.toggle('visible',grandDkk>0);
 
   // UGC qty display
   const elV=document.getElementById('qv-ugc-video'); if(elV)elV.textContent=qty.ugc_video;
@@ -924,16 +878,17 @@ function render() {
   const note = document.getElementById('usage-note');
   if(note) {
     const reels = reelCount();
+    const billable = billableReels(uKey);
     if(uKey==='none') {
-      note.innerHTML='Select a duration to add usage rights for paid ads, website use &amp; digital marketing.';
-    } else if(uKey==='organic') {
-      note.innerHTML='<strong>Organic usage rights added</strong> — website, social &amp; owned channels. Free.';
+      note.innerHTML='Organic usage is included in every package. Add paid ads per video.';
     } else if(reels===0) {
-      note.innerHTML='Select a package above to apply usage rights to your videos.';
+      note.innerHTML='Select a package to apply paid ads rights to your videos.';
+    } else if(billable===0) {
+      note.innerHTML='<strong>Included</strong> — 3 months of paid ads come with the Campaign package.';
     } else {
-      const ppv=DKK.usage[uKey], tot=ppv*reels;
+      const ppv=DKK.usage[uKey], tot=ppv*billable;
       const mLabel={'1m':'1 month','3m':'3 months','6m':'6 months','12m':'12 months'}[uKey];
-      note.innerHTML=`<strong>${fmtDKK(tot)}</strong> — ${reels} video${reels>1?'s':''} × ${fmtDKK(ppv)} · ${mLabel}.`;
+      note.innerHTML=`<strong>${fmtDKK(tot)}</strong> — ${billable} video${billable>1?'s':''} × ${fmtDKK(ppv)} · ${mLabel}.`;
     }
   }
 
@@ -990,9 +945,9 @@ function render() {
   if(ugcNote) {
     const vCount=ugcVideoCount();
     if(ugcUKey==='none') {
-      ugcNote.innerHTML='Select a duration to add paid advertising rights to your UGC content.';
+      ugcNote.innerHTML='Organic usage is included. Add paid ads per video.';
     } else if(vCount===0) {
-      ugcNote.innerHTML='Add a UGC base or extra reel above to apply paid ads rights.';
+      ugcNote.innerHTML='Add a video above to apply paid ads rights.';
     } else {
       const ppv=DKK.ugcusage[ugcUKey]; const tot=ppv*vCount;
       const mLabel={'1m':'1 month','3m':'3 months','6m':'6 months','12m':'12 months'}[ugcUKey];
@@ -1012,55 +967,26 @@ function setCurrency(c) {
 }
 
 function updateLabels() {
-  // Package prices
-  document.getElementById('pp-single').textContent     = fmtDKK(DKK.single);
-  document.getElementById('pp-ambassador').textContent = fmtDKK(DKK.ambassador);
-  document.getElementById('pp-campaign').textContent   = fmtDKK(DKK.campaign);
-  // Value labels
-  document.getElementById('pv-ambassador').textContent = 'Value ~'+fmtDKK(DKK.ambassadorValue);
-  document.getElementById('pv-campaign').textContent   = 'Value '+fmtDKK(DKK.campaignValue);
-  // Per-reel (rounded to nearest 100)
-  document.getElementById('pp-single-reel').textContent    = fmtDKK(Math.round(DKK.single/100)*100)+'/reel';
-  document.getElementById('pp-ambassador-reel').textContent = fmtDKK(Math.round(DKK.ambassador/3/100)*100)+'/reel';
-  document.getElementById('pp-campaign-reel').textContent   = fmtDKK(Math.round(DKK.campaign/5/100)*100)+'/reel';
+  document.getElementById('pp-single').textContent   = fmtDKK(DKK.single);
+  document.getElementById('pp-standard').textContent = fmtDKK(DKK.standard);
+  document.getElementById('pp-campaign').textContent = fmtDKK(DKK.campaign);
 
-  // Collab usage pills
   document.getElementById('us-1m').textContent  = fmtDKK(DKK.usage['1m'])+'/video';
   document.getElementById('us-3m').textContent  = fmtDKK(DKK.usage['3m'])+'/video';
   document.getElementById('us-6m').textContent  = fmtDKK(DKK.usage['6m'])+'/video';
   document.getElementById('us-12m').textContent = fmtDKK(DKK.usage['12m'])+'/video';
 
-  // UGC usage pills
   document.getElementById('uus-1m').textContent  = fmtDKK(DKK.ugcusage['1m'])+'/video';
   document.getElementById('uus-3m').textContent  = fmtDKK(DKK.ugcusage['3m'])+'/video';
   document.getElementById('uus-6m').textContent  = fmtDKK(DKK.ugcusage['6m'])+'/video';
   document.getElementById('uus-12m').textContent = fmtDKK(DKK.ugcusage['12m'])+'/video';
 
-  // EUR distribution
-  document.getElementById('tp-igcopost').textContent = fmtEUR(EUR.igcopost);
-  document.getElementById('tp-tiktok').textContent   = fmtEUR(EUR.tiktok);
-  document.getElementById('tp-facebook').textContent = fmtEUR(EUR.facebook);
-  document.getElementById('tp-youtube').textContent  = fmtEUR(EUR.youtube);
-  document.getElementById('tp-pinterest').textContent= fmtEUR(EUR.pinterest);
-
-  // Collab DKK add-ons
-  const dkkMap={newsletter:3500,raw:2500,horizontal:2000,giveaway:4500,
-                linkbio:1500,whitelist:3500,sparkad:2500};
-  for(const[k,v] of Object.entries(dkkMap)){
-    const el=document.getElementById('tp-'+k);
-    if(el)el.textContent=fmtDKK(v);
+  for(const k of DKK_KEYS){
+    const el=document.getElementById('tp-'+k.replace(/_/g,'-'));
+    if(el)el.textContent=fmtDKK(DKK[k]);
   }
-
-  // UGC deliverable prices
-  document.getElementById('tp-ugc-video').textContent     = fmtDKK(DKK.ugc_video);
-  document.getElementById('tp-ugc-photo').textContent     = fmtDKK(DKK.ugc_photo);
-  document.getElementById('tp-ugc-raw').textContent       = fmtDKK(DKK.ugc_raw);
-  document.getElementById('tp-ugc-horizontal').textContent= fmtDKK(DKK.ugc_horizontal);
-  document.getElementById('tp-ugc-square').textContent    = fmtDKK(DKK.ugc_square);
-  document.getElementById('tp-ugc-hook').textContent      = fmtDKK(DKK.ugc_hook);
-  document.getElementById('tp-ugc-cta').textContent       = fmtDKK(DKK.ugc_cta);
-  document.getElementById('tp-ugc-textfree').textContent  = fmtDKK(DKK.ugc_textfree);
-  document.getElementById('tp-ugc-express').textContent   = fmtDKK(DKK.ugc_express);
+  document.getElementById('tp-ugc-video').textContent = fmtDKK(DKK.ugc_video);
+  document.getElementById('tp-ugc-photo').textContent = fmtDKK(DKK.ugc_photo);
 }
 
 /* ── FORM SUBMIT ── */
@@ -1072,20 +998,20 @@ function prepareSubmit(e) {
   }
   let txt = 'QUOTE DETAILS\n';
   _lines.forEach(l => {
-    const p = l.free ? 'Included' : l.contact ? 'Contact us' : l.dkk !== undefined ? fmtDKK(l.dkk) : fmtEUR(l.eur);
+    const p = l.free ? 'Included' : l.discount ? '−'+fmtDKK(l.savingDkk) : fmtDKK(l.dkk);
     txt += `• ${l.label}: ${p}\n`;
   });
-  txt += `TOTAL: ${grandFmt(_grandEur)} (excl. VAT, ${currency})`;
+  txt += `TOTAL: ${fmtDKK(_grandDkk)} (excl. VAT, ${currency})`;
   document.getElementById('hidden-quote').value = txt;
 }
 
-function savePDF(){if(_grandEur===0){alert('Add items to your quote first.');return;}window.print();}
+function savePDF(){if(_grandDkk===0){alert('Add items to your quote first.');return;}window.print();}
 function scrollToQuote(){document.getElementById('quote-section').scrollIntoView({behavior:'smooth',block:'start'});}
 function copyQuote(){
   if(!_lines.length)return;
-  let text='Byggeligt Home — Content Quote 2025\n'+'─'.repeat(36)+'\n';
-  _lines.forEach(l=>{const p=l.free?'Included':l.dkk!==undefined?fmtDKK(l.dkk):fmtEUR(l.eur);text+=`${l.label}: ${p}\n`;});
-  text+='─'.repeat(36)+'\nTotal: '+grandFmt(_grandEur)+' (excl. VAT, '+currency+')\n\ncontact@byggeligt.com';
+  let text='Byggeligt Home — Content Quote 2026\n'+'─'.repeat(36)+'\n';
+  _lines.forEach(l=>{const p=l.free?'Included':l.discount?'−'+fmtDKK(l.savingDkk):fmtDKK(l.dkk);text+=`${l.label}: ${p}\n`;});
+  text+='─'.repeat(36)+'\nTotal: '+fmtDKK(_grandDkk)+' (excl. VAT, '+currency+')\n\ncontact@byggeligt.com';
   navigator.clipboard.writeText(text).then(()=>{
     const b=document.querySelector('.q-copy-btn');b.textContent='✓ Copied!';
     setTimeout(()=>{b.textContent='Copy to clipboard';},2000);
